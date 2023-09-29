@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class API_Test {
+    // getting track info from Spotify
+
     public static void main(String[] args) {
         String accessToken =
                 "BQB9egwIt5m9cLC2SgAWlI6lnLA9CegSDPegwFinsTaUJNwSYtGapdfXvMdKN5wJy9RY51bGepNs02k67Mxcodidjp6k601BXk3LzFystOD-dtevjrc"; // token

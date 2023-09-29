@@ -1,14 +1,17 @@
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
 
 public class API_Test {
     // getting track info from Spotify
 
     public static void main(String[] args) {
+        // TODO: Automate generating tokens
         String accessToken =
-                "BQB9egwIt5m9cLC2SgAWlI6lnLA9CegSDPegwFinsTaUJNwSYtGapdfXvMdKN5wJy9RY51bGepNs02k67Mxcodidjp6k601BXk3LzFystOD-dtevjrc"; // token
+                "BQAAoneljqiWK9FayvPiVJ6KhJTBb6zq50ChzCftdXaW5dd2r5DlH5HDL8Dxfi8qBCP6qXWclm40Y7LGqSGyV4Rh8A_1e36_vn_75q90QSF4puBEk5Q"; // token
         String trackId = "2IjyFRCRn8x1bEquOM3vxg"; // id of the song in Spotify
         String apiUrl = "https://api.spotify.com/v1/tracks/" + trackId;
 

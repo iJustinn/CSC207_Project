@@ -9,7 +9,6 @@ public class API_Test {
     // getting track info from Spotify
 
     public static void main(String[] args) {
-        // TODO: Automate generating tokens
         String accessToken =
                 "BQAAoneljqiWK9FayvPiVJ6KhJTBb6zq50ChzCftdXaW5dd2r5DlH5HDL8Dxfi8qBCP6qXWclm40Y7LGqSGyV4Rh8A_1e36_vn_75q90QSF4puBEk5Q"; // token
         String trackId = "2IjyFRCRn8x1bEquOM3vxg"; // id of the song in Spotify

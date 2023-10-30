@@ -1,4 +1,7 @@
 package entity;
 
-public class Album {
+public interface Album {
+    String getId();
+    String getName();
+    String getReleaseDate();
 }

@@ -1,0 +1,20 @@
+package entity;
+
+public class UserProfile {
+    private final String username;
+    private final String password;
+
+
+    public UserProfile(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+}

@@ -1,8 +1,7 @@
 package app;
+
 import javax.swing.*;
 import java.awt.*;
-
-
 
 public class Main {
     public static void main(String[] args) {
@@ -10,21 +9,43 @@ public class Main {
     }
 
     private static void createAndShowGUI() {
-        // Create a frame
-        JFrame frame = new JFrame("Swing Example");
+        // Create the main frame
+        JFrame frame = new JFrame("Media Manager");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
+        frame.setSize(1000, 600); // Adjust as per your requirement
+        frame.getContentPane().setBackground(Color.DARK_GRAY);
 
-        frame.getContentPane().setBackground(Color.GRAY);
+        // Top bar
+        JPanel topBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton recommendationsButton = new JButton("Recommendations");
+        topBar.add(recommendationsButton);
+        // Add user profile icon (using a placeholder button for now)
+        JButton userProfileButton = new JButton("User Profile");
+        topBar.add(userProfileButton);
 
-        // Create a button and add it to the frame
-        JButton button = new JButton("Click Me!");
-        button.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Button was clicked!"));
-        frame.getContentPane().add(button);
+        // Sidebar for playlists
+        JPanel sidebar = new JPanel(new GridLayout(10, 1)); // Assuming 10 playlists max for simplicity
+        sidebar.setBackground(Color.GRAY);
+        sidebar.setPreferredSize(new Dimension(150, frame.getHeight()));
 
-        button.setPreferredSize(new Dimension(100, 50));
+        for (int i = 0; i < 10; i++) { // Adding placeholder buttons for playlists
+            JButton playlistButton = new JButton("Playlist " + (i + 1));
+            sidebar.add(playlistButton);
+        }
 
-        frame.setLayout(new FlowLayout());
+        // Central panel for recommended artists
+        JPanel centerPanel = new JPanel(new GridLayout(2, 4)); // Assuming 8 recommended artists for simplicity
+        centerPanel.setBackground(Color.DARK_GRAY);
+
+        for (int i = 0; i < 8; i++) {
+            JButton artistButton = new JButton("Artist " + (i + 1));
+            centerPanel.add(artistButton);
+        }
+
+        frame.setLayout(new BorderLayout());
+        frame.add(topBar, BorderLayout.NORTH);
+        frame.add(sidebar, BorderLayout.WEST);
+        frame.add(centerPanel, BorderLayout.CENTER);
 
         // Display the frame
         frame.setVisible(true);

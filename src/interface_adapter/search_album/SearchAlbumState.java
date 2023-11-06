@@ -4,12 +4,21 @@ import entity.Album;
 
 public class SearchAlbumState {
     private Album[] albums = null;
+    private String searchInput = null;
 
+    public SearchAlbumState() {}
     public SearchAlbumState(SearchAlbumState copy) {
         albums = copy.albums;
+        searchInput = copy.searchInput;
     }
 
-    public SearchAlbumState() { }
+    public String getSearchInput() {
+        return searchInput;
+    }
+
+    public void setSearchInput(String searchInput) {
+        this.searchInput = searchInput;
+    }
 
     public Album[] getAlbums() {
         return albums;

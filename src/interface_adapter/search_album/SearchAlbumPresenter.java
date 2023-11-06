@@ -13,14 +13,15 @@ public class SearchAlbumPresenter implements SearchAlbumOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(SearchAlbumOutputData outputData) {
+    public void prepareSuccessView(SearchAlbumOutputData response) {
         SearchAlbumState state = viewModel.getState();
-        state.setAlbums(outputData.getAlbums());
+        state.setAlbums(response.getAlbums());
         viewModel.setState(state);
         viewModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
+        // To be implemented
     }
 }

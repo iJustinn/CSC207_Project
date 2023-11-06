@@ -1,4 +1,4 @@
 package entity;
 
-public class Artist {
+public interface Artist {
 }

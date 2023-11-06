@@ -1,4 +1,5 @@
-# This is copied from the official Gitignore Templates
+# Copied from the official Gitignore Templates
+# Reference: https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
@@ -41,9 +42,6 @@
 .idea/modules
 *.iml
 *.ipr
-
-# Maven
-/API/target
 
 # CMake
 cmake-build-*/

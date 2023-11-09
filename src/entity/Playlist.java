@@ -54,4 +54,9 @@ public class Playlist {
     public void setSongs(Map<Integer, Song> songs) {
         this.songs = songs;
     }
+
+    public void addSong(Song song) {
+        this.songs.put(this.songs.size() + 1, song);
+        this.numberOfSongs = this.songs.size();
+    }
 }

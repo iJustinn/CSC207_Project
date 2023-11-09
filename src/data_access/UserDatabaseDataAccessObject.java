@@ -1,5 +1,6 @@
 package data_access;
-
+import entity.UserDatabase;
+import entity.Playlist;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -61,7 +62,7 @@ public class UserDatabaseDataAccessObject {
 
         // Generate a new song ID and add the song to the playlist
         int newSongId = playlist.getSongs().size() + 1;
-        playlist.getSongs().put(newSongId, newSong);
+        playlist.getSong().put(newSongId, newSong);
         playlist.setNumberOfSongs(playlist.getSongs().size());
 
         // Save the updated database back to the JSON file
@@ -87,3 +88,4 @@ public class UserDatabaseDataAccessObject {
         return true;
     }
 }
+'

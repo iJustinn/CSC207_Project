@@ -1,6 +1,5 @@
 package spotify.services;
 
-import java.util.*;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.requests.data.search.simplified.SearchAlbumsRequest;
 import se.michaelthelin.spotify.model_objects.specification.AlbumSimplified;

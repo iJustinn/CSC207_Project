@@ -2,16 +2,21 @@
 
 package entity;
 
+import java.util.ArrayList;
+
 public class Song {
     private String title;
-    private String artist;
+    private ArrayList<Artist> artist;
     private String album;
 
+    private String id;
+
     // Constructor
-    public Song(String title, String artist, String album) {
+    public Song(String title, ArrayList<Artist> artist, String album, String id) {
         this.title = title;
         this.artist = artist;
         this.album = album;
+        this.id = id;
     }
 
     // No-argument constructor for Jackson
@@ -26,12 +31,8 @@ public class Song {
         this.title = title;
     }
 
-    public String getArtist() {
+    public ArrayList<Artist> getArtist() {
         return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
     }
 
     public String getAlbum() {
@@ -40,5 +41,9 @@ public class Song {
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public String getId() {
+        return id;
     }
 }

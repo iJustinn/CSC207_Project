@@ -1,4 +1,7 @@
 package use_case.add_song;
 
-public class AddSongOutputBoundary {
+public interface AddSongOutputBoundary {
+    void prepareSuccessView(String success);
+
+    void prepareFailView(String error);
 }

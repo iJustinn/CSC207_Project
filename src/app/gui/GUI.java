@@ -3,14 +3,14 @@ package app.gui;
 import javax.swing.*;
 import java.awt.*;
 
-import use_case.*;
+//import use_case.*;
 
 public class GUI {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Music Management System");
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            frame.setSize(1000, 500);
+            frame.setSize(300, 600);
 
             // CardLayout for switching between different panels
             CardLayout cardLayout = new CardLayout();
@@ -60,7 +60,13 @@ public class GUI {
     private static JPanel createSearchPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        // Add components for search functionality
+
+        JTextField searchText = new JTextField(); // text input box
+        searchText.setColumns(30); // width
+        searchText.setBackground(Color.LIGHT_GRAY); // background color
+        searchText.setForeground(Color.BLACK); // text color
+
+        panel.add(searchText, BorderLayout.NORTH);
         panel.setBackground(Color.WHITE);
         return panel;
     }
@@ -68,7 +74,11 @@ public class GUI {
     private static JPanel createPlaylistPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        // Add components for playlist management
+
+        JLabel playlistLabel = new JLabel("Playlists Management Interface", SwingConstants.CENTER);
+        playlistLabel.setFont(new Font("Arial", Font.PLAIN, 16)); // text font & size
+        panel.add(playlistLabel, BorderLayout.CENTER);
+
         panel.setBackground(Color.WHITE);
         return panel;
     }
@@ -76,7 +86,11 @@ public class GUI {
     private static JPanel createSongPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        // Add components for song management
+
+        JLabel SonsLabel = new JLabel("Songs Management Interface", SwingConstants.CENTER);
+        SonsLabel.setFont(new Font("Arial", Font.PLAIN, 16)); // text font & size
+        panel.add(SonsLabel, BorderLayout.CENTER);
+
         panel.setBackground(Color.WHITE);
         return panel;
     }

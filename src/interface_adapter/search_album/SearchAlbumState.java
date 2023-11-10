@@ -1,6 +1,6 @@
 package interface_adapter.search_album;
 
-import entity.Album;
+import entity.album.Album;
 
 public class SearchAlbumState {
     private Album[] albums = null;

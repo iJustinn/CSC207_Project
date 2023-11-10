@@ -1,4 +1,6 @@
-package entity;
+package entity.album;
+
+import entity.artist.Artist;
 
 public interface Album {
     String getId();

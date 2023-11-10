@@ -1,6 +1,6 @@
 package use_case.search_album;
 
-import entity.Album;
+import entity.album.Album;
 
 public class SearchAlbumInteractor implements SearchAlbumInputBoundary {
     final SearchAlbumDataAccessInterface dataAccess;

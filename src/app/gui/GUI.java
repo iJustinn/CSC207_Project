@@ -53,21 +53,27 @@ public class GUI {
             frame.getContentPane().setBackground(Color.BLACK);
             buttonPanel.setBackground(Color.BLACK);
 
+            frame.setLocationRelativeTo(null); // center the GUI
+
             frame.setVisible(true);
         });
     }
 
     private static JPanel createSearchPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        JPanel panel = new JPanel(new BorderLayout());
+
+        JPanel searchBoxPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // adding sub-panel for search box
 
         JTextField searchText = new JTextField(); // text input box
-        searchText.setColumns(30); // width
+        searchText.setColumns(21); // width
         searchText.setBackground(Color.LIGHT_GRAY); // background color
         searchText.setForeground(Color.BLACK); // text color
 
-        panel.add(searchText, BorderLayout.NORTH);
+        searchBoxPanel.add(searchText); // adding search box to sub-panel
+
+        panel.add(searchBoxPanel, BorderLayout.NORTH);
         panel.setBackground(Color.WHITE);
+
         return panel;
     }
 

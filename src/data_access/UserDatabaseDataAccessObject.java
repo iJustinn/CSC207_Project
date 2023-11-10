@@ -1,21 +1,19 @@
 package data_access;
 import entity.UserDatabase;
-import entity.Playlist;
 import entity.Song;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
+import use_case.create_playlist.CreatePlaylistDataAccessInterface;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
-public class UserDatabaseDataAccessObject {
+public class UserDatabaseDataAccessObject implements CreatePlaylistDataAccessInterface {
 
     private final ObjectMapper objectMapper; // Jackson's object mapper for JSON serialization/deserialization
     private final String storageDirectory; // The directory path where the user databases are stored
@@ -86,5 +84,5 @@ public class UserDatabaseDataAccessObject {
         saveUserDatabase(username, userDatabase);
         return true;
     }
+
 }
-'

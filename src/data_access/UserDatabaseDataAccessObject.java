@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import use_case.add_song.AddSongUserDataAccessInterface;
+import use_case.create_playlist.CreatePlaylistDataAccessInterface;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface {
+public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface {
 
     private final ObjectMapper objectMapper; // Jackson's object mapper for JSON serialization/deserialization
     private final String storageDirectory; // The directory path where the user databases are stored
@@ -77,37 +78,24 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
     }
 
     @Override
-    public boolean checkPlaylistExist(String username, String playlistId, Song newSong) throws IOException {
+    public boolean checkPlaylistExist(String username, String playlistId) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
         // Located our target playlist
         Playlist target = userDatabase.getPlaylists().get(playlistId);
 
         //Check to see if playlist exists in our user's data
-        if (target == null) {
-            System.out.println("Playlist does not exist.");
-            return false;
-        }
-
-        return true;
+        return target != null;
     }
 
     @Override
     // Create a new playlist in a user's database
-    public boolean createPlaylist(String username, String playlistId) throws IOException {
+    public boolean createPlaylist(String username, Playlist newPlaylist) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
 
-        if (userDatabase.getPlaylists().containsKey(playlistId)) {
-            System.out.println("Playlist already exists.");
-            return false;
-        }
-
-        // Create a new playlist and add it to the user's playlists map
-        UserDatabase.Playlist newPlaylist = new UserDatabase.Playlist(playlistId, 0, new Date(), new HashMap<>());
-        userDatabase.getPlaylists().put(playlistId, newPlaylist);
+        userDatabase.getPlaylists().put(newPlaylist.getName(), newPlaylist);
 
         // Save the updated database back to the JSON file
         saveUserDatabase(username, userDatabase);
         return true;
     }
 }
-'

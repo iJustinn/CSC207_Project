@@ -9,6 +9,6 @@ public interface AddSongUserDataAccessInterface {
 
     boolean checkSongExist(String username, String playlistId, Song newSong) throws IOException;
 
-    boolean checkPlaylistExist(String username, String playlistId, Song newSong) throws IOException;
+    boolean checkPlaylistExist(String username, String playlistId) throws IOException;
 
 }

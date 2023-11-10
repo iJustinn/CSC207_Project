@@ -28,18 +28,23 @@ public class CreatePlaylistInteractor implements CreatePlaylistInputBoundary {
     }
 
     @Override
-    public void execute(CreatePlaylistInputData createPlaylistInputData) {
+    public void execute(CreatePlaylistInputData createPlaylistInputData) throws IOException {
 
         LocalDateTime now = LocalDateTime.now();
         Playlist playlist = playlistFactory.create(createPlaylistInputData.getPlaylistName());
         playlist.setDate(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
-        try {
-            playlistDataAccessObject.createPlaylist("local", playlist);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
-        CreatePlaylistOutputData createPlaylistOutputData = new CreatePlaylistOutputData(playlist.getName(), now.toString());
-        playlistPresenter.prepareSuccessView(createPlaylistOutputData);
+        if (playlistDataAccessObject.checkPlaylistExist("local", playlist.getName())) {
+            playlistPresenter.prepareFailView("This playlist already exists.");
+        } else {
+            try {
+                playlistDataAccessObject.createPlaylist("local", playlist);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            CreatePlaylistOutputData createPlaylistOutputData = new CreatePlaylistOutputData(playlist.getName(), now.toString());
+            playlistPresenter.prepareSuccessView(createPlaylistOutputData);
+        }
     }
 }

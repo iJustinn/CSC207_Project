@@ -1,16 +1,24 @@
 package use_case.add_song;
 
+import entity.Playlist;
+import entity.Song;
+
 public class AddSongInputData {
 
-    final private String id;
+    final private Playlist playlist;
+    final private Song song;
 
-    public AddSongInputData(String id) {
-        this.id = id;
+    public AddSongInputData(String id, Playlist playlist, Song song) {
+
+        this.playlist = playlist;
+        this.song = song;
     }
 
-    public String getId() {
-        return id;
+    public Song getSong() {
+        return song;
     }
 
-
+    public Playlist getPlaylist() {
+        return playlist;
+    }
 }

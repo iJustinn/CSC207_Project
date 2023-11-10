@@ -55,21 +55,39 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
         // Located our target playlist
         Playlist target = userDatabase.getPlaylists().get(playlistId);
 
+        //Add the song to the on memory storage of user's data
+        target.getSongs().put(newSong.getId(), newSong);
+
+        //Change the size of the playlist
+        target.setNumberOfSongs(target.getSongs().size());
+
+        // Save the updated database back to the JSON file
+        saveUserDatabase(username, userDatabase);
+        return true;
+    }
+
+    @Override
+    public boolean checkSongExist(String username, String playlistId, Song newSong) throws IOException {
+        UserDatabase userDatabase = loadUserDatabase(username);
+        // Located our target playlist
+        Playlist target = userDatabase.getPlaylists().get(playlistId);
+
+        //Check to see if the song was already in our playlist
+        return target.getSongs().get(newSong.getId()) == null;
+    }
+
+    @Override
+    public boolean checkPlaylistExist(String username, String playlistId, Song newSong) throws IOException {
+        UserDatabase userDatabase = loadUserDatabase(username);
+        // Located our target playlist
+        Playlist target = userDatabase.getPlaylists().get(playlistId);
+
         //Check to see if playlist exists in our user's data
         if (target == null) {
             System.out.println("Playlist does not exist.");
             return false;
         }
 
-        // Generate a new song ID
-        int newSongId = target.getNumberOfSongs() + 1;
-
-        //Add the song to the on memory storage of user's data
-        target.getSong().put(newSongId, newSong);
-        playlist.setNumberOfSongs(playlist.getSongs().size());
-
-        // Save the updated database back to the JSON file
-        saveUserDatabase(username, userDatabase);
         return true;
     }
 

@@ -1,5 +1,7 @@
 package use_case.add_song;
 
-public interface AddSongInputBoundary {
+import java.io.IOException;
 
+public interface AddSongInputBoundary {
+    void execute(AddSongInputData addSongInputdata) throws IOException;
 }

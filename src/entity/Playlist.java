@@ -19,9 +19,6 @@ public class Playlist {
         this.songs = songs;
     }
 
-    // No-argument constructor for Jackson
-    public Playlist() {}
-
     // Getters and setters
     public String getName() {
         return name;

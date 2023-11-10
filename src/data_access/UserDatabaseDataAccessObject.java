@@ -1,4 +1,5 @@
 package data_access;
+import entity.Playlist;
 import entity.UserDatabase;
 import entity.Song;
 
@@ -10,8 +11,6 @@ import use_case.create_playlist.CreatePlaylistDataAccessInterface;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 
 public class UserDatabaseDataAccessObject implements CreatePlaylistDataAccessInterface {
 
@@ -68,17 +67,10 @@ public class UserDatabaseDataAccessObject implements CreatePlaylistDataAccessInt
 
     @Override
     // Create a new playlist in a user's database
-    public boolean createPlaylist(String username, String playlistId) throws IOException {
+    public boolean createPlaylist(String username, Playlist playlist) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
 
-        if (userDatabase.getPlaylists().containsKey(playlistId)) {
-            System.out.println("Playlist already exists.");
-            return false;
-        }
-
-        // Create a new playlist and add it to the user's playlists map
-        UserDatabase.Playlist newPlaylist = new UserDatabase.Playlist(playlistId, 0, new Date(), new HashMap<>());
-        userDatabase.getPlaylists().put(playlistId, newPlaylist);
+        userDatabase.getPlaylists().put(playlist.getName(), playlist);
 
         // Save the updated database back to the JSON file
         saveUserDatabase(username, userDatabase);

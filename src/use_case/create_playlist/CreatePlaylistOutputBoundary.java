@@ -1,4 +1,4 @@
 package use_case.create_playlist;
 
-public class CreatePlaylistOutputBoundary {
+public interface CreatePlaylistOutputBoundary {
 }

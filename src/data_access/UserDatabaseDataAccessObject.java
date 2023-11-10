@@ -1,6 +1,7 @@
 package data_access;
 import entity.UserDatabase;
 import entity.Playlist;
+import entity.Song;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class UserDatabaseDataAccessObject {
@@ -30,7 +32,7 @@ public class UserDatabaseDataAccessObject {
         File file = new File(storageDirectory, username + "_playlists.json");
         if (!file.exists()) {
             // If the file doesn't exist, return an empty database
-            return new UserDatabase(new HashMap<>());
+            return new UserDatabase();
         }
         // Deserialize the JSON file to a UserDatabase object
         return objectMapper.readValue(file, new TypeReference<UserDatabase>() {});
@@ -44,14 +46,10 @@ public class UserDatabaseDataAccessObject {
     }
 
     // Get a specific playlist from a user's database
-    public Optional<UserDatabase.Playlist> getPlaylist(String username, String playlistId) throws IOException {
-        UserDatabase userDatabase = loadUserDatabase(username);
-        // Retrieve a playlist by ID from the user's playlists map
-        return Optional.ofNullable(userDatabase.getPlaylists().get(playlistId));
-    }
 
+    @Override
     // Add a new song to a specific playlist in a user's database
-    public boolean addSongToPlaylist(String username, String playlistId, UserDatabase.Song newSong) throws IOException {
+    public boolean addSongToPlaylist(String username, String playlistId, Song newSong) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
         UserDatabase.Playlist playlist = userDatabase.getPlaylists().get(playlistId);
 
@@ -70,6 +68,7 @@ public class UserDatabaseDataAccessObject {
         return true;
     }
 
+    @Override
     // Create a new playlist in a user's database
     public boolean createPlaylist(String username, String playlistId) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);

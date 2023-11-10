@@ -1,4 +1,4 @@
 package use_case.add_song;
 
-public class AddSongOutputBoundary {
+public interface AddSongOutputBoundary {
 }

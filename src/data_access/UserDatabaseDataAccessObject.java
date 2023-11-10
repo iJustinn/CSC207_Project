@@ -6,6 +6,7 @@ import entity.Song;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
+import use_case.add_song.AddSongUserDataAccessInterface;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class UserDatabaseDataAccessObject {
+public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface {
 
     private final ObjectMapper objectMapper; // Jackson's object mapper for JSON serialization/deserialization
     private final String storageDirectory; // The directory path where the user databases are stored
@@ -51,16 +52,20 @@ public class UserDatabaseDataAccessObject {
     // Add a new song to a specific playlist in a user's database
     public boolean addSongToPlaylist(String username, String playlistId, Song newSong) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
-        UserDatabase.Playlist playlist = userDatabase.getPlaylists().get(playlistId);
+        // Located our target playlist
+        Playlist target = userDatabase.getPlaylists().get(playlistId);
 
-        if (playlist == null) {
+        //Check to see if playlist exists in our user's data
+        if (target == null) {
             System.out.println("Playlist does not exist.");
             return false;
         }
 
-        // Generate a new song ID and add the song to the playlist
-        int newSongId = playlist.getSongs().size() + 1;
-        playlist.getSong().put(newSongId, newSong);
+        // Generate a new song ID
+        int newSongId = target.getNumberOfSongs() + 1;
+
+        //Add the song to the on memory storage of user's data
+        target.getSong().put(newSongId, newSong);
         playlist.setNumberOfSongs(playlist.getSongs().size());
 
         // Save the updated database back to the JSON file

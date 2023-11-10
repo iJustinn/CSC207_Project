@@ -1,28 +1,66 @@
+// Playlist.java in package entity
+
 package entity;
 
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 public class Playlist {
-    private final String name;
-    private final String id;
-    private final ArrayList<Song> songs;
+    private String name;
+    private int numberOfSongs;
+    private Date date;
+    private Map<Integer, Song> songs;
 
-
-    public Playlist(String name, String id, ArrayList<Song> songs) {
+    // Constructor
+    public Playlist(String name, int numberOfSongs, Date date, Map<Integer, Song> songs) {
         this.name = name;
-        this.id = id;
+        this.numberOfSongs = numberOfSongs;
+        this.date = date;
         this.songs = songs;
     }
 
+    // No-argument constructor for Jackson
+    public Playlist() {}
+
+    // Getters and setters
     public String getName() {
         return name;
     }
 
-    public String getId() {
-        return id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public ArrayList<Song> getSongs() {
+    public int getNumberOfSongs() {
+        return numberOfSongs;
+    }
+
+    public void setNumberOfSongs(int numberOfSongs) {
+        this.numberOfSongs = numberOfSongs;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Map<Integer, Song> getSongs() {
         return songs;
+    }
+
+    public void setSongs(Map<Integer, Song> songs) {
+        this.songs = songs;
+    }
+
+    public void getSong() {
+
+    }
+
+    public void addSong(Song song) {
+        this.songs.put(this.songs.size() + 1, song);
+        this.numberOfSongs = this.songs.size();
     }
 }

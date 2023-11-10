@@ -1,4 +1,6 @@
 package use_case.create_playlist;
 
-public class CreatePlaylistInputBoundary {
+public interface CreatePlaylistInputBoundary {
+
+    void execute(CreatePlaylistInputData createPlaylistInputData);
 }

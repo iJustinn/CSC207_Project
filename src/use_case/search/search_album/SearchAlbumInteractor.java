@@ -1,12 +1,14 @@
-package use_case.search_album;
+package use_case.search.search_album;
 
 import entity.album.Album;
+import use_case.search.SearchDataAccessInterface;
+import use_case.search.SearchInputData;
 
 public class SearchAlbumInteractor implements SearchAlbumInputBoundary {
-    final SearchAlbumDataAccessInterface dataAccess;
+    final SearchDataAccessInterface dataAccess;
     final SearchAlbumOutputBoundary presenter;
 
-    public SearchAlbumInteractor(SearchAlbumDataAccessInterface dataAccess,
+    public SearchAlbumInteractor(SearchDataAccessInterface dataAccess,
                                  SearchAlbumOutputBoundary searchAlbumOutputBoundary) {
         this.dataAccess = dataAccess;
         this.presenter = searchAlbumOutputBoundary;
@@ -14,9 +16,9 @@ public class SearchAlbumInteractor implements SearchAlbumInputBoundary {
     }
 
     @Override
-    public void execute(SearchAlbumInputData searchAlbumInputData) {
-        String albumName = searchAlbumInputData.getAlbumName();
-        Album[] albums = dataAccess.searchAlbumsByString(albumName);
+    public void execute(SearchInputData searchAlbumInputData) {
+        String albumName = searchAlbumInputData.getInput();
+        Album[] albums = dataAccess.searchAlbums(albumName);
         SearchAlbumOutputData searchAlbumOutputData = new SearchAlbumOutputData(albums);
         presenter.prepareSuccessView(searchAlbumOutputData);
     }

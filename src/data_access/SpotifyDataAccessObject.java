@@ -1,7 +1,6 @@
 package data_access;
 
 import entity.album.Album;
-import use_case.search_album.SearchAlbumDataAccessInterface;
 
 // These two imports are for accessing albums through the Spotify API
 import spotify.services.SearchAlbumService;

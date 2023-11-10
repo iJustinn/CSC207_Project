@@ -1,4 +1,4 @@
-package use_case.search_album;
+package use_case.search.search_album;
 
 public interface SearchAlbumOutputBoundary {
     void prepareSuccessView(SearchAlbumOutputData outputData);

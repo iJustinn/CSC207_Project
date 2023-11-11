@@ -1,10 +1,12 @@
 package data_access;
 import entity.UserDatabase;
+import entity.Playlist;
 import entity.Song;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
+import use_case.add_song.AddSongUserDataAccessInterface;
 import use_case.create_playlist.CreatePlaylistDataAccessInterface;
 
 import java.io.File;
@@ -12,8 +14,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
-public class UserDatabaseDataAccessObject implements CreatePlaylistDataAccessInterface {
+public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface {
 
     private final ObjectMapper objectMapper; // Jackson's object mapper for JSON serialization/deserialization
     private final String storageDirectory; // The directory path where the user databases are stored
@@ -49,17 +53,14 @@ public class UserDatabaseDataAccessObject implements CreatePlaylistDataAccessInt
     // Add a new song to a specific playlist in a user's database
     public boolean addSongToPlaylist(String username, String playlistId, Song newSong) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
-        UserDatabase.Playlist playlist = userDatabase.getPlaylists().get(playlistId);
+        // Located our target playlist
+        Playlist target = userDatabase.getPlaylists().get(playlistId);
 
-        if (playlist == null) {
-            System.out.println("Playlist does not exist.");
-            return false;
-        }
+        //Add the song to the on memory storage of user's data
+        target.getSongs().put(newSong.getId(), newSong);
 
-        // Generate a new song ID and add the song to the playlist
-        int newSongId = playlist.getSongs().size() + 1;
-        playlist.getSong().put(newSongId, newSong);
-        playlist.setNumberOfSongs(playlist.getSongs().size());
+        //Change the size of the playlist
+        target.setNumberOfSongs(target.getSongs().size());
 
         // Save the updated database back to the JSON file
         saveUserDatabase(username, userDatabase);
@@ -67,22 +68,34 @@ public class UserDatabaseDataAccessObject implements CreatePlaylistDataAccessInt
     }
 
     @Override
+    public boolean checkSongExist(String username, String playlistId, Song newSong) throws IOException {
+        UserDatabase userDatabase = loadUserDatabase(username);
+        // Located our target playlist
+        Playlist target = userDatabase.getPlaylists().get(playlistId);
+
+        //Check to see if the song was already in our playlist
+        return target.getSongs().get(newSong.getId()) == null;
+    }
+
+    @Override
+    public boolean checkPlaylistExist(String username, String playlistId) throws IOException {
+        UserDatabase userDatabase = loadUserDatabase(username);
+        // Located our target playlist
+        Playlist target = userDatabase.getPlaylists().get(playlistId);
+
+        //Check to see if playlist exists in our user's data
+        return target != null;
+    }
+
+    @Override
     // Create a new playlist in a user's database
-    public boolean createPlaylist(String username, String playlistId) throws IOException {
+    public boolean createPlaylist(String username, Playlist newPlaylist) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
 
-        if (userDatabase.getPlaylists().containsKey(playlistId)) {
-            System.out.println("Playlist already exists.");
-            return false;
-        }
-
-        // Create a new playlist and add it to the user's playlists map
-        UserDatabase.Playlist newPlaylist = new UserDatabase.Playlist(playlistId, 0, new Date(), new HashMap<>());
-        userDatabase.getPlaylists().put(playlistId, newPlaylist);
+        userDatabase.getPlaylists().put(newPlaylist.getName(), newPlaylist);
 
         // Save the updated database back to the JSON file
         saveUserDatabase(username, userDatabase);
         return true;
     }
-
 }

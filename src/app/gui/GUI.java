@@ -101,3 +101,6 @@ public class GUI {
         return panel;
     }
 }
+
+// javac -d bin src/app/gui/GUI.java
+// java -cp bin app.gui.GUI

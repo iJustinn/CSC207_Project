@@ -1,6 +1,6 @@
 package data_access;
 
-import entity.album.Album;
+import entity.album.AlbumSimple;
 
 // These two imports are for accessing albums through the Spotify API
 import spotify.services.SearchAlbumService;
@@ -21,7 +21,7 @@ public class SpotifyDataAccessObject implements SearchAlbumDataAccessInterface {
     }
 
     @Override
-    public Album[] searchAlbumsByString(String albumName) {
+    public AlbumSimple[] searchAlbumsByString(String albumName) {
         AlbumDto[] albums = searchAlbum.requestSearchAlbum(albumName);
         return albumFactory.createMany(albums);
     }

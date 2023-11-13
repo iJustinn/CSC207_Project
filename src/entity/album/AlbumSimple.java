@@ -2,7 +2,7 @@ package entity.album;
 
 import entity.artist.Artist;
 
-public interface Album {
+public interface AlbumSimple {
     String getId();
     String getName();
     String[] getGenres();

@@ -2,7 +2,7 @@ package entity.album;
 
 import entity.artist.Artist;
 
-public class SpotifyAlbum implements Album {
+public class SpotifyAlbum implements AlbumSimple {
     private final String id;
     private final String name;
     private final String[] genres;

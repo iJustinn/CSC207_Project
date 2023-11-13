@@ -1,9 +1,7 @@
 package interface_adapter.search_album;
 
-import use_case.search_album.SearchAlbumOutputBoundary;
-import use_case.search_album.SearchAlbumOutputData;
-
-import javax.swing.*;
+import use_case.search.search_album.SearchAlbumOutputBoundary;
+import use_case.search.search_album.SearchAlbumOutputData;
 
 public class SearchAlbumPresenter implements SearchAlbumOutputBoundary {
     private final SearchAlbumViewModel viewModel;

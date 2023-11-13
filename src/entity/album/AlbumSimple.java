@@ -1,6 +1,8 @@
-package entity;
+package entity.album;
 
-public interface Album {
+import entity.artist.Artist;
+
+public interface AlbumSimple {
     String getId();
     String getName();
     String[] getGenres();

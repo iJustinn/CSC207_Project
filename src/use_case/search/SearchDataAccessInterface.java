@@ -1,9 +1,9 @@
 package use_case.search;
 
 import entity.album.AlbumSimple;
-import entity.artist.Artist;
+import entity.artist.ArtistFull;
 
 public interface SearchDataAccessInterface {
     AlbumSimple[] searchAlbums(String albumName);
-    Artist[] searchArtist(String artistName);
+    ArtistFull[] searchArtist(String artistName);
 }

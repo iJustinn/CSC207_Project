@@ -1,9 +1,9 @@
-package use_case.search;
+package use_case.search.search_artist;
 
-public class SearchInputData {
+public class SearchArtistInputData {
     private final String input;
 
-    public SearchInputData(String input) {
+    public SearchArtistInputData(String input) {
         this.input = input;
     }
 

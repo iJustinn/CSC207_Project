@@ -1,6 +1,6 @@
 package entity.artist;
 
-public class SpotifyArtist implements Artist {
+public class SpotifyArtist implements ArtistFull {
     private final String id;
     private final String name;
     private final String[] genres;
@@ -10,7 +10,7 @@ public class SpotifyArtist implements Artist {
                   String[] genres) {
         this.id = id;
         this.name = name;
-         this.genres = genres;
+        this.genres = genres;
     }
 
     @Override

@@ -1,19 +1,19 @@
 package entity.album;
 
-import entity.artist.Artist;
+import entity.artist.ArtistFull;
 
 public class SpotifyAlbum implements AlbumSimple {
     private final String id;
     private final String name;
     private final String[] genres;
-    private final Artist[] artists;
+    private final ArtistFull[] artists;
     private final String releaseDate;
 
     SpotifyAlbum(String id,
                  String name,
                  String releaseDate,
                  String[] genres,
-                 Artist[] artists) {
+                 ArtistFull[] artists) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
@@ -37,7 +37,7 @@ public class SpotifyAlbum implements AlbumSimple {
     }
 
     @Override
-    public Artist[] getArtists() {
+    public ArtistFull[] getArtists() {
         return artists;
     }
 

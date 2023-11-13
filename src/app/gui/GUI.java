@@ -3,9 +3,9 @@ package app.gui;
 import javax.swing.*;
 import java.awt.*;
 
-//import use_case.*;
-
 public class GUI {
+    private static JButton backButton;
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Music Management System");
@@ -17,33 +17,29 @@ public class GUI {
             JPanel cardPanel = new JPanel(cardLayout);
 
             // Panels for different functionalities
-            JPanel searchPanel = createSearchPanel();
+            JPanel searchPanel = createSearchPanel(cardLayout, cardPanel);
             JPanel playlistPanel = createPlaylistPanel();
-            JPanel songPanel = createSongPanel();
+            JPanel songSearchPanel = createSongSearchPanel();
+            JPanel albumSearchPanel = createAlbumSearchPanel();
+            JPanel artistSearchPanel = createArtistSearchPanel();
 
             // Adding panels to the card layout
             cardPanel.add(searchPanel, "SearchPanel");
             cardPanel.add(playlistPanel, "PlaylistPanel");
-            cardPanel.add(songPanel, "SongPanel");
+            cardPanel.add(songSearchPanel, "SongSearchPanel");
+            cardPanel.add(albumSearchPanel, "AlbumSearchPanel");
+            cardPanel.add(artistSearchPanel, "ArtistSearchPanel");
 
-            // Buttons for switching between panels
-            JButton searchButton = new JButton("Search");
-            searchButton.setForeground(Color.BLACK);
-            searchButton.addActionListener(e -> cardLayout.show(cardPanel, "SearchPanel"));
-
-            JButton playlistButton = new JButton("Playlists");
-            playlistButton.setForeground(Color.BLACK);
-            playlistButton.addActionListener(e -> cardLayout.show(cardPanel, "PlaylistPanel"));
-
-            JButton songButton = new JButton("Songs");
-            songButton.setForeground(Color.BLACK);
-            songButton.addActionListener(e -> cardLayout.show(cardPanel, "SongPanel"));
-
-            // Button panel
+            // Button panel with Back button
             JPanel buttonPanel = new JPanel();
-            buttonPanel.add(searchButton);
-            buttonPanel.add(playlistButton);
-            buttonPanel.add(songButton);
+//            buttonPanel.add(createNavButton("Back", "SearchPanel", cardLayout, cardPanel, buttonPanel));
+            buttonPanel.add(createNavButton("Playlists", "PlaylistPanel", cardLayout, cardPanel, buttonPanel));
+            buttonPanel.add(createNavButton("Search", "SearchPanel", cardLayout, cardPanel, buttonPanel));
+
+            // Create and add the Back button
+            backButton = createNavButton("Back", "SearchPanel", cardLayout, cardPanel, buttonPanel);
+//            backButton.setVisible(false); // Initially invisible
+            buttonPanel.add(backButton);
 
             // Adding panels to the frame
             frame.getContentPane().add(cardPanel, BorderLayout.CENTER);
@@ -54,32 +50,50 @@ public class GUI {
             buttonPanel.setBackground(Color.BLACK);
 
             frame.setLocationRelativeTo(null); // center the GUI
-
             frame.setVisible(true);
         });
     }
 
-    private static JPanel createSearchPanel() {
+    private static JButton createNavButton(String name, String panelName, CardLayout cardLayout, JPanel cardPanel, JPanel buttonPanel) {
+        JButton button = new JButton(name);
+        button.setForeground(Color.BLACK);
+        button.addActionListener(e -> {
+            cardLayout.show(cardPanel, panelName);
+//            updateBackButtonVisibility(buttonPanel, name);
+        });
+        return button;
+    }
+
+//    private static void updateBackButtonVisibility(JPanel buttonPanel, String buttonName) {
+//        // Show the Back button only when not on the main Search panel
+//        backButton.setVisible(!"Search".equals(buttonName));
+////        backButton.setVisible(!"Playlists".equals(buttonName));
+//    }
+
+    private static JPanel createSearchPanel(CardLayout cardLayout, JPanel cardPanel) {
         JPanel panel = new JPanel(new BorderLayout());
 
         JPanel searchBoxPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // adding sub-panel for search box
-
         JTextField searchText = new JTextField(); // text input box
         searchText.setColumns(21); // width
         searchText.setBackground(Color.LIGHT_GRAY); // background color
         searchText.setForeground(Color.BLACK); // text color
 
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(createNavButton("Song", "SongSearchPanel", cardLayout, cardPanel, buttonPanel));
+        buttonPanel.add(createNavButton("Album", "AlbumSearchPanel", cardLayout, cardPanel, buttonPanel));
+        buttonPanel.add(createNavButton("Artist", "ArtistSearchPanel", cardLayout, cardPanel, buttonPanel));
+
         searchBoxPanel.add(searchText); // adding search box to sub-panel
-
         panel.add(searchBoxPanel, BorderLayout.NORTH);
-        panel.setBackground(Color.WHITE);
+        panel.add(buttonPanel, BorderLayout.CENTER);
 
+        panel.setBackground(Color.WHITE);
         return panel;
     }
 
     private static JPanel createPlaylistPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        JPanel panel = new JPanel(new BorderLayout());
 
         JLabel playlistLabel = new JLabel("Playlists Management Interface", SwingConstants.CENTER);
         playlistLabel.setFont(new Font("Arial", Font.PLAIN, 16)); // text font & size
@@ -89,18 +103,25 @@ public class GUI {
         return panel;
     }
 
-    private static JPanel createSongPanel() {
+    private static JPanel createSongSearchPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        // Customize this panel for song search
+        return panel;
+    }
 
-        JLabel SonsLabel = new JLabel("Songs Management Interface", SwingConstants.CENTER);
-        SonsLabel.setFont(new Font("Arial", Font.PLAIN, 16)); // text font & size
-        panel.add(SonsLabel, BorderLayout.CENTER);
+    private static JPanel createAlbumSearchPanel() {
+        JPanel panel = new JPanel();
+        // Customize this panel for album search
+        return panel;
+    }
 
-        panel.setBackground(Color.WHITE);
+    private static JPanel createArtistSearchPanel() {
+        JPanel panel = new JPanel();
+        // Customize this panel for artist search
         return panel;
     }
 }
 
+// cd ~/Library/CloudStorage/Dropbox/Code/CSC207/CSC207_Project
 // javac -d bin src/app/gui/GUI.java
 // java -cp bin app.gui.GUI

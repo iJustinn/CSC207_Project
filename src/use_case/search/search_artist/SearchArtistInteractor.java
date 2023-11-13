@@ -1,8 +1,7 @@
 package use_case.search.search_artist;
 
-import entity.artist.Artist;
+import entity.artist.ArtistFull;
 import use_case.search.SearchDataAccessInterface;
-import use_case.search.SearchInputData;
 
 public class SearchArtistInteractor implements SearchArtistInputBoundary {
     final SearchDataAccessInterface dataAccess;
@@ -15,9 +14,9 @@ public class SearchArtistInteractor implements SearchArtistInputBoundary {
     }
 
     @Override
-    public void execute(SearchInputData searchAlbumInputData) {
-        String artistName = searchAlbumInputData.getInput();
-        Artist[] artists = dataAccess.searchArtist(artistName);
+    public void execute(SearchArtistInputData searchArtistInputData) {
+        String artistName = searchArtistInputData.getInput();
+        ArtistFull[] artists = dataAccess.searchArtist(artistName);
         SearchArtistOutputData outputData = new SearchArtistOutputData(artists);
         presenter.prepareSuccessView(outputData);
     }

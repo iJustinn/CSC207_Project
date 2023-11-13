@@ -4,12 +4,14 @@ import entity.album.AlbumSimple;
 
 // These two imports are for accessing albums through the Spotify API
 import spotify.services.SearchAlbumService;
-import spotify.models.AlbumDto;
+
+import entity.artist.ArtistFull;
+import use_case.search.SearchDataAccessInterface;
 
 /**
  * A DataAccessObject used to get data from the Spotify API
  */
-public class SpotifyDataAccessObject implements SearchAlbumDataAccessInterface {
+public class SpotifyDataAccessObject implements SearchDataAccessInterface {
 
     private final SearchAlbumService searchAlbum;
     private final AlbumFactory albumFactory;
@@ -21,8 +23,12 @@ public class SpotifyDataAccessObject implements SearchAlbumDataAccessInterface {
     }
 
     @Override
-    public AlbumSimple[] searchAlbumsByString(String albumName) {
-        AlbumDto[] albums = searchAlbum.requestSearchAlbum(albumName);
-        return albumFactory.createMany(albums);
+    public AlbumSimple[] searchAlbums(String albumName) {
+        return new AlbumSimple[0];
+    }
+
+    @Override
+    public ArtistFull[] searchArtist(String artistName) {
+        return new ArtistFull[0];
     }
 }

@@ -1,6 +1,6 @@
 package entity.artist;
 
-public interface Artist {
+public interface ArtistSimple {
     String getId();
     String getName();
 }

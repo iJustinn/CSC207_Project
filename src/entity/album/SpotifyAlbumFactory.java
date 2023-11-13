@@ -1,6 +1,6 @@
 package entity.album;
 
-import entity.artist.Artist;
+import entity.artist.ArtistFull;
 import spotify.models.AlbumDto;
 
 public class SpotifyAlbumFactory {
@@ -8,7 +8,7 @@ public class SpotifyAlbumFactory {
                               String name,
                               String releaseDate,
                               String[] genres,
-                              Artist[] artists) {
+                              ArtistFull[] artists) {
         return new SpotifyAlbum(id, name, releaseDate, genres, artists);
     }
 

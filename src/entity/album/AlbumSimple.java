@@ -1,11 +1,11 @@
 package entity.album;
 
-import entity.artist.Artist;
+import entity.artist.ArtistFull;
 
 public interface AlbumSimple {
     String getId();
     String getName();
     String[] getGenres();
-    Artist[] getArtists();
+    ArtistFull[] getArtists();
     String getReleaseDate();
 }

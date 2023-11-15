@@ -8,17 +8,18 @@ public class GUI {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Music Management System");
+            JFrame frame = new JFrame("Music Management System"); // name of the window
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            frame.setSize(300, 600);
+            frame.setSize(300, 600); // size of the window
 
             // CardLayout for switching between different panels
             CardLayout cardLayout = new CardLayout();
             JPanel cardPanel = new JPanel(cardLayout);
 
-            // Panels for different functionalities
+            // Panels for main (search) and playlist
             JPanel searchPanel = createSearchPanel(cardLayout, cardPanel);
             JPanel playlistPanel = createPlaylistPanel();
+            // Panels for three types of search
             JPanel songSearchPanel = createSongSearchPanel();
             JPanel albumSearchPanel = createAlbumSearchPanel();
             JPanel artistSearchPanel = createArtistSearchPanel();
@@ -30,13 +31,12 @@ public class GUI {
             cardPanel.add(albumSearchPanel, "AlbumSearchPanel");
             cardPanel.add(artistSearchPanel, "ArtistSearchPanel");
 
-            // Button panel with Back button
+            // Button panel
             JPanel buttonPanel = new JPanel();
 //            buttonPanel.add(createNavButton("Back", "SearchPanel", cardLayout, cardPanel, buttonPanel));
             buttonPanel.add(createNavButton("Playlists", "PlaylistPanel", cardLayout, cardPanel, buttonPanel));
             buttonPanel.add(createNavButton("Search", "SearchPanel", cardLayout, cardPanel, buttonPanel));
-
-            // Create and add the Back button
+            // Back button
             backButton = createNavButton("Back", "SearchPanel", cardLayout, cardPanel, buttonPanel);
 //            backButton.setVisible(false); // Initially invisible
             buttonPanel.add(backButton);

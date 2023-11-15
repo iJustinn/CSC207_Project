@@ -1,9 +1,10 @@
 package app.gui;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,13 +15,15 @@ public class GUI {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Music Management System");
+            JFrame frame = new JFrame("Music Management System"); // name of the window
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            frame.setSize(300, 600);
+            frame.setSize(300, 600); // size of the window
 
+            // CardLayout for switching between different panels
             cardLayout = new CardLayout();
             cardPanel = new JPanel(cardLayout);
 
+            // All panels in the program
             JPanel searchPanel = createSearchPanel();
             JPanel playlistPanel = createPlaylistPanel();
             JPanel songSearchPanel = createSongSearchPanel();
@@ -28,6 +31,7 @@ public class GUI {
             JPanel artistSearchPanel = createArtistSearchPanel();
             JPanel specificPlaylistPanel = createSpecificPlaylistPanel();
 
+            // Adding panels to the card layout
             cardPanel.add(searchPanel, "SearchPanel");
             cardPanel.add(playlistPanel, "PlaylistPanel");
             cardPanel.add(songSearchPanel, "SongSearchPanel");
@@ -35,16 +39,17 @@ public class GUI {
             cardPanel.add(artistSearchPanel, "ArtistSearchPanel");
             cardPanel.add(specificPlaylistPanel, "SpecificPlaylistPanel");
 
-
+            // Button panel, order of code reflect order on the program window
             JPanel buttonPanel = new JPanel();
             buttonPanel.add(createNavButton("Playlists", "PlaylistPanel"));
             buttonPanel.add(createNavButton("Search", "SearchPanel"));
-            JButton backButton = createNavButton("Back", "SearchPanel");
-            buttonPanel.add(backButton);
+            buttonPanel.add(createNavButton("Back", "SearchPanel"));
 
+            // Adding panels to the frame
             frame.getContentPane().add(cardPanel, BorderLayout.CENTER);
             frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
+            // Styling
             frame.getContentPane().setBackground(Color.BLACK);
             buttonPanel.setBackground(Color.BLACK);
 

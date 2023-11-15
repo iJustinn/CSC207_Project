@@ -1,90 +1,80 @@
 package app.gui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUI {
-    private static JButton backButton;
+    private static CardLayout cardLayout;
+    private static JPanel cardPanel;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Music Management System"); // name of the window
+            JFrame frame = new JFrame("Music Management System");
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            frame.setSize(300, 600); // size of the window
+            frame.setSize(300, 600);
 
-            // CardLayout for switching between different panels
-            CardLayout cardLayout = new CardLayout();
-            JPanel cardPanel = new JPanel(cardLayout);
+            cardLayout = new CardLayout();
+            cardPanel = new JPanel(cardLayout);
 
-            // Panels for main (search) and playlist
-            JPanel searchPanel = createSearchPanel(cardLayout, cardPanel);
+            JPanel searchPanel = createSearchPanel();
             JPanel playlistPanel = createPlaylistPanel();
-            // Panels for three types of search
             JPanel songSearchPanel = createSongSearchPanel();
             JPanel albumSearchPanel = createAlbumSearchPanel();
             JPanel artistSearchPanel = createArtistSearchPanel();
+            JPanel specificPlaylistPanel = createSpecificPlaylistPanel();
 
-            // Adding panels to the card layout
             cardPanel.add(searchPanel, "SearchPanel");
             cardPanel.add(playlistPanel, "PlaylistPanel");
             cardPanel.add(songSearchPanel, "SongSearchPanel");
             cardPanel.add(albumSearchPanel, "AlbumSearchPanel");
             cardPanel.add(artistSearchPanel, "ArtistSearchPanel");
+            cardPanel.add(specificPlaylistPanel, "SpecificPlaylistPanel");
 
-            // Button panel
+
             JPanel buttonPanel = new JPanel();
-//            buttonPanel.add(createNavButton("Back", "SearchPanel", cardLayout, cardPanel, buttonPanel));
-            buttonPanel.add(createNavButton("Playlists", "PlaylistPanel", cardLayout, cardPanel, buttonPanel));
-            buttonPanel.add(createNavButton("Search", "SearchPanel", cardLayout, cardPanel, buttonPanel));
-            // Back button
-            backButton = createNavButton("Back", "SearchPanel", cardLayout, cardPanel, buttonPanel);
-//            backButton.setVisible(false); // Initially invisible
+            buttonPanel.add(createNavButton("Playlists", "PlaylistPanel"));
+            buttonPanel.add(createNavButton("Search", "SearchPanel"));
+            JButton backButton = createNavButton("Back", "SearchPanel");
             buttonPanel.add(backButton);
 
-            // Adding panels to the frame
             frame.getContentPane().add(cardPanel, BorderLayout.CENTER);
             frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-            // Styling
             frame.getContentPane().setBackground(Color.BLACK);
             buttonPanel.setBackground(Color.BLACK);
 
-            frame.setLocationRelativeTo(null); // center the GUI
+            frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         });
     }
 
-    private static JButton createNavButton(String name, String panelName, CardLayout cardLayout, JPanel cardPanel, JPanel buttonPanel) {
+    private static JButton createNavButton(String name, String panelName) {
         JButton button = new JButton(name);
         button.setForeground(Color.BLACK);
-        button.addActionListener(e -> {
-            cardLayout.show(cardPanel, panelName);
-//            updateBackButtonVisibility(buttonPanel, name);
-        });
+        button.addActionListener(e -> cardLayout.show(cardPanel, panelName));
         return button;
     }
 
-//    private static void updateBackButtonVisibility(JPanel buttonPanel, String buttonName) {
-//        // Show the Back button only when not on the main Search panel
-//        backButton.setVisible(!"Search".equals(buttonName));
-////        backButton.setVisible(!"Playlists".equals(buttonName));
-//    }
-
-    private static JPanel createSearchPanel(CardLayout cardLayout, JPanel cardPanel) {
+    private static JPanel createSearchPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        JPanel searchBoxPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // adding sub-panel for search box
-        JTextField searchText = new JTextField(); // text input box
-        searchText.setColumns(21); // width
-        searchText.setBackground(Color.LIGHT_GRAY); // background color
-        searchText.setForeground(Color.BLACK); // text color
+        JPanel searchBoxPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JTextField searchText = new JTextField();
+        searchText.setColumns(21);
+        searchText.setBackground(Color.LIGHT_GRAY);
+        searchText.setForeground(Color.BLACK);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(createNavButton("Song", "SongSearchPanel", cardLayout, cardPanel, buttonPanel));
-        buttonPanel.add(createNavButton("Album", "AlbumSearchPanel", cardLayout, cardPanel, buttonPanel));
-        buttonPanel.add(createNavButton("Artist", "ArtistSearchPanel", cardLayout, cardPanel, buttonPanel));
+        buttonPanel.add(createNavButton("Song", "SongSearchPanel"));
+        buttonPanel.add(createNavButton("Album", "AlbumSearchPanel"));
+        buttonPanel.add(createNavButton("Artist", "ArtistSearchPanel"));
 
-        searchBoxPanel.add(searchText); // adding search box to sub-panel
+        searchBoxPanel.add(searchText);
         panel.add(searchBoxPanel, BorderLayout.NORTH);
         panel.add(buttonPanel, BorderLayout.CENTER);
 
@@ -95,33 +85,114 @@ public class GUI {
     private static JPanel createPlaylistPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        JLabel playlistLabel = new JLabel("Playlists Management Interface", SwingConstants.CENTER);
-        playlistLabel.setFont(new Font("Arial", Font.PLAIN, 16)); // text font & size
-        panel.add(playlistLabel, BorderLayout.CENTER);
+        String[] columnNames = {"Playlist", "Access"};
+        Object[][] data = {
+                {"Playlist EX #1", "Access"},
+                {"Playlist EX #2", "Access"},
+                // Dummy Variables for now
+        };
+        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+            public boolean isCellEditable(int row, int column) {
+                return column == 1;
+            }
+        };
+        JTable table = new JTable(model);
 
+        TableColumn accessColumn = table.getColumnModel().getColumn(1);
+        accessColumn.setCellRenderer(new ButtonRenderer());
+        accessColumn.setCellEditor(new ButtonEditor(new JCheckBox()));
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        return panel;
+    }
+
+    private static JPanel createSpecificPlaylistPanel() {
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("Specific Playlist Interface"));
         panel.setBackground(Color.WHITE);
         return panel;
     }
 
+    static class ButtonRenderer extends JButton implements TableCellRenderer {
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+    static class ButtonEditor extends DefaultCellEditor {
+        protected JButton button;
+        private String label;
+        private boolean isPushed;
+
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    isPushed = true;
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                     boolean isSelected, int row, int column) {
+            if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(table.getBackground());
+            }
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            return button;
+        }
+
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                // Switch to the specific playlist panel
+                cardLayout.show(cardPanel, "SpecificPlaylistPanel");
+            }
+            isPushed = false;
+            return label;
+        }
+
+    public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+    }
+
     private static JPanel createSongSearchPanel() {
         JPanel panel = new JPanel();
-        // Customize this panel for song search
+        // Add components for song search
         return panel;
     }
 
     private static JPanel createAlbumSearchPanel() {
         JPanel panel = new JPanel();
-        // Customize this panel for album search
+        // Add components for album search
         return panel;
     }
 
     private static JPanel createArtistSearchPanel() {
         JPanel panel = new JPanel();
-        // Customize this panel for artist search
+        // Add components for artist search
         return panel;
     }
 }
-
-// cd ~/Library/CloudStorage/Dropbox/Code/CSC207/CSC207_Project
-// javac -d bin src/app/gui/GUI.java
-// java -cp bin app.gui.GUI

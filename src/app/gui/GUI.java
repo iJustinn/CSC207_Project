@@ -75,7 +75,7 @@ public class GUI {
         searchText.setForeground(Color.BLACK);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(createNavButton("Song", "SongSearchPanel"));
+        buttonPanel.add(createNavButton("entity/Song", "SongSearchPanel"));
         buttonPanel.add(createNavButton("Album", "AlbumSearchPanel"));
         buttonPanel.add(createNavButton("Artist", "ArtistSearchPanel"));
 
@@ -90,7 +90,7 @@ public class GUI {
     private static JPanel createPlaylistPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        String[] columnNames = {"Playlist", "Access"};
+        String[] columnNames = {"entity/Playlist", "Access"};
         Object[][] data = {
                 {"Playlist EX #1", "Access"},
                 {"Playlist EX #2", "Access"},

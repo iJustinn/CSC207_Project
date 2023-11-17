@@ -2,6 +2,8 @@
 
 package entity;
 
+import entity.Playlist.Playlist;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

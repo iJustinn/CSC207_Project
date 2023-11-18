@@ -23,12 +23,12 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface {
     }
 
     @Override
-    public AlbumSimple[] searchAlbums(String albumName) {
+    public AlbumSimple[] searchAlbumsByName(String albumName) {
         return new AlbumSimple[0];
     }
 
     @Override
-    public ArtistFull[] searchArtist(String artistName) {
+    public ArtistFull[] searchArtistByName(String artistName) {
         return new ArtistFull[0];
     }
 }

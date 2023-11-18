@@ -1,16 +1,19 @@
 package entity.artist;
 
-public class SpotifyArtist implements ArtistFull {
+public class SpotifyArtistFull implements ArtistFull {
     private final String id;
     private final String name;
     private final String[] genres;
+    private final Integer popularity;
 
-    SpotifyArtist(String id,
-                  String name,
-                  String[] genres) {
+    SpotifyArtistFull(String id,
+                      String name,
+                      String[] genres,
+                      Integer popularity) {
         this.id = id;
         this.name = name;
         this.genres = genres;
+        this.popularity = popularity;
     }
 
     @Override
@@ -23,7 +26,13 @@ public class SpotifyArtist implements ArtistFull {
         return name;
     }
 
+    @Override
     public String[] getGenres() {
         return genres;
+    }
+
+    @Override
+    public Integer getPopularity() {
+        return popularity;
     }
 }

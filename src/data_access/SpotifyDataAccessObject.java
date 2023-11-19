@@ -1,25 +1,46 @@
 package data_access;
 
-import entity.album.AlbumSimple;
 
 // These two imports are for accessing albums through the Spotify API
-import spotify.services.SearchAlbumService;
 
+import entity.album.AlbumFull;
+import entity.album.AlbumSimple;
 import entity.artist.ArtistFull;
+
+import entity.artist.ArtistSimple;
+import entity.song.SongFull;
+import entity.song.SongSimple;
+import spotify.SpotifyEndpoint;
 import use_case.search.SearchDataAccessInterface;
+import use_case.get_by_id.GetByIdDataAccessInterface;
 
 /**
  * A DataAccessObject used to get data from the Spotify API
  */
-public class SpotifyDataAccessObject implements SearchDataAccessInterface {
+public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetByIdDataAccessInterface {
 
-    private final SearchAlbumService searchAlbum;
+    private final SpotifyEndpoint spotifyApi;
     private final AlbumFactory albumFactory;
 
     public SpotifyDataAccessObject(AlbumFactory albumFactory,
-                                   SearchAlbumService searchAlbumService) {
+                                   SpotifyEndpoint spotifyApi) {
         this.albumFactory = albumFactory;
-        this.searchAlbum = searchAlbumService;
+        this.spotifyApi = spotifyApi;
+    }
+
+    @Override
+    public AlbumFull[] getAlbumById(String albumId) {
+        return new AlbumFull[0];
+    }
+
+    @Override
+    public ArtistFull[] getArtistById(String artistId) {
+        return new ArtistFull[0];
+    }
+
+    @Override
+    public SongFull[] getSongById(String songId) {
+        return new SongFull[0];
     }
 
     @Override
@@ -28,7 +49,12 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface {
     }
 
     @Override
-    public ArtistFull[] searchArtistByName(String artistName) {
-        return new ArtistFull[0];
+    public ArtistSimple[] searchArtistByName(String artistName) {
+        return new ArtistSimple[0];
+    }
+
+    @Override
+    public SongSimple[] searchSongByName(String songName) {
+        return new SongSimple[0];
     }
 }

@@ -1,4 +1,4 @@
 package entity.song;
 
-public interface SongFull extends SongSimple{
+public interface SongFull {
 }

@@ -1,7 +1,13 @@
 package app;
+
+import data_access.SpotifyDataAccessObject;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.search_album.SearchAlbumViewModel;
+import view.SearchView;
+import view.ViewManager;
+
 import javax.swing.*;
 import java.awt.*;
-
 
 
 public class Main {
@@ -9,24 +15,41 @@ public class Main {
         SwingUtilities.invokeLater(() -> createAndShowGUI());
     }
 
+    // Mostly copied from Week5 CACoding
     private static void createAndShowGUI() {
         // Create a frame
-        JFrame frame = new JFrame("Swing Example");
+        JFrame frame = new JFrame("Spotify");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
 
-        frame.getContentPane().setBackground(Color.GRAY);
+        CardLayout cardLayout = new CardLayout();
 
-        // Create a button and add it to the frame
-        JButton button = new JButton("Click Me!");
-        button.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Button was clicked!"));
-        frame.getContentPane().add(button);
+        JPanel views = new JPanel(cardLayout);
+        frame.add(views);
 
-        button.setPreferredSize(new Dimension(100, 50));
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        new ViewManager(views, cardLayout, viewManagerModel);
 
-        frame.setLayout(new FlowLayout());
+        SearchAlbumViewModel searchAlbumViewModel = new SearchAlbumViewModel();
+
+        SpotifyDataAccessObject spotify;
+        try {
+            spotify = new SpotifyDataAccessObject();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        SearchView searchView = SearchAlbumUseCaseFactory.create(
+                viewManagerModel,
+                searchAlbumViewModel,
+                spotify
+        );
+
+        views.add(searchView, searchView.viewName);
+        viewManagerModel.setActiveViewName(searchView.viewName);
+        viewManagerModel.firePropertyChanged();
 
         // Display the frame
+        frame.pack();
         frame.setVisible(true);
     }
 }

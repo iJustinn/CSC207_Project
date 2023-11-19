@@ -1,6 +1,6 @@
 package use_case.create_playlist;
 
-import entity.Playlist;
+import entity.Playlist.Playlist;
 
 import java.io.IOException;
 

@@ -1,12 +1,13 @@
 // Playlist.java in package entity
 
-package entity;
+package entity.Playlist;
+
+import entity.Song.Song;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
-public class Playlist {
+public class Playlist implements PlaylistInterface{
     private String name;
     private int numberOfSongs;
     private Date date;

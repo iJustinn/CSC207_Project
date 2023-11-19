@@ -1,10 +1,12 @@
 // Song.java in package entity
 
-package entity;
+package entity.Song;
+
+import entity.Artist;
 
 import java.util.ArrayList;
 
-public class Song {
+public class Song implements SongInterface{
     private String title;
     private ArrayList<Artist> artist;
     private String album;

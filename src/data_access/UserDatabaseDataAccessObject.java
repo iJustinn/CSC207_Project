@@ -1,7 +1,7 @@
 package data_access;
 import entity.UserDatabase;
-import entity.Playlist;
-import entity.Song;
+import entity.Playlist.Playlist;
+import entity.Song.Song;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -12,10 +12,6 @@ import use_case.create_playlist.CreatePlaylistDataAccessInterface;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface {
 

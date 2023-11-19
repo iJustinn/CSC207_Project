@@ -8,12 +8,7 @@ public class UserSession {
 
     private UserSession() {}
 
-    public static UserSession getInstance() {
-        if (instance == null) {
-            instance = new UserSession();
-        }
-        return instance;
-    }
+    public static UserSession getInstance() {return instance;}
 
     public void loginUser(User user) {
         this.currentUser = user;

@@ -2,10 +2,7 @@ package use_case.create_playlist;
 
 import entity.Playlist;
 import entity.PlaylistFactory;
-import entity.UserDatabase;
-import use_case.create_playlist.CreatePlaylistDataAccessInterface;
-import use_case.create_playlist.CreatePlaylistInputData;
-import use_case.create_playlist.CreatePlaylistOutputBoundary;
+import entity.UserSession;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -29,7 +26,7 @@ public class CreatePlaylistInteractor implements CreatePlaylistInputBoundary {
 
     @Override
     public void execute(CreatePlaylistInputData createPlaylistInputData) throws IOException {
-
+        String currentUserId = UserSession.getInstance().getCurrentUser().getName();
         LocalDateTime now = LocalDateTime.now();
         Playlist playlist = playlistFactory.create(createPlaylistInputData.getPlaylistName());
         playlist.setDate(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
@@ -38,7 +35,7 @@ public class CreatePlaylistInteractor implements CreatePlaylistInputBoundary {
             playlistPresenter.prepareFailView("This playlist already exists.");
         } else {
             try {
-                playlistDataAccessObject.createPlaylist("local", playlist);
+                playlistDataAccessObject.createPlaylist(currentUserId, playlist);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

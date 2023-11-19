@@ -1,4 +1,4 @@
-package entity;
+package entity.User;
 
 public class UserProfile {
     private final String username;

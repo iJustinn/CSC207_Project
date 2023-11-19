@@ -1,5 +1,5 @@
 package data_access;
-import entity.UserDatabase;
+import entity.User.UserDatabase;
 import entity.Playlist;
 import entity.Song;
 
@@ -12,10 +12,6 @@ import use_case.create_playlist.CreatePlaylistDataAccessInterface;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface {
 

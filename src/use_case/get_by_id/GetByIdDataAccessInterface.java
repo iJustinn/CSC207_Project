@@ -5,7 +5,7 @@ import entity.artist.ArtistFull;
 import entity.song.SongFull;
 
 public interface GetByIdDataAccessInterface {
-    AlbumFull[] getAlbumById(String albumId);
-    ArtistFull[] getArtistById(String artistId);
-    SongFull[] getSongById(String songId);
+    AlbumFull getAlbumById(String albumId);
+    ArtistFull getArtistById(String artistId);
+    SongFull getSongById(String songId);
 }

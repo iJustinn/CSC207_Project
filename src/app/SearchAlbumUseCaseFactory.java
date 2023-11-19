@@ -12,6 +12,7 @@ import use_case.search.search_album.SearchAlbumOutputBoundary;
 import use_case.search.search_album.SearchAlbumOutputData;
 import view.SearchView;
 
+
 public class SearchAlbumUseCaseFactory {
     private SearchAlbumUseCaseFactory() {}
 
@@ -19,21 +20,9 @@ public class SearchAlbumUseCaseFactory {
                                     SearchAlbumViewModel searchAlbumViewModel,
                                     SearchDataAccessInterface dataAccessInterface) {
 
-        try {
-            SearchAlbumController controller = createSearchAlbumUseCase(viewManagerModel, searchAlbumViewModel, dataAccessInterface);
-            return new SearchView(controller, searchAlbumViewModel);
-        } catch (Exception e) {
-
-        }
-        return null;
-    }
-
-    private static SearchAlbumController createSearchAlbumUseCase(ViewManagerModel viewManagerModel,
-                                                                  SearchAlbumViewModel searchAlbumViewModel,
-                                                                  SearchDataAccessInterface searchDataAccessInterface) {
-
         SearchAlbumOutputBoundary outputBoundary = new SearchAlbumPresenter(searchAlbumViewModel);
-        SearchAlbumInputBoundary inputBoundary = new SearchAlbumInteractor(searchDataAccessInterface, outputBoundary);
-        return new SearchAlbumController(inputBoundary);
+        SearchAlbumInputBoundary inputBoundary = new SearchAlbumInteractor(dataAccessInterface, outputBoundary);
+        SearchAlbumController controller = new SearchAlbumController(inputBoundary);
+        return new SearchView(controller, searchAlbumViewModel);
     }
 }

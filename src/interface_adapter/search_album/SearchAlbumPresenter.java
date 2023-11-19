@@ -20,6 +20,6 @@ public class SearchAlbumPresenter implements SearchAlbumOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-        // To be implemented
+        // TODO: To be implemented
     }
 }

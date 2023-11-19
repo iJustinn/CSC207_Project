@@ -4,8 +4,10 @@ import entity.album.AlbumSimple;
 import entity.artist.ArtistSimple;
 import entity.song.SongSimple;
 
+import java.util.List;
+
 public interface SearchDataAccessInterface {
-    AlbumSimple[] searchAlbumsByName(String albumName);
-    ArtistSimple[] searchArtistByName(String artistName);
-    SongSimple[] searchSongByName(String songName);
+    List<AlbumSimple> searchAlbumsByName(String albumName);
+    List<ArtistSimple> searchArtistByName(String artistName);
+    List<SongSimple> searchSongByName(String songName);
 }

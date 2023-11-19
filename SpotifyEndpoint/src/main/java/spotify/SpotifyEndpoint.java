@@ -2,9 +2,13 @@ package spotify;
 
 import se.michaelthelin.spotify.SpotifyApi;
 
+import se.michaelthelin.spotify.model_objects.specification.AlbumSimplified;
 import se.michaelthelin.spotify.requests.data.search.simplified.SearchAlbumsRequest;
 
 import spotify.models.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 public class SpotifyEndpoint {
@@ -15,10 +19,15 @@ public class SpotifyEndpoint {
         spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
     }
 
-    public AlbumSimpleModel[] requestSearchAlbum(String albumName) {
+    public List<AlbumSimpleModel> requestSearchAlbum(String albumName) {
         SearchAlbumsRequest searchAlbumsRequest = spotifyApi.searchAlbums(albumName).build();
-        // AlbumSimplified[] spotifyAlbums = searchAlbumsRequest.execute().getItems();
-        return new AlbumSimpleModel[] {};
+        try {
+            AlbumSimplified[] spotifyAlbums = searchAlbumsRequest.execute().getItems();
+            return Arrays.stream(spotifyAlbums).map(AlbumSimpleModel::new).toList();
+        } catch (Exception e) {
+            System.out.println("Error in spotify");
+        }
+        return List.of();
     }
 
 }

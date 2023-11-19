@@ -5,14 +5,21 @@ package data_access;
 
 import entity.album.AlbumFull;
 import entity.album.AlbumSimple;
-import entity.artist.ArtistFull;
+import entity.album.AlbumFactory;
 
 import entity.artist.ArtistSimple;
+import entity.artist.ArtistFull;
+
 import entity.song.SongFull;
 import entity.song.SongSimple;
+
 import spotify.SpotifyEndpoint;
+import spotify.models.AlbumSimpleModel;
 import use_case.search.SearchDataAccessInterface;
 import use_case.get_by_id.GetByIdDataAccessInterface;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A DataAccessObject used to get data from the Spotify API
@@ -28,33 +35,35 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetBy
         this.spotifyApi = spotifyApi;
     }
 
+
     @Override
-    public AlbumFull[] getAlbumById(String albumId) {
-        return new AlbumFull[0];
+    public List<AlbumSimple> searchAlbumsByName(String albumName) {
+        List<AlbumSimpleModel> spotifyAlbums = this.spotifyApi.requestSearchAlbum(albumName);
+        return spotifyAlbums.stream().map(AlbumSimple::new).toList();
     }
 
     @Override
-    public ArtistFull[] getArtistById(String artistId) {
-        return new ArtistFull[0];
+    public List<ArtistSimple> searchArtistByName(String artistName) {
+        return List.of();
     }
 
     @Override
-    public SongFull[] getSongById(String songId) {
-        return new SongFull[0];
+    public List<SongSimple> searchSongByName(String songName) {
+        return List.of();
     }
 
     @Override
-    public AlbumSimple[] searchAlbumsByName(String albumName) {
-        return new AlbumSimple[0];
+    public AlbumFull getAlbumById(String albumId) {
+        return null;
     }
 
     @Override
-    public ArtistSimple[] searchArtistByName(String artistName) {
-        return new ArtistSimple[0];
+    public ArtistFull getArtistById(String artistId) {
+        return null;
     }
 
     @Override
-    public SongSimple[] searchSongByName(String songName) {
-        return new SongSimple[0];
+    public SongFull getSongById(String songId) {
+        return null;
     }
 }

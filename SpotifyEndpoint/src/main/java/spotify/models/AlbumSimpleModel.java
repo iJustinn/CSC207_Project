@@ -2,18 +2,21 @@ package spotify.models;
 
 import se.michaelthelin.spotify.model_objects.specification.AlbumSimplified;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 public class AlbumSimpleModel {
     private final String id;
     private final String albumName;
     private final String releaseDate;
-    private final ArtistSimpleModel[] artists;
+    private final List<ArtistSimpleModel> artists;
 
     public AlbumSimpleModel(AlbumSimplified album) {
         this.id = album.getId();
         this.albumName = album.getName();
         this.releaseDate = album.getReleaseDate();
-        this.artists = album.getArtists();
+        this.artists = Arrays.stream(album.getArtists()).map(ArtistSimpleModel::new).toList();
     }
 
     public String getId() {
@@ -28,7 +31,7 @@ public class AlbumSimpleModel {
         return releaseDate;
     }
 
-    public ArtistSimpleModel[] getArtists() {
+    public List<ArtistSimpleModel> getArtists() {
         return artists;
     }
 }

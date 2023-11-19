@@ -3,9 +3,12 @@ package spotify.models;
 
 import se.michaelthelin.spotify.model_objects.specification.Track;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class TrackModel {
     private final AlbumSimpleModel album;
-    private final ArtistSimpleModel[] artists;
+    private final List<ArtistSimpleModel> artists;
     private final Integer discNumber;
     private final Integer durationMs;
     private final String id;
@@ -15,13 +18,13 @@ public class TrackModel {
 
     public TrackModel(Track track) {
         this.album = new AlbumSimpleModel(track.getAlbum());
-        this.artists = track.getArtists();
         this.id = track.getId();
         this.discNumber = track.getDiscNumber();
         this.trackNumber = track.getTrackNumber();
         this.popularity = track.getPopularity();
         this.name = track.getName();
         this.durationMs = track.getDurationMs();
+        this.artists = Arrays.stream(track.getArtists()).map(ArtistSimpleModel::new).toList();
     }
 
     public Integer getDiscNumber() {
@@ -36,7 +39,7 @@ public class TrackModel {
         return durationMs;
     }
 
-    public ArtistSimpleModel[] getArtists() {
+    public List<ArtistSimpleModel> getArtists() {
         return artists;
     }
 

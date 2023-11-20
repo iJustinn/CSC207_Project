@@ -10,8 +10,8 @@ import entity.album.AlbumFactory;
 import entity.artist.ArtistSimple;
 import entity.artist.ArtistFull;
 
-import entity.song.SongFull;
-import entity.song.SongSimple;
+import entity.Song.SongFull;
+import entity.Song.SongSimple;
 
 import spotify.SpotifyEndpoint;
 import spotify.models.AlbumSimpleModel;

@@ -1,4 +1,5 @@
 package use_case.create_user_profile;
 
-public class CreateUserProfileInputBoundary {
+public interface CreateUserProfileInputBoundary {
+    void execute(CreateUserProfileInputData inputData);
 }

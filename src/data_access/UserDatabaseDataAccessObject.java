@@ -1,6 +1,7 @@
 package data_access;
-import entity.UserDatabase;
-import entity.Playlist.Playlist;
+import entity.User.UserDatabase;
+import entity.Playlist;
+import entity.Song;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

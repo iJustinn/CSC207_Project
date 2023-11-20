@@ -1,11 +1,7 @@
 package use_case.create_playlist;
 
-import entity.Playlist;
-import entity.PlaylistFactory;
-import entity.UserDatabase;
-import use_case.create_playlist.CreatePlaylistDataAccessInterface;
-import use_case.create_playlist.CreatePlaylistInputData;
-import use_case.create_playlist.CreatePlaylistOutputBoundary;
+import entity.Playlist.Playlist;
+import entity.Playlist.PlaylistFactory;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

@@ -1,7 +1,7 @@
 package interface_adapter.search_album;
 
-import use_case.search_album.SearchAlbumInputBoundary;
-import use_case.search_album.SearchAlbumInputData;
+import use_case.search.search_album.SearchAlbumInputBoundary;
+import use_case.search.search_album.SearchAlbumInputData;
 
 public class SearchAlbumController {
     final SearchAlbumInputBoundary interactor;

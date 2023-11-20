@@ -8,8 +8,6 @@ import java.beans.PropertyChangeSupport;
 public class SearchAlbumViewModel extends ViewModel {
     public static final String TITLE_LABEL = "SEARCH ALBUM FUNCTION";
 
-    public static final String SEARCH_LABEL = "Search";
-
     public static final String SEARCH_BUTTON_LABEL = "Search";
 
     private SearchAlbumState state = new SearchAlbumState();

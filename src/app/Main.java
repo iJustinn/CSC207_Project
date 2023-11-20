@@ -1,30 +1,50 @@
 package app;
+
+import data_access.SpotifyDataAccessObject;
+import entity.album.AlbumFactory;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.search_album.SearchAlbumViewModel;
+import spotify.SpotifyEndpoint;
+import view.SearchView;
+import view.ViewManager;
+
 import javax.swing.*;
 import java.awt.*;
 
+
 public class Main {
+    // Mostly copied from Week5 CACoding
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> createAndShowGUI());
-    }
+        JFrame application = new JFrame("Spotify");
+        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    private static void createAndShowGUI() {
-        // Create a frame
-        JFrame frame = new JFrame("Swing Example");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
+        CardLayout cardLayout = new CardLayout();
 
-        frame.getContentPane().setBackground(Color.GRAY);
+        JPanel views = new JPanel(cardLayout);
+        application.add(views);
 
-        // Create a button and add it to the frame
-        JButton button = new JButton("Click Me!");
-        button.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Button was clicked!"));
-        frame.getContentPane().add(button);
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        new ViewManager(views, cardLayout, viewManagerModel);
 
-        button.setPreferredSize(new Dimension(100, 50));
+        SearchAlbumViewModel searchAlbumViewModel = new SearchAlbumViewModel();
 
-        frame.setLayout(new FlowLayout());
+        AlbumFactory albumFactory = new AlbumFactory();
+        SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
 
-        // Display the frame
-        frame.setVisible(true);
+        SpotifyDataAccessObject spotify = new SpotifyDataAccessObject(albumFactory, spotifyEndpoint);
+
+        SearchView searchView = SearchAlbumUseCaseFactory.create(
+                viewManagerModel,
+                searchAlbumViewModel,
+                spotify
+        );
+        views.add(searchView, searchView.viewName);
+
+        viewManagerModel.setActiveViewName(searchView.viewName);
+        viewManagerModel.firePropertyChanged();
+
+        // Display the application
+        application.pack();
+        application.setVisible(true);
     }
 }

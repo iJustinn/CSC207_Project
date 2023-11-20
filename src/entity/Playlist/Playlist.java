@@ -7,7 +7,7 @@ import entity.Song.Song;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Playlist implements PlaylistInterface{
+public class Playlist implements IPlaylist {
     private String name;
     private int numberOfSongs;
     private Date date;

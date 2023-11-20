@@ -1,6 +1,6 @@
 package entity.artist;
 
-public class ArtistFull {
+public class ArtistFull implements IArtistFull {
     private final String id;
     private final String name;
     private final String[] genres;

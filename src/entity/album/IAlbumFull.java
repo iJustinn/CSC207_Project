@@ -1,16 +1,16 @@
 package entity.album;
 
-import entity.Song;
-import entity.artist.ArtistFull;
+import entity.artist.IArtistFull;
+import entity.song.SongSimple;
 
-public interface AlbumFull {
+public interface IAlbumFull {
     String getId();
     String getName();
-    ArtistFull[] getArtists();
+    IArtistFull[] getArtists();
     String getReleaseDate();
 
     String[] getGenres();
     Integer getPopularity();
     String getLabel();
-    Song[] getTracklist();
+    SongSimple[] getTracklist();
 }

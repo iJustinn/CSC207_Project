@@ -1,17 +1,17 @@
 package use_case.search.search_artist;
 
-import entity.artist.ArtistSimple;
+import entity.artist.IArtistSimple;
 
 import java.util.List;
 
 public class SearchArtistOutputData {
-    private final List<ArtistSimple> artists;
+    private final List<IArtistSimple> artists;
 
-    public SearchArtistOutputData(List<ArtistSimple> artists) {
+    public SearchArtistOutputData(List<IArtistSimple> artists) {
         this.artists = artists;
     }
 
-    public List<ArtistSimple> getArtists() {
+    public List<IArtistSimple> getArtists() {
         return artists;
     }
 }

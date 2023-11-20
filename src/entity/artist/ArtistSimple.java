@@ -2,7 +2,7 @@ package entity.artist;
 
 import spotify.models.ArtistSimpleModel;
 
-public class ArtistSimple {
+public class ArtistSimple implements IArtistSimple {
     private final String id;
     private final String name;
 

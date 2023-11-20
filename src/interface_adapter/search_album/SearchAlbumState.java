@@ -2,10 +2,11 @@ package interface_adapter.search_album;
 
 import entity.album.AlbumSimple;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchAlbumState {
-    private List<AlbumSimple> albums = null;
+    private List<AlbumSimple> albums = new ArrayList<>();
     private String searchInput = null;
 
     public SearchAlbumState() {}

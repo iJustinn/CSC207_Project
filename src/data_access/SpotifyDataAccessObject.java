@@ -3,13 +3,12 @@ package data_access;
 
 // These two imports are for accessing albums through the Spotify API
 
-import entity.album.AlbumFull;
+import entity.album.IAlbumFull;
 import entity.album.AlbumSimple;
 import entity.album.AlbumFactory;
 
-import entity.artist.ArtistSimple;
-import entity.artist.ArtistFull;
-
+import entity.artist.IArtistFull;
+import entity.artist.IArtistSimple;
 import entity.song.SongFull;
 import entity.song.SongSimple;
 
@@ -18,7 +17,6 @@ import spotify.models.AlbumSimpleModel;
 import use_case.search.SearchDataAccessInterface;
 import use_case.get_by_id.GetByIdDataAccessInterface;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,7 +41,7 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetBy
     }
 
     @Override
-    public List<ArtistSimple> searchArtistByName(String artistName) {
+    public List<IArtistSimple> searchArtistByName(String artistName) {
         return List.of();
     }
 
@@ -53,12 +51,12 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetBy
     }
 
     @Override
-    public AlbumFull getAlbumById(String albumId) {
+    public IAlbumFull getAlbumById(String albumId) {
         return null;
     }
 
     @Override
-    public ArtistFull getArtistById(String artistId) {
+    public IArtistFull getArtistById(String artistId) {
         return null;
     }
 

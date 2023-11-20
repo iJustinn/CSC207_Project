@@ -1,6 +1,6 @@
 package entity.album;
 
-import entity.Song;
+import entity.Song.Song;
 import entity.artist.ArtistFull;
 
 public interface AlbumFull {

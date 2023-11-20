@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "search";
@@ -23,6 +24,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final SearchAlbumViewModel searchAlbumViewModel;
 
     private final JButton searchButton;
+    private final JList<AlbumSimple> albumList = new JList<AlbumSimple>();
+    private CustomListModel<AlbumSimple> listModel;
 
     public SearchView(SearchAlbumController controller, SearchAlbumViewModel viewModel) {
         this.searchAlbumController = controller;
@@ -63,9 +66,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         if (e.getSource().equals(searchButton)) {
                             SearchAlbumState currentState = searchAlbumViewModel.getState();
                             searchAlbumController.execute(currentState.getSearchInput());
-                            for (AlbumSimple s: currentState.getAlbums()) {
-                                System.out.println(s.getName());
-                            }
                         }
                     }
                 }
@@ -81,6 +81,14 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(searchField);
         this.add(buttons);
 
+        albumList.setPreferredSize(new Dimension(400, 360));
+
+        listModel = new CustomListModel<AlbumSimple>(searchAlbumViewModel.getState().getAlbums());
+
+        albumList.setModel(listModel);
+
+        this.add(albumList);
+
     }
 
 
@@ -91,6 +99,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        List<AlbumSimple> newAlbums = searchAlbumViewModel.getState().getAlbums();
+        listModel.setList(newAlbums);
+        listModel.fireDataChanged();
     }
 }

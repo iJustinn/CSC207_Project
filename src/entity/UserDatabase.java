@@ -3,6 +3,7 @@
 package entity;
 
 import entity.Playlist.Playlist;
+import entity.Song.Song;
 
 import java.util.HashMap;
 import java.util.Map;

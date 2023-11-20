@@ -11,7 +11,6 @@ import view.ViewManager;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class Main {
     // Mostly copied from Week5 CACoding
     public static void main(String[] args) {

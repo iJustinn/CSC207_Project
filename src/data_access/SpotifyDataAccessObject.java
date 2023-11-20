@@ -1,34 +1,69 @@
 package data_access;
 
-import entity.album.AlbumSimple;
 
 // These two imports are for accessing albums through the Spotify API
-import spotify.services.SearchAlbumService;
 
+import entity.album.AlbumFull;
+import entity.album.AlbumSimple;
+import entity.album.AlbumFactory;
+
+import entity.artist.ArtistSimple;
 import entity.artist.ArtistFull;
+
+import entity.song.SongFull;
+import entity.song.SongSimple;
+
+import spotify.SpotifyEndpoint;
+import spotify.models.AlbumSimpleModel;
 import use_case.search.SearchDataAccessInterface;
+import use_case.get_by_id.GetByIdDataAccessInterface;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A DataAccessObject used to get data from the Spotify API
  */
-public class SpotifyDataAccessObject implements SearchDataAccessInterface {
+public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetByIdDataAccessInterface {
 
-    private final SearchAlbumService searchAlbum;
+    private final SpotifyEndpoint spotifyApi;
     private final AlbumFactory albumFactory;
 
     public SpotifyDataAccessObject(AlbumFactory albumFactory,
-                                   SearchAlbumService searchAlbumService) {
+                                   SpotifyEndpoint spotifyApi) {
         this.albumFactory = albumFactory;
-        this.searchAlbum = searchAlbumService;
+        this.spotifyApi = spotifyApi;
+    }
+
+
+    @Override
+    public List<AlbumSimple> searchAlbumsByName(String albumName) {
+        List<AlbumSimpleModel> spotifyAlbums = this.spotifyApi.requestSearchAlbum(albumName);
+        return spotifyAlbums.stream().map(AlbumSimple::new).toList();
     }
 
     @Override
-    public AlbumSimple[] searchAlbums(String albumName) {
-        return new AlbumSimple[0];
+    public List<ArtistSimple> searchArtistByName(String artistName) {
+        return List.of();
     }
 
     @Override
-    public ArtistFull[] searchArtist(String artistName) {
-        return new ArtistFull[0];
+    public List<SongSimple> searchSongByName(String songName) {
+        return List.of();
+    }
+
+    @Override
+    public AlbumFull getAlbumById(String albumId) {
+        return null;
+    }
+
+    @Override
+    public ArtistFull getArtistById(String artistId) {
+        return null;
+    }
+
+    @Override
+    public SongFull getSongById(String songId) {
+        return null;
     }
 }

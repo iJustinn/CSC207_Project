@@ -2,8 +2,10 @@ package interface_adapter.search_album;
 
 import entity.album.AlbumSimple;
 
+import java.util.List;
+
 public class SearchAlbumState {
-    private AlbumSimple[] albums = null;
+    private List<AlbumSimple> albums = null;
     private String searchInput = null;
 
     public SearchAlbumState() {}
@@ -20,11 +22,11 @@ public class SearchAlbumState {
         this.searchInput = searchInput;
     }
 
-    public AlbumSimple[] getAlbums() {
+    public List<AlbumSimple> getAlbums() {
         return albums;
     }
 
-    public void setAlbums(AlbumSimple[] albums) {
+    public void setAlbums(List<AlbumSimple> albums) {
         this.albums = albums;
     }
 }

@@ -16,4 +16,8 @@ public interface SongInterface {
     public void setAlbum(String album);
 
     public String getId();
+
+    public String getComment();
+
+    public void setComment(String comment);
 }

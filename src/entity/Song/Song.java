@@ -7,11 +7,15 @@ import entity.Artist;
 import java.util.ArrayList;
 
 public class Song implements SongInterface{
+    private final String EMPTY_STRING = "";
+
     private String title;
     private ArrayList<Artist> artist;
     private String album;
 
     private String id;
+
+    private String comment;
 
     // Constructor
     public Song(String title, ArrayList<Artist> artist, String album, String id) {
@@ -19,6 +23,7 @@ public class Song implements SongInterface{
         this.artist = artist;
         this.album = album;
         this.id = id;
+        this.comment = EMPTY_STRING;
     }
 
     // No-argument constructor for Jackson
@@ -47,5 +52,13 @@ public class Song implements SongInterface{
 
     public String getId() {
         return id;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

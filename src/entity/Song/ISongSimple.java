@@ -1,12 +1,13 @@
-package entity.album;
+package entity.song;
 
 import entity.artist.ArtistSimple;
-
 import java.util.List;
 
-public interface IAlbumSimple {
+public interface ISongSimple {
+    public Integer getDiscNumber();
+    public Integer getDurationMs();
     public String getId();
     public String getName();
-    public String getReleaseDate();
+    public Integer getTrackNumber();
     public List<ArtistSimple> getArtists();
 }

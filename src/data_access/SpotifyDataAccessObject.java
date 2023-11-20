@@ -9,8 +9,8 @@ import entity.album.AlbumFactory;
 
 import entity.artist.IArtistFull;
 import entity.artist.IArtistSimple;
-import entity.song.SongFull;
-import entity.song.SongSimple;
+import entity.song.ISongFull;
+import entity.song.ISongSimple;
 
 import spotify.SpotifyEndpoint;
 import spotify.models.AlbumSimpleModel;
@@ -46,7 +46,7 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetBy
     }
 
     @Override
-    public List<SongSimple> searchSongByName(String songName) {
+    public List<ISongSimple> searchSongByName(String songName) {
         return List.of();
     }
 
@@ -61,7 +61,7 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetBy
     }
 
     @Override
-    public SongFull getSongById(String songId) {
+    public ISongFull getSongById(String songId) {
         return null;
     }
 }

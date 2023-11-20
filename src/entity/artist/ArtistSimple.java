@@ -6,9 +6,7 @@ public class ArtistSimple implements IArtistSimple {
     private final String id;
     private final String name;
 
-    ArtistSimple(String id,
-                 String name,
-                 String[] genres) {
+    public ArtistSimple(String id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -18,10 +16,12 @@ public class ArtistSimple implements IArtistSimple {
         this.name = artist.getName();
     }
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public String getName() {
         return name;
     }

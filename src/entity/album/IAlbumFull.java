@@ -1,16 +1,17 @@
 package entity.album;
 
-import entity.artist.IArtistFull;
+import entity.artist.ArtistSimple;
 import entity.song.SongSimple;
+import java.util.List;
 
 public interface IAlbumFull {
     String getId();
     String getName();
-    IArtistFull[] getArtists();
+    List<ArtistSimple> getArtists();
     String getReleaseDate();
 
     String[] getGenres();
     Integer getPopularity();
     String getLabel();
-    SongSimple[] getTracklist();
+    List<SongSimple> getTracklist();
 }

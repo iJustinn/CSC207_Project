@@ -46,7 +46,7 @@ public class UserDatabase {
             return false;
         }
         int newSongId = playlist.getSongs().size() + 1;
-        playlist.getSongs().put(newSongId, newSong);
+        playlist.getSongs().put(String.valueOf(newSongId), newSong);
         playlist.setNumberOfSongs(playlist.getSongs().size());
         return true;
     }

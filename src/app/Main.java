@@ -1,7 +1,6 @@
 package app;
 
 import data_access.SpotifyDataAccessObject;
-import entity.album.AlbumFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.search_album.SearchAlbumViewModel;
 import spotify.SpotifyEndpoint;
@@ -28,10 +27,9 @@ public class Main {
 
         SearchAlbumViewModel searchAlbumViewModel = new SearchAlbumViewModel();
 
-        AlbumFactory albumFactory = new AlbumFactory();
         SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
 
-        SpotifyDataAccessObject spotify = new SpotifyDataAccessObject(albumFactory, spotifyEndpoint);
+        SpotifyDataAccessObject spotify = new SpotifyDataAccessObject(spotifyEndpoint);
 
         SearchView searchView = SearchAlbumUseCaseFactory.create(
                 viewManagerModel,

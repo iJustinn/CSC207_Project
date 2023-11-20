@@ -25,7 +25,6 @@ public class AlbumModel {
         this.label = album.getLabel();
         this.popularity = album.getPopularity();
 
-        // Map a list of ArtistSimplified to ArtistSimpleModel
         this.artists = Arrays.stream(album.getArtists()).map(ArtistSimpleModel::new).toList();
         this.tracks = Arrays.stream(album.getTracks().getItems()).map(TrackSimpleModel::new).toList();
     }

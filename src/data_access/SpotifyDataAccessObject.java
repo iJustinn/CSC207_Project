@@ -5,7 +5,6 @@ package data_access;
 
 import entity.album.IAlbumFull;
 import entity.album.AlbumSimple;
-import entity.album.AlbumFactory;
 
 import entity.artist.IArtistFull;
 import entity.artist.IArtistSimple;
@@ -23,13 +22,9 @@ import java.util.List;
  * A DataAccessObject used to get data from the Spotify API
  */
 public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetByIdDataAccessInterface {
-
     private final SpotifyEndpoint spotifyApi;
-    private final AlbumFactory albumFactory;
 
-    public SpotifyDataAccessObject(AlbumFactory albumFactory,
-                                   SpotifyEndpoint spotifyApi) {
-        this.albumFactory = albumFactory;
+    public SpotifyDataAccessObject(SpotifyEndpoint spotifyApi) {
         this.spotifyApi = spotifyApi;
     }
 

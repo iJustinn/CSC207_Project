@@ -13,7 +13,7 @@ public class SongSimple implements ISongSimple {
     private final Integer trackNumber;
     private final List<ArtistSimple> artists;
 
-    SongSimple(TrackSimpleModel track) {
+    public SongSimple(TrackSimpleModel track) {
         this.id = track.getId();
         this.name = track.getName();
         this.artists = track.getArtists().stream().map(ArtistSimple::new).toList();

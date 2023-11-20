@@ -9,7 +9,14 @@ import view.SearchView;
 import view.ViewManager;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 
 public class Main {
     // Mostly copied from Week5 CACoding

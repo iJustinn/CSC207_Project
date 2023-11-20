@@ -1,4 +1,4 @@
-package entity.song;
+package entity.Song;
 
 public interface SongFull {
 }

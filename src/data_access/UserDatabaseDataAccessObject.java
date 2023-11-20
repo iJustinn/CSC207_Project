@@ -6,6 +6,7 @@ import entity.Song.Song;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
+import use_case.add_comment.AddCommentDataAccessInterface;
 import use_case.add_song.AddSongUserDataAccessInterface;
 import use_case.create_playlist.CreatePlaylistDataAccessInterface;
 
@@ -13,7 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
-public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface {
+public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface,
+        AddCommentDataAccessInterface {
 
     private final ObjectMapper objectMapper; // Jackson's object mapper for JSON serialization/deserialization
     private final String storageDirectory; // The directory path where the user databases are stored
@@ -92,6 +94,19 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
 
         // Save the updated database back to the JSON file
         saveUserDatabase(username, userDatabase);
+        return true;
+    }
+
+    //Add or change the comment of a song
+    public boolean addComment(String username, Song song, String comment) throws IOException {
+        UserDatabase userDatabase = loadUserDatabase(username);
+
+        // Add/change the comment of the song
+        song.setComment(comment);
+
+        // Save to our local database, the JSON file
+        saveUserDatabase(username, userDatabase);
+
         return true;
     }
 }

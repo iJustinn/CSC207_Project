@@ -7,10 +7,10 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class CreateUserProfileInteractor implements CreateUserProfileInputBoundary {
-    private final CreateUserProfileDataAccessInterface userProfileDataAccessObject;
+    private final CreateUserProfileUserDataAccessInterface userProfileDataAccessObject;
     private final CreateUserProfileOutputBoundary userProfilePresenter;
 
-    public CreateUserProfileInteractor(CreateUserProfileDataAccessInterface userProfileDataAccessInterface,
+    public CreateUserProfileInteractor(CreateUserProfileUserDataAccessInterface userProfileDataAccessInterface,
                                        CreateUserProfileOutputBoundary userProfileOutputBoundary) {
         this.userProfileDataAccessObject = userProfileDataAccessInterface;
         this.userProfilePresenter = userProfileOutputBoundary;
@@ -21,13 +21,8 @@ public class CreateUserProfileInteractor implements CreateUserProfileInputBounda
         String currentUserId = UserSession.getInstance().getCurrentUser().getName();
         LocalDateTime now = LocalDateTime.now();
 
-        try {
-            userProfileDataAccessObject.createUserProfile(currentUserId, createProfileInputData.getProfileInformation());
-            CreateUserProfileOutputData outputData = new CreateUserProfileOutputData(true, "Profile created successfully", Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
-            userProfilePresenter.present(outputData);
-        } catch (IOException e) {
-            CreateUserProfileOutputData outputData = new CreateUserProfileOutputData(false, "Failed to create profile", null);
-            userProfilePresenter.present(outputData);
-        }
+        userProfileDataAccessObject.createUserProfile(currentUserId, createProfileInputData.getProfileInformation());
+        CreateUserProfileOutputData outputData = new CreateUserProfileOutputData(true, "Profile created successfully", Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
+        userProfilePresenter.present(outputData);
     }
 }

@@ -1,7 +1,7 @@
 package use_case.create_playlist;
 
-import entity.Playlist;
-import entity.PlaylistFactory;
+import entity.Playlist.Playlist;
+import entity.Playlist.PlaylistFactory;
 import entity.UserSession;
 
 import java.io.IOException;
@@ -26,22 +26,22 @@ public class CreatePlaylistInteractor implements CreatePlaylistInputBoundary {
 
     @Override
     public void execute(CreatePlaylistInputData createPlaylistInputData) throws IOException {
-        String currentUserId = UserSession.getInstance().getCurrentUser().getName();
+        // String currentUserId = UserSession.getInstance().getCurrentUser().getName();
         LocalDateTime now = LocalDateTime.now();
         Playlist playlist = playlistFactory.create(createPlaylistInputData.getPlaylistName());
         playlist.setDate(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
 
-        if (playlistDataAccessObject.checkPlaylistExist("local", playlist.getName())) {
+        if (playlistDataAccessObject.checkPlaylistExist("use_1", playlist.getName())) {
             playlistPresenter.prepareFailView("This playlist already exists.");
         } else {
             try {
-                playlistDataAccessObject.createPlaylist(currentUserId, playlist);
+                playlistDataAccessObject.createPlaylist("user_1", playlist);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
             CreatePlaylistOutputData createPlaylistOutputData = new CreatePlaylistOutputData(playlist.getName(), now.toString());
-            playlistPresenter.prepareSuccessView(createPlaylistOutputData);
+            playlistPresenter.prepareSuccessView(createPlaylistOutputData, "successfully");
         }
     }
 }

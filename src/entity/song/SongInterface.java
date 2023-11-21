@@ -1,4 +1,4 @@
-package entity.Song;
+package entity.song;
 
 import entity.Artist;
 

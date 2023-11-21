@@ -2,12 +2,10 @@ package entity.album;
 
 import entity.artist.ArtistSimple;
 import spotify.models.AlbumSimpleModel;
-import spotify.models.ArtistSimpleModel;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class AlbumSimple {
+public class AlbumSimple implements IAlbumSimple{
     private final String id;
     private final String name;
     private final List<ArtistSimple> artists;
@@ -20,19 +18,28 @@ public class AlbumSimple {
         this.releaseDate = album.getReleaseDate();
     }
 
+    @Override
     public String getReleaseDate() {
         return releaseDate;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public List<ArtistSimple> getArtists() {
         return artists;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

@@ -1,7 +1,5 @@
 package use_case.add_song;
 
-import entity.Song.Song;
-
 import java.io.IOException;
 
 public interface AddSongUserDataAccessInterface {

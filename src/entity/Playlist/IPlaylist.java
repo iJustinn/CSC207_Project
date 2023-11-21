@@ -1,11 +1,9 @@
 package entity.Playlist;
 
-import entity.Song.Song;
-
 import java.util.Date;
 import java.util.HashMap;
 
-public interface PlaylistInterface {
+public interface IPlaylist {
     public String getName();
 
     public void setName(String name);

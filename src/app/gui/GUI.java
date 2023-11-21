@@ -75,7 +75,7 @@ public class GUI {
         searchText.setForeground(Color.BLACK);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(createNavButton("entity/Song", "SongSearchPanel"));
+        buttonPanel.add(createNavButton("entity/song", "SongSearchPanel"));
         buttonPanel.add(createNavButton("Album", "AlbumSearchPanel"));
         buttonPanel.add(createNavButton("Artist", "ArtistSearchPanel"));
 

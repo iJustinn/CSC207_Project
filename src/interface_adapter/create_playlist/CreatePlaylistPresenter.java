@@ -6,19 +6,24 @@ import use_case.create_playlist.CreatePlaylistOutputData;
 public class CreatePlaylistPresenter implements CreatePlaylistOutputBoundary {
     private CreateViewModel viewModel;
 
+
     public CreatePlaylistPresenter(CreateViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
     @Override
-    public void prepareSuccessView(CreatePlaylistOutputData outputData) {
-        String message = "Playlist created: " + outputData.getPlaylistName() + " at " + outputData.getCreationDateTime();
-        viewModel.updateState(new CreatePlaylistState(true, message));
+    public void prepareSuccessView(CreatePlaylistOutputData createPlaylistOutputData, String message) {
+        CreatePlaylistState state = viewModel.getState();
+        state.setPlaylistName(createPlaylistOutputData.getPlaylistName());
+        state.setCreationSuccessful(true);
+        state.setMessage(message);
     }
 
 
     @Override
     public void prepareFailView(String message) {
-        viewModel.updateState(new CreatePlaylistState(false, message));
+        CreatePlaylistState state = viewModel.getState();
+        state.setCreationSuccessful(false);
+        state.setMessage(message);
     }
 }

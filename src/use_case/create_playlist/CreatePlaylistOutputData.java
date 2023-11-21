@@ -1,5 +1,7 @@
 package use_case.create_playlist;
 
+import java.util.Date;
+
 public class CreatePlaylistOutputData {
 
     private final String playlistName;

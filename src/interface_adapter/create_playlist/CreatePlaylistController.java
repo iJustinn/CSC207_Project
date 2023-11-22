@@ -12,7 +12,7 @@ public class CreatePlaylistController {
         this.interactor = interactor;
     }
 
-    public void createPlaylist(String playlistName) {
+    public void execute(String playlistName) {
         try {
             interactor.execute(new CreatePlaylistInputData(playlistName));
         } catch (IOException e) {

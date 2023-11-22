@@ -31,11 +31,11 @@ public class CreatePlaylistInteractor implements CreatePlaylistInputBoundary {
         Playlist playlist = playlistFactory.create(createPlaylistInputData.getPlaylistName());
         playlist.setDate(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
 
-        if (playlistDataAccessObject.checkPlaylistExist("use_1", playlist.getName())) {
+        if (playlistDataAccessObject.checkPlaylistExist("Alice", playlist.getName())) {
             playlistPresenter.prepareFailView("This playlist already exists.");
         } else {
             try {
-                playlistDataAccessObject.createPlaylist("user_1", playlist);
+                playlistDataAccessObject.createPlaylist("Alice", playlist);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

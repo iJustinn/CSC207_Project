@@ -5,6 +5,7 @@ package entity.User;
 import entity.Playlist;
 
 import entity.Playlist.Playlist;
+import entity.Song.Song;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +41,19 @@ public class UserDatabase {
     // Method to retrieve a playlist by name
     public Optional<Playlist> getPlaylist(String playlistName) {
         return Optional.ofNullable(playlists.get(playlistName));
+    }
+
+    // Method to add a song to a specific playlist
+    public boolean addSongToPlaylist(String playlistName, Song newSong) {
+        Playlist playlist = playlists.get(playlistName);
+        if (playlist == null) {
+            // Playlist does not exist
+            return false;
+        }
+        int newSongId = playlist.getSongs().size() + 1;
+        playlist.getSongs().put(String.valueOf(newSongId), newSong);
+        playlist.setNumberOfSongs(playlist.getSongs().size());
+        return true;
     }
 
     // More methods could be added for additional functionality, like deleting a playlist, updating a playlist, etc.

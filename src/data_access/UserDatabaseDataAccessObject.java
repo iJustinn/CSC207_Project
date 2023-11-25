@@ -8,13 +8,15 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import use_case.add_song.AddSongUserDataAccessInterface;
 import use_case.create_playlist.CreatePlaylistDataAccessInterface;
+import use_case.view_playlists.ViewPlaylistsDataUserAccessInterface;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface {
+public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface,
+        ViewPlaylistsDataUserAccessInterface {
 
     private final ObjectMapper objectMapper; // Jackson's object mapper for JSON serialization/deserialization
     private final String storageDirectory; // The directory path where the user databases are stored
@@ -99,6 +101,8 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
     // Return a list of playlist names, used by view playlists
     public ArrayList<String> viewPlaylists(String username) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
-        ArrayList<String> names = userDatabase.ke
+        ArrayList<String> names = new ArrayList<String>(userDatabase.getPlaylists().keySet());
+
+        return names;
     }
 }

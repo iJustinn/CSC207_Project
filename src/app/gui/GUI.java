@@ -1,5 +1,11 @@
 package app.gui;
 
+import app.SearchAlbumUseCaseFactory;
+import data_access.SpotifyDataAccessObject;
+import entity.album.AlbumFactory;
+import interface_adapter.search_album.SearchAlbumViewModel;
+import view.SearchView;
+
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import javax.swing.table.DefaultTableModel;
@@ -120,7 +126,7 @@ public class GUI {
         return panel;
     }
 
-    static class ButtonRenderer extends JButton implements TableCellRenderer {
+    public static class ButtonRenderer extends JButton implements TableCellRenderer {
         public ButtonRenderer() {
             setOpaque(true);
         }
@@ -133,7 +139,7 @@ public class GUI {
         }
     }
 
-    static class ButtonEditor extends DefaultCellEditor {
+    public static class ButtonEditor extends DefaultCellEditor {
         protected JButton button;
         private String label;
         private boolean isPushed;
@@ -192,6 +198,24 @@ public class GUI {
     private static JPanel createAlbumSearchPanel() {
         JPanel panel = new JPanel();
         // Add components for album search
+
+//        SearchAlbumViewModel searchAlbumViewModel = new SearchAlbumViewModel();
+//
+//        AlbumFactory albumFactory = new AlbumFactory();
+//        SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
+//
+//        SpotifyDataAccessObject spotify = new SpotifyDataAccessObject(albumFactory, spotifyEndpoint);
+//
+//        SearchView searchView = SearchAlbumUseCaseFactory.create(
+//                viewManagerModel,
+//                searchAlbumViewModel,
+//                spotify
+//        );
+//        views.add(searchView, searchView.viewName);
+//
+//        viewManagerModel.setActiveViewName(searchView.viewName);
+//        viewManagerModel.firePropertyChanged();
+
         return panel;
     }
 

@@ -103,33 +103,43 @@ public class Main {
     private static JPanel createPlaylistPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        String[] columnNames = {"Existing Playlists", "Access"}; // title of the table view
-        Object[][] data = {
-                {"Playlist EX #1", "Access"},
-                {"Playlist EX #2", "Access"},
-                // Dummy Variables for now
-        };
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-            public boolean isCellEditable(int row, int column) {
-                return column == 1;
-            }
-        };
-        JTable table = new JTable(model);
+        // Dummy data for playlists
+        String[] playlists = {"Playlist EX #1", "Playlist EX #2"};
 
-        JTableHeader header = table.getTableHeader();// style table header
-        header.setBackground(Color.white);  // background color
-        header.setForeground(Color.DARK_GRAY); // text color
-        header.setFont(new Font("Arial", Font.BOLD, 14)); // font and size
+        // Creating the JList and setting its model
+        JList<String> playlistList = new JList<>(playlists);
+        playlistList.setCellRenderer(new PlaylistCellRenderer());
 
-        TableColumn accessColumn = table.getColumnModel().getColumn(1);
-        accessColumn.setCellRenderer(new app.Main.ButtonRenderer());
-        accessColumn.setCellEditor(new app.Main.ButtonEditor(new JCheckBox()));
-
-        JScrollPane scrollPane = new JScrollPane(table);
+        // Adding JList to JScrollPane
+        JScrollPane scrollPane = new JScrollPane(playlistList);
         panel.add(scrollPane, BorderLayout.CENTER);
 
         return panel;
     }
+
+    static class PlaylistCellRenderer extends JPanel implements ListCellRenderer<String> {
+        private JLabel nameLabel;
+        private JButton accessButton;
+
+        public PlaylistCellRenderer() {
+            setLayout(new BorderLayout());
+            nameLabel = new JLabel();
+            accessButton = new JButton("Access");
+            accessButton.addActionListener(e -> {
+                // Handle the Access button click event
+            });
+
+            add(nameLabel, BorderLayout.CENTER);
+            add(accessButton, BorderLayout.EAST);
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
+            nameLabel.setText(value);
+            return this;
+        }
+    }
+
 
     private static JPanel createSpecificPlaylistPanel() {
         JPanel panel = new JPanel();

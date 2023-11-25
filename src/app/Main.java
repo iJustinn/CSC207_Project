@@ -10,6 +10,7 @@ import view.ViewManager;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -102,7 +103,7 @@ public class Main {
     private static JPanel createPlaylistPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        String[] columnNames = {"entity/Playlist", "Access"};
+        String[] columnNames = {"Existing Playlists", "Access"}; // title of the table view
         Object[][] data = {
                 {"Playlist EX #1", "Access"},
                 {"Playlist EX #2", "Access"},
@@ -114,6 +115,11 @@ public class Main {
             }
         };
         JTable table = new JTable(model);
+
+        JTableHeader header = table.getTableHeader();// style table header
+        header.setBackground(Color.white);  // background color
+        header.setForeground(Color.DARK_GRAY); // text color
+        header.setFont(new Font("Arial", Font.BOLD, 14)); // font and size
 
         TableColumn accessColumn = table.getColumnModel().getColumn(1);
         accessColumn.setCellRenderer(new app.Main.ButtonRenderer());
@@ -197,7 +203,9 @@ public class Main {
 
     private static JPanel createSongSearchPanel() {
         JPanel panel = new JPanel();
+
         // Add components for song search
+
         return panel;
     }
 
@@ -210,7 +218,6 @@ public class Main {
         SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
         SpotifyDataAccessObject spotify = new SpotifyDataAccessObject(albumFactory, spotifyEndpoint);
 
-        // Assuming SearchAlbumUseCaseFactory.create returns a JPanel or SearchView component
         SearchView searchView = SearchAlbumUseCaseFactory.create(
                 viewManagerModel,
                 searchAlbumViewModel,
@@ -224,7 +231,9 @@ public class Main {
 
     private static JPanel createArtistSearchPanel() {
         JPanel panel = new JPanel();
+
         // Add components for artist search
+
         return panel;
     }
 }

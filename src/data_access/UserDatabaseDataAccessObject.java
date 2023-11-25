@@ -12,6 +12,7 @@ import use_case.create_playlist.CreatePlaylistDataAccessInterface;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface {
 
@@ -93,5 +94,11 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
         // Save the updated database back to the JSON file
         saveUserDatabase(username, userDatabase);
         return true;
+    }
+
+    // Return a list of playlist names, used by view playlists
+    public ArrayList<String> viewPlaylists(String username) throws IOException {
+        UserDatabase userDatabase = loadUserDatabase(username);
+        ArrayList<String> names = userDatabase.ke
     }
 }

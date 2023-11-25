@@ -11,14 +11,13 @@ import entity.artist.ArtistSimple;
 import entity.artist.ArtistFull;
 
 import entity.Song.SongFull;
-import entity.song.SongSimple;
+import entity.Song.SongSimple;
 
 import spotify.SpotifyEndpoint;
 import spotify.models.AlbumSimpleModel;
 import use_case.search.SearchDataAccessInterface;
 import use_case.get_by_id.GetByIdDataAccessInterface;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

@@ -65,6 +65,12 @@
       "numberOfSongs" : 0,
       "date" : "2023-11-23",
       "songs" : { }
+    },
+    "dx" : {
+      "name" : "dx",
+      "numberOfSongs" : 0,
+      "date" : "2023-11-23",
+      "songs" : { }
     }
   }
 }

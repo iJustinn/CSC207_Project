@@ -100,35 +100,44 @@ public class Main {
         return panel;
     }
 
+    public interface PlaylistAccessListener {
+        void onPlaylistAccess(String playlistName);
+    }
+
     private static JPanel createPlaylistPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-
-        // Dummy data for playlists
         String[] playlists = {"Playlist EX #1", "Playlist EX #2"};
 
-        // Creating the JList and setting its model
-        JList<String> playlistList = new JList<>(playlists);
-        playlistList.setCellRenderer(new PlaylistCellRenderer());
+        PlaylistAccessListener listener = new PlaylistAccessListener() {
+            @Override
+            public void onPlaylistAccess(String playlistName) {
+                System.out.println("Accessing playlist: " + playlistName);
+                cardLayout.show(cardPanel, "SpecificPlaylistPanel");
+            }
+        };
 
-        // Adding JList to JScrollPane
+        JList<String> playlistList = new JList<>(playlists);
+        playlistList.setCellRenderer(new PlaylistCellRenderer(listener));
         JScrollPane scrollPane = new JScrollPane(playlistList);
         panel.add(scrollPane, BorderLayout.CENTER);
-
         return panel;
     }
 
     static class PlaylistCellRenderer extends JPanel implements ListCellRenderer<String> {
         private JLabel nameLabel;
         private JButton accessButton;
+        private PlaylistAccessListener listener;
 
-        public PlaylistCellRenderer() {
+        public PlaylistCellRenderer(PlaylistAccessListener listener) {
+            this.listener = listener;
             setLayout(new BorderLayout());
             nameLabel = new JLabel();
             accessButton = new JButton("Access");
             accessButton.addActionListener(e -> {
-                // Handle the Access button click event
+                if (listener != null) {
+                    listener.onPlaylistAccess(nameLabel.getText());
+                }
             });
-
             add(nameLabel, BorderLayout.CENTER);
             add(accessButton, BorderLayout.EAST);
         }
@@ -136,30 +145,42 @@ public class Main {
         @Override
         public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
             nameLabel.setText(value);
+            if (isSelected) {
+                setBackground(list.getSelectionBackground());
+                setForeground(list.getSelectionForeground());
+            } else {
+                setBackground(list.getBackground());
+                setForeground(list.getForeground());
+            }
             return this;
         }
-    }
 
+        private void accessPlaylist(String playlistName) {
+            cardLayout.show(cardPanel, "SpecificPlaylistPanel");
+            cardPanel.revalidate();
+            cardPanel.repaint();
+        }
+    }
 
     private static JPanel createSpecificPlaylistPanel() {
         JPanel panel = new JPanel();
-        panel.add(new JLabel("Specific Playlist Interface"));
-        panel.setBackground(Color.WHITE);
+        panel.add(new JLabel("Playlist Interface TO BE IMPLEMENT"));
+        panel.setBackground(Color.WHITE); // Distinctive color for testing
         return panel;
     }
 
-    public static class ButtonRenderer extends JButton implements TableCellRenderer {
-        public ButtonRenderer() {
-            setOpaque(true);
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                                                       boolean isSelected, boolean hasFocus, int row, int column) {
-            setText((value == null) ? "" : value.toString());
-            return this;
-        }
-    }
+//    public static class ButtonRenderer extends JButton implements TableCellRenderer {
+//        public ButtonRenderer() {
+//            setOpaque(true);
+//        }
+//
+//        @Override
+//        public Component getTableCellRendererComponent(JTable table, Object value,
+//                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+//            setText((value == null) ? "" : value.toString());
+//            return this;
+//        }
+//    }
 
     public static class ButtonEditor extends DefaultCellEditor {
         protected JButton button;

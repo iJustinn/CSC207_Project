@@ -9,10 +9,6 @@ import view.SearchView;
 import view.ViewManager;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

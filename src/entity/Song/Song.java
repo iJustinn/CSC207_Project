@@ -10,7 +10,7 @@ public class Song implements entity.Song.SongInterface {
     private final String EMPTY_STRING = "";
 
     private String title;
-    private ArrayList<Artist> artist;
+    private ArrayList<String> artist;
     private String album;
 
     private String id;
@@ -18,7 +18,7 @@ public class Song implements entity.Song.SongInterface {
     private String comment;
 
     // Constructor
-    public Song(String title, ArrayList<Artist> artist, String album, String id) {
+    public Song(String title, ArrayList<String> artist, String album, String id) {
         this.title = title;
         this.artist = artist;
         this.album = album;
@@ -38,7 +38,7 @@ public class Song implements entity.Song.SongInterface {
         this.title = title;
     }
 
-    public ArrayList<Artist> getArtist() {
+    public ArrayList<String> getArtist() {
         return artist;
     }
 

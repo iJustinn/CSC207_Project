@@ -1,82 +1,25 @@
 {
   "playlists" : {
-    "dasdas" : {
-      "name" : "dasdas",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-21",
-      "songs" : { }
-    },
-    "dsds" : {
-      "name" : "dsds",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-21",
-      "songs" : { }
-    },
-    "dsa" : {
-      "name" : "dsa",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-21",
-      "songs" : { }
-    },
     "love story" : {
       "name" : "love story",
-      "numberOfSongs" : 0,
+      "numberOfSongs" : 2,
       "date" : "2023-11-21",
-      "songs" : { }
-    },
-    "dsd" : {
-      "name" : "dsd",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-21",
-      "songs" : { }
-    },
-    "dsad" : {
-      "name" : "dsad",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-21",
-      "songs" : { }
-    },
-    "dsadas" : {
-      "name" : "dsadas",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-21",
-      "songs" : { }
-    },
-    "ddsa" : {
-      "name" : "ddsa",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-21",
-      "songs" : { }
-    },
-    "sssssss" : {
-      "name" : "sssssss",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-21",
-      "songs" : { }
-    },
-    "sdsds" : {
-      "name" : "sdsds",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-22",
-      "songs" : { }
-    },
-    "caonima" : {
-      "name" : "caonima",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-23",
-      "songs" : { }
-    },
-    "dx" : {
-      "name" : "dx",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-23",
-      "songs" : { }
-    },
-    "ds" : {
-      "name" : "ds",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-25",
-      "songs" : { }
+      "songs" : {
+        "1": {
+          "title": "Song Title 1",
+          "artist": ["Artist A", "Artist B"],
+          "album": "Album 1",
+          "id": "1",
+          "comment": "This is a comment for Song 1"
+        },
+        "2": {
+          "title": "Song Title 2",
+          "artist": ["Artist C"],
+          "album": "Album 2",
+          "id": "2",
+          "comment": "This is a comment for Song 2"
+        }
+      }
     }
   }
 }

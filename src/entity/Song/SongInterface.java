@@ -9,7 +9,7 @@ public interface SongInterface {
 
     public void setTitle(String title);
 
-    public ArrayList<Artist> getArtist();
+    public ArrayList<String> getArtist();
 
     public String getAlbum();
 

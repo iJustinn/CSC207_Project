@@ -1,6 +1,6 @@
 package use_case.search.search_album;
 
-import entity.album.AlbumSimple;
+import entity.album.IAlbumSimple;
 import use_case.search.SearchDataAccessInterface;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class SearchAlbumInteractor implements SearchAlbumInputBoundary {
     @Override
     public void execute(SearchAlbumInputData searchAlbumInputData) {
         String albumName = searchAlbumInputData.getInput();
-        List<AlbumSimple> albums = dataAccess.searchAlbumsByName(albumName);
+        List<IAlbumSimple> albums = dataAccess.searchAlbumsByName(albumName);
         SearchAlbumOutputData searchAlbumOutputData = new SearchAlbumOutputData(albums);
         presenter.prepareSuccessView(searchAlbumOutputData);
     }

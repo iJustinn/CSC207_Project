@@ -1,18 +1,13 @@
 package data_access;
 
 
-// These two imports are for accessing albums through the Spotify API
-
-import entity.album.IAlbumFull;
-import entity.album.AlbumSimple;
-
-import entity.artist.IArtistFull;
-import entity.artist.IArtistSimple;
-import entity.song.ISongFull;
-import entity.song.ISongSimple;
+import entity.album.*;
+import entity.artist.*;
+import entity.song.*;
 
 import spotify.SpotifyEndpoint;
-import spotify.models.AlbumSimpleModel;
+import spotify.models.*;
+
 import use_case.search.SearchDataAccessInterface;
 import use_case.get_by_id.GetByIdDataAccessInterface;
 
@@ -30,19 +25,33 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetBy
 
 
     @Override
-    public List<AlbumSimple> searchAlbumsByName(String albumName) {
-        List<AlbumSimpleModel> spotifyAlbums = this.spotifyApi.requestSearchAlbum(albumName);
-        return spotifyAlbums.stream().map(AlbumSimple::new).toList();
+    public List<? extends IAlbumSimple> searchAlbumsByName(String albumName) {
+        try {
+            List<AlbumSimpleModel> albums = spotifyApi.searchAlbum(albumName);
+            return albums.stream().map(AlbumSimple::new).toList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
-    public List<IArtistSimple> searchArtistByName(String artistName) {
-        return List.of();
+    public List<? extends IArtistFull> searchArtistByName(String artistName) {
+        try {
+            List<ArtistModel> artists = spotifyApi.searchArtist(artistName);
+            return artists.stream().map(ArtistFull::new).toList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
-    public List<ISongSimple> searchSongByName(String songName) {
-        return List.of();
+    public List<? extends ISongFull> searchSongByName(String songName) {
+        try {
+            List<TrackModel> songs = spotifyApi.searchTrack(songName);
+            return songs.stream().map(SongFull::new).toList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

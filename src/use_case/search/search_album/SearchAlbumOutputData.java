@@ -1,17 +1,17 @@
 package use_case.search.search_album;
 
-import entity.album.AlbumSimple;
+import entity.album.IAlbumSimple;
 
 import java.util.List;
 
 public class SearchAlbumOutputData {
-    private final List<AlbumSimple> albums;
+    private final List<IAlbumSimple> albums;
 
-    public SearchAlbumOutputData(List<AlbumSimple> albums) {
+    public SearchAlbumOutputData(List<IAlbumSimple> albums) {
         this.albums = albums;
     }
 
-    public List<AlbumSimple> getAlbums() {
+    public List<IAlbumSimple> getAlbums() {
         return albums;
     }
 }

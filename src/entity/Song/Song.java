@@ -6,7 +6,7 @@ import entity.Artist;
 
 import java.util.ArrayList;
 
-public class Song implements SongInterface{
+public class Song implements entity.Song.SongInterface {
     private final String EMPTY_STRING = "";
 
     private String title;

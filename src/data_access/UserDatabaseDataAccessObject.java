@@ -9,14 +9,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import use_case.add_song.AddSongUserDataAccessInterface;
 import use_case.create_playlist.CreatePlaylistDataAccessInterface;
 import use_case.view_playlists.ViewPlaylistsDataUserAccessInterface;
+import use_case.view_song.ViewSongDataAccess;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface,
-        ViewPlaylistsDataUserAccessInterface {
+        ViewPlaylistsDataUserAccessInterface, ViewSongDataAccess {
 
     private final ObjectMapper objectMapper; // Jackson's object mapper for JSON serialization/deserialization
     private final String storageDirectory; // The directory path where the user databases are stored
@@ -104,5 +106,13 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
         ArrayList<String> names = new ArrayList<String>(userDatabase.getPlaylists().keySet());
 
         return names;
+    }
+
+    //Return the songs inside a playlist
+    public HashMap<String, Song> getSongsByPlaylistName(String username, String name) throws IOException {
+        UserDatabase userDatabase = loadUserDatabase(username);
+        return userDatabase.getPlaylists().get(name).getSongs();
+
+
     }
 }

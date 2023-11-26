@@ -15,7 +15,7 @@ public class ArtistFull implements IArtistFull {
         this.popularity = popularity;
     }
 
-    ArtistFull(ArtistModel artist) {
+    public ArtistFull(ArtistModel artist) {
         this.id = artist.getId();
         this.name = artist.getName();
         this.genres = artist.getGenres();

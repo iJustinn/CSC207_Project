@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import use_case.add_song.AddSongUserDataAccessInterface;
 import use_case.create_playlist.CreatePlaylistDataAccessInterface;
 import use_case.delete_playlist.DeletePlaylistDataAccessInterface;
+import use_case.delete_song.DeleteSongDataAccessInterface;
 import use_case.view_playlists.ViewPlaylistsDataUserAccessInterface;
 import use_case.view_song.ViewSongDataAccess;
 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface,
-        ViewPlaylistsDataUserAccessInterface, ViewSongDataAccess, DeletePlaylistDataAccessInterface {
+        ViewPlaylistsDataUserAccessInterface, ViewSongDataAccess, DeletePlaylistDataAccessInterface, DeleteSongDataAccessInterface {
 
     private final ObjectMapper objectMapper; // Jackson's object mapper for JSON serialization/deserialization
     private final String storageDirectory; // The directory path where the user databases are stored
@@ -68,6 +69,26 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
         saveUserDatabase(username, userDatabase);
         return true;
     }
+
+    @Override
+    // Delete a song from a specific playlist in a user's database
+    public boolean deleteSongFromPlaylist(String username, String playlistId, String songId) throws IOException {
+        UserDatabase userDatabase = loadUserDatabase(username);
+
+        // Locate the target playlist
+        Playlist targetPlaylist = userDatabase.getPlaylists().get(playlistId);
+
+        // Remove the song from the playlist
+        targetPlaylist.getSongs().remove(songId);
+
+        // Update the number of songs in the playlist
+        targetPlaylist.setNumberOfSongs(targetPlaylist.getSongs().size());
+
+        // Save the updated database back to the JSON file
+        saveUserDatabase(username, userDatabase);
+        return true;
+    }
+
 
     @Override
     public boolean checkSongExist(String username, String playlistId, Song newSong) throws IOException {

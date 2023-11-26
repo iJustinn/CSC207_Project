@@ -28,6 +28,7 @@ public class GUI_View_Playlists {
         ViewPlaylistsController controller = new ViewPlaylistsController(interactor);
         ViewPlaylistsView view = new ViewPlaylistsView(viewModel);
 
+
         // Set up the main window (JFrame)
         JFrame frame = new JFrame("Playlist Viewer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

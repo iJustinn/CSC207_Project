@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import use_case.add_song.AddSongUserDataAccessInterface;
 import use_case.create_playlist.CreatePlaylistDataAccessInterface;
+import use_case.delete_playlist.DeletePlaylistDataAccessInterface;
 import use_case.view_playlists.ViewPlaylistsDataUserAccessInterface;
 import use_case.view_song.ViewSongDataAccess;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface,
-        ViewPlaylistsDataUserAccessInterface, ViewSongDataAccess {
+        ViewPlaylistsDataUserAccessInterface, ViewSongDataAccess, DeletePlaylistDataAccessInterface {
 
     private final ObjectMapper objectMapper; // Jackson's object mapper for JSON serialization/deserialization
     private final String storageDirectory; // The directory path where the user databases are stored
@@ -113,6 +114,20 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
         UserDatabase userDatabase = loadUserDatabase(username);
         return userDatabase.getPlaylists().get(name).getSongs();
 
+
+
+    }
+
+    public boolean deleteplaylist(String username, String deletePlaylist) throws IOException{
+        if(!checkPlaylistExist(username,deletePlaylist)){
+            return false;
+        }
+        UserDatabase userdatabase = loadUserDatabase(username);
+        userdatabase.getPlaylists().remove(deletePlaylist);
+
+        saveUserDatabase(username, userdatabase);
+
+        return true;
 
     }
 }

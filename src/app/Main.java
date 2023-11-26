@@ -1,7 +1,6 @@
 package app;
 
 import data_access.SpotifyDataAccessObject;
-import entity.album.AlbumFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.search_album.SearchAlbumViewModel;
 import spotify.SpotifyEndpoint;
@@ -165,19 +164,6 @@ public class Main {
         return panel;
     }
 
-//    public static class ButtonRenderer extends JButton implements TableCellRenderer {
-//        public ButtonRenderer() {
-//            setOpaque(true);
-//        }
-//
-//        @Override
-//        public Component getTableCellRendererComponent(JTable table, Object value,
-//                                                       boolean isSelected, boolean hasFocus, int row, int column) {
-//            setText((value == null) ? "" : value.toString());
-//            return this;
-//        }
-//    }
-
     public static class ButtonEditor extends DefaultCellEditor {
         protected JButton button;
         private String label;
@@ -240,10 +226,9 @@ public class Main {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        SearchAlbumViewModel searchAlbumViewModel = new SearchAlbumViewModel();
-        AlbumFactory albumFactory = new AlbumFactory();
-        SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
-        SpotifyDataAccessObject spotify = new SpotifyDataAccessObject(albumFactory, spotifyEndpoint);
+        SearchAlbumViewModel searchAlbumViewModel = new SearchAlbumViewModel(); // Initialize the ViewModel for the album search
+        SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint(); // Initialize the SpotifyEndpoint
+        SpotifyDataAccessObject spotify = new SpotifyDataAccessObject(spotifyEndpoint);
 
         SearchView searchView = SearchAlbumUseCaseFactory.create(
                 viewManagerModel,

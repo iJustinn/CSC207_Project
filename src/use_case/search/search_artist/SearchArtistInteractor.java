@@ -18,7 +18,7 @@ public class SearchArtistInteractor implements SearchArtistInputBoundary {
     @Override
     public void execute(SearchArtistInputData searchArtistInputData) {
         String artistName = searchArtistInputData.getInput();
-        List<IArtistFull> artists = dataAccess.searchArtistByName(artistName);
+        List<? extends IArtistFull> artists = dataAccess.searchArtistByName(artistName);
         SearchArtistOutputData outputData = new SearchArtistOutputData(artists);
         presenter.prepareSuccessView(outputData);
     }

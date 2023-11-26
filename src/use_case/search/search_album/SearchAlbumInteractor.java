@@ -19,7 +19,7 @@ public class SearchAlbumInteractor implements SearchAlbumInputBoundary {
     @Override
     public void execute(SearchAlbumInputData searchAlbumInputData) {
         String albumName = searchAlbumInputData.getInput();
-        List<IAlbumSimple> albums = dataAccess.searchAlbumsByName(albumName);
+        List<? extends IAlbumSimple> albums = dataAccess.searchAlbumsByName(albumName);
         SearchAlbumOutputData searchAlbumOutputData = new SearchAlbumOutputData(albums);
         presenter.prepareSuccessView(searchAlbumOutputData);
     }

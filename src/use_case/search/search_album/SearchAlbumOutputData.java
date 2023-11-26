@@ -5,13 +5,13 @@ import entity.album.IAlbumSimple;
 import java.util.List;
 
 public class SearchAlbumOutputData {
-    private final List<IAlbumSimple> albums;
+    private final List<? extends IAlbumSimple> albums;
 
-    public SearchAlbumOutputData(List<IAlbumSimple> albums) {
+    public SearchAlbumOutputData(List<? extends IAlbumSimple> albums) {
         this.albums = albums;
     }
 
-    public List<IAlbumSimple> getAlbums() {
+    public List<? extends IAlbumSimple> getAlbums() {
         return albums;
     }
 }

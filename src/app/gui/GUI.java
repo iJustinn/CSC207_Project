@@ -2,7 +2,6 @@ package app.gui;
 
 import app.SearchAlbumUseCaseFactory;
 import data_access.SpotifyDataAccessObject;
-import entity.album.AlbumFactory;
 import interface_adapter.search_album.SearchAlbumViewModel;
 import view.SearchView;
 

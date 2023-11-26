@@ -12,8 +12,8 @@ public class ViewPlaylistsInteractor implements ViewPlaylistsInputBoundary{
     }
 
     @Override
-    public void execute() throws IOException {
-       ArrayList<String> playlists = viewPlaylistsDataUserAccessInterface.viewPlaylists("local");
+    public void execute(String user) throws IOException {
+       ArrayList<String> playlists = viewPlaylistsDataUserAccessInterface.viewPlaylists(user);
        ViewPlaylistsOutputData outData = new ViewPlaylistsOutputData(playlists);
        viewPlaylistsPresenter.prepareSuccessView(outData);
     }

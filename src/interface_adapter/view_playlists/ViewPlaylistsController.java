@@ -11,7 +11,7 @@ public class ViewPlaylistsController {
         this.viewPlaylistsInteractor = viewPlaylistsInteractor;
     }
 
-    public void execute() throws IOException {
-        viewPlaylistsInteractor.execute();
+    public void execute(String user) throws IOException {
+        viewPlaylistsInteractor.execute(user);
     }
 }

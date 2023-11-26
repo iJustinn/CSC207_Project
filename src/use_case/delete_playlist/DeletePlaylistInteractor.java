@@ -16,7 +16,7 @@ public class DeletePlaylistInteractor implements DeletePlaylistInputBoundary{
     public void execute(DeletePlaylistInputData deletePlaylistInputData) throws IOException {
         String username = "Alice"; // for testing
 
-        boolean success = deleteDAO.deletePlaylist(username, deletePlaylistInputData.getPlaylistId());
+        boolean success = deleteDAO.deleteplaylist(username, deletePlaylistInputData.getPlaylistId());
         String message = success ? "Playlist deleted successfully." : "Failed to delete playlist.";
         DeletePlaylistOutputData outputData = new DeletePlaylistOutputData(success, message);
 

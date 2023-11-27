@@ -1,7 +1,7 @@
 package entity.User;
 
 import entity.Playlist.Playlist;
-import entity.Song.Song;
+import entity.song.Song;
 
 import java.util.HashMap;
 import java.util.Map;

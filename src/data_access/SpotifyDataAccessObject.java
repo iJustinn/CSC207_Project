@@ -6,17 +6,15 @@ package data_access;
 import entity.album.AlbumFull;
 import entity.album.AlbumSimple;
 
-import entity.artist.ArtistSimple;
 import entity.artist.ArtistFull;
 
 import entity.song.Song;
 
 import spotify.SpotifyEndpoint;
-import spotify.models.AlbumSimpleModel;
+import spotify.models.*;
 import use_case.search.SearchDataAccessInterface;
 import use_case.get_by_id.GetByIdDataAccessInterface;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,19 +30,21 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetBy
 
 
     @Override
-    public List<AlbumSimple> searchAlbumsByName(String albumName) {
-        List<AlbumSimpleModel> spotifyAlbums = this.spotifyApi.searchAlbum(albumName);
-        return spotifyAlbums.stream().map(AlbumSimple::new).toList();
+    public List<AlbumSimple> searchAlbumsByName(String name) {
+        List<AlbumSimpleModel> albums = this.spotifyApi.searchAlbum(name);
+        return albums.stream().map(AlbumSimple::new).toList();
     }
 
     @Override
-    public List<ArtistFull> searchArtistByName(String artistName) {
-        return List.of();
+    public List<ArtistFull> searchArtistByName(String name) {
+        List<ArtistModel> artists = this.spotifyApi.searchArtist(name);
+        return artists.stream().map(ArtistFull::new).toList();
     }
 
     @Override
-    public List<Song> searchSongByName(String songName) {
-        return List.of();
+    public List<Song> searchSongByName(String name) {
+        List<TrackModel> songs = this.spotifyApi.searchTrack(name);
+        return songs.stream().map(Song::new).toList();
     }
 
     @Override

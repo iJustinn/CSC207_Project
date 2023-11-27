@@ -4,6 +4,8 @@ import org.apache.hc.core5.http.ParseException;
 import se.michaelthelin.spotify.SpotifyApi;
 
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
+import se.michaelthelin.spotify.requests.data.albums.GetAlbumRequest;
+import se.michaelthelin.spotify.requests.data.albums.GetAlbumsTracksRequest;
 import se.michaelthelin.spotify.requests.data.search.simplified.SearchAlbumsRequest;
 
 import se.michaelthelin.spotify.requests.data.search.simplified.SearchArtistsRequest;
@@ -31,7 +33,7 @@ public class SpotifyEndpoint {
             AlbumSimplified[] albums = request.execute().getItems();
             return Arrays.stream(albums).map(AlbumSimpleModel::new).toList();
         } catch (Exception e) {
-            System.out.println("Error in Spotify Endpoint");
+            System.out.println("Error in Spotify Endpoint: Search Album Request");
             return List.of();
         }
     }
@@ -42,7 +44,7 @@ public class SpotifyEndpoint {
             Artist[] artists = request.execute().getItems();
             return Arrays.stream(artists).map(ArtistModel::new).toList();
         } catch (Exception e) {
-            System.out.println("Error in Spotify Endpoint");
+            System.out.println("Error in Spotify Endpoint: Search Artist Request.");
             return List.of();
         }
 
@@ -54,9 +56,19 @@ public class SpotifyEndpoint {
             Track[] tracks = request.execute().getItems();
             return Arrays.stream(tracks).map(TrackModel::new).toList();
         } catch (Exception e) {
-            System.out.println("Error in Spotify Endpoint");
+            System.out.println("Error in Spotify Endpoint: Search Track Request.");
             return List.of();
         }
     }
 
+    public List<TrackSimpleModel> getAlbumTracks(String id) {
+        try {
+            GetAlbumsTracksRequest request = spotifyApi.getAlbumsTracks(id).build();
+            TrackSimplified[] tracks = request.execute().getItems();
+            return Arrays.stream(tracks).map(TrackSimpleModel::new).toList();
+        } catch (Exception e) {
+            System.out.println("Error in Spotify Endpoint: Get Album By Id Request.");
+        return List.of();
+        }
+    }
 }

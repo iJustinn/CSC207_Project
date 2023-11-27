@@ -1,6 +1,6 @@
 package view;
 
-import entity.album.IAlbumSimple;
+import entity.album.AlbumSimple;
 import interface_adapter.search_album.SearchAlbumController;
 import interface_adapter.search_album.SearchAlbumState;
 import interface_adapter.search_album.SearchAlbumViewModel;
@@ -24,8 +24,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final SearchAlbumViewModel searchAlbumViewModel;
 
     private final JButton searchButton;
-    private final JList<IAlbumSimple> albumList = new JList<entity.album.IAlbumSimple>();
-    private CustomListModel<IAlbumSimple> listModel;
+    private final JList<AlbumSimple> albumList = new JList<entity.album.AlbumSimple>();
+    private CustomListModel<AlbumSimple> listModel;
 
     public SearchView(SearchAlbumController controller, SearchAlbumViewModel viewModel) {
         this.searchAlbumController = controller;
@@ -83,7 +83,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         albumList.setPreferredSize(new Dimension(400, 360));
 
-        listModel = new CustomListModel<entity.album.IAlbumSimple>(searchAlbumViewModel.getState().getAlbums());
+        listModel = new CustomListModel<entity.album.AlbumSimple>(searchAlbumViewModel.getState().getAlbums());
 
         albumList.setModel(listModel);
 
@@ -99,7 +99,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        List<IAlbumSimple> newAlbums = searchAlbumViewModel.getState().getAlbums();
+        List<AlbumSimple> newAlbums = searchAlbumViewModel.getState().getAlbums();
         listModel.setList(newAlbums);
         listModel.fireDataChanged();
     }

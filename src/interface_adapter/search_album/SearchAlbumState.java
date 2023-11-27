@@ -1,12 +1,12 @@
 package interface_adapter.search_album;
 
-import entity.album.IAlbumSimple;
+import entity.album.AlbumSimple;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchAlbumState {
-    private List<IAlbumSimple> albums = new ArrayList<IAlbumSimple>();
+    private List<AlbumSimple> albums = new ArrayList<AlbumSimple>();
     private String searchInput = null;
 
     public SearchAlbumState() {}
@@ -23,11 +23,11 @@ public class SearchAlbumState {
         this.searchInput = searchInput;
     }
 
-    public List<IAlbumSimple> getAlbums() {
+    public List<AlbumSimple> getAlbums() {
         return albums;
     }
 
-    public void setAlbums(List<IAlbumSimple> albums) {
+    public void setAlbums(List<AlbumSimple> albums) {
         this.albums = albums;
     }
 }

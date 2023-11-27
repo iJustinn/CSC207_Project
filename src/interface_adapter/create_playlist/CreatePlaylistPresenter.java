@@ -17,6 +17,8 @@ public class CreatePlaylistPresenter implements CreatePlaylistOutputBoundary {
         state.setPlaylistName(createPlaylistOutputData.getPlaylistName());
         state.setCreationSuccessful(true);
         state.setMessage(message);
+        this.viewModel.SetState(state);
+        viewModel.firePropertyChanged();
     }
 
 
@@ -25,5 +27,7 @@ public class CreatePlaylistPresenter implements CreatePlaylistOutputBoundary {
         CreatePlaylistState state = viewModel.getState();
         state.setCreationSuccessful(false);
         state.setMessage(message);
+        this.viewModel.SetState(state);
+        viewModel.firePropertyChanged();
     }
 }

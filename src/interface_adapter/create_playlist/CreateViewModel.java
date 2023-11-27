@@ -9,6 +9,7 @@ public class CreateViewModel extends ViewModel {
 
     public final String TITLE_LABEL = "Create Playlist";
 
+
     private CreatePlaylistState state = new CreatePlaylistState();
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);

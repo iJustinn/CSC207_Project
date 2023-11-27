@@ -25,25 +25,38 @@ public class SpotifyEndpoint {
         spotifyApi = new SpotifyApi.Builder().setAccessToken(accessToken).build();
     }
 
-    public List<AlbumSimpleModel> searchAlbum(String q)
-            throws IOException, SpotifyWebApiException, ParseException {
-        SearchAlbumsRequest request = spotifyApi.searchAlbums(q).build();
-        AlbumSimplified[] albums = request.execute().getItems();
-        return Arrays.stream(albums).map(AlbumSimpleModel::new).toList();
+    public List<AlbumSimpleModel> searchAlbum(String q) {
+        try {
+            SearchAlbumsRequest request = spotifyApi.searchAlbums(q).build();
+            AlbumSimplified[] albums = request.execute().getItems();
+            return Arrays.stream(albums).map(AlbumSimpleModel::new).toList();
+        } catch (Exception e) {
+            System.out.println("Error in Spotify Endpoint");
+            return List.of();
+        }
     }
 
-    public List<ArtistModel> searchArtist(String q)
-            throws IOException, SpotifyWebApiException, ParseException {
-        SearchArtistsRequest request = spotifyApi.searchArtists(q).build();
-        Artist[] artists = request.execute().getItems();
-        return Arrays.stream(artists).map(ArtistModel::new).toList();
+    public List<ArtistModel> searchArtist(String q) {
+        try {
+            SearchArtistsRequest request = spotifyApi.searchArtists(q).build();
+            Artist[] artists = request.execute().getItems();
+            return Arrays.stream(artists).map(ArtistModel::new).toList();
+        } catch (Exception e) {
+            System.out.println("Error in Spotify Endpoint");
+            return List.of();
+        }
+
     }
 
-    public List<TrackModel> searchTrack(String q)
-            throws IOException, SpotifyWebApiException, ParseException {
-        SearchTracksRequest request = spotifyApi.searchTracks(q).build();
-        Track[] tracks = request.execute().getItems();
-        return Arrays.stream(tracks).map(TrackModel::new).toList();
+    public List<TrackModel> searchTrack(String q) {
+        try {
+            SearchTracksRequest request = spotifyApi.searchTracks(q).build();
+            Track[] tracks = request.execute().getItems();
+            return Arrays.stream(tracks).map(TrackModel::new).toList();
+        } catch (Exception e) {
+            System.out.println("Error in Spotify Endpoint");
+            return List.of();
+        }
     }
 
 }

@@ -33,14 +33,8 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetBy
 
     @Override
     public List<AlbumSimple> searchAlbumsByName(String albumName) {
-        try {
-            List<AlbumSimpleModel> spotifyAlbums = this.spotifyApi.searchAlbum(albumName);
-            return spotifyAlbums.stream().map(AlbumSimple::new).toList();
-        } catch (Exception e) {
-            System.out.println("error");
-            return List.of();
-        }
-
+        List<AlbumSimpleModel> spotifyAlbums = this.spotifyApi.searchAlbum(albumName);
+        return spotifyAlbums.stream().map(AlbumSimple::new).toList();
     }
 
     @Override

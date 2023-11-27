@@ -1,8 +1,4 @@
-// UserDatabase.java in package entity
-
 package entity.User;
-
-import entity.Playlist;
 
 import entity.Playlist.Playlist;
 import entity.Song.Song;

@@ -1,24 +1,38 @@
 package interface_adapter.create_playlist;
 
-public class CreateViewModel {
-    private CreatePlaylistState state;
-    // Listener or observer to notify the view
-    private PlaylistViewListener viewListener;
+import interface_adapter.ViewModel;
 
-    public void updateState(CreatePlaylistState state) {
-        this.state = state;
-        if (viewListener != null) {
-            viewListener.onStateChanged(state);
-        }
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+public class CreateViewModel extends ViewModel {
+
+    public final String TITLE_LABEL = "Create Playlist";
+
+
+    private CreatePlaylistState state = new CreatePlaylistState();
+
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
+    public CreateViewModel(){super("Create");}
+
+    public CreatePlaylistState getState(){return state;}
+
+    public void SetState(CreatePlaylistState state){this.state = state;}
+
+    public void firePropertyChanged() {
+        support.firePropertyChange("state", null, this.state);
     }
 
-    // Method to set the view listener
-    public void setViewListener(PlaylistViewListener viewListener) {
-        this.viewListener = viewListener;
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
     }
 
-    // Interface for notifying state changes to the view
-    public interface PlaylistViewListener {
-        void onStateChanged(CreatePlaylistState state);
+    public boolean isCreationSuccessful() {
+        return state.isCreationSuccessful();
+    }
+
+    public String getCreationMessage() {
+        return state.getMessage();
     }
 }

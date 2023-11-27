@@ -1,11 +1,11 @@
 package use_case.get_by_id;
 
-import entity.album.IAlbumFull;
-import entity.artist.IArtistFull;
-import entity.song.ISongFull;
+import entity.album.AlbumFull;
+import entity.artist.ArtistFull;
+import entity.Song.SongFull;
 
 public interface GetByIdDataAccessInterface {
-    IAlbumFull getAlbumById(String albumId);
-    IArtistFull getArtistById(String artistId);
-    ISongFull getSongById(String songId);
+    AlbumFull getAlbumById(String albumId);
+    ArtistFull getArtistById(String artistId);
+    SongFull getSongById(String songId);
 }

@@ -10,6 +10,9 @@ public class Playlist implements IPlaylist {
     private int numberOfSongs;
     private Date date;
     private HashMap<String, Song> songs;
+    public Playlist() {
+        // this constructor is needed by Jackson
+    }
 
     // Constructor
     public Playlist(String name, int numberOfSongs, Date date, HashMap<String, Song> songs) {

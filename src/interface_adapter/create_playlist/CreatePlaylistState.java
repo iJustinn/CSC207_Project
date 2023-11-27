@@ -1,20 +1,45 @@
 package interface_adapter.create_playlist;
 
-public class CreatePlaylistState {
-    private final boolean isSuccess;
-    private final String message;
+import java.util.Date;
 
-    public CreatePlaylistState(boolean isSuccess, String message) {
-        this.isSuccess = isSuccess;
-        this.message = message;
+public class CreatePlaylistState {
+    private String playlistName;
+    private boolean creationSuccessful;
+
+    private String message;
+
+    public CreatePlaylistState() {
+        resetState();
     }
 
-    // Getters
-    public boolean isSuccess() {
-        return isSuccess;
+    public String getPlaylistName() {
+        return playlistName;
+    }
+
+    public void setPlaylistName(String playlistName) {
+        this.playlistName = playlistName;
+    }
+
+    public boolean isCreationSuccessful() {
+        return creationSuccessful;
+    }
+
+    public void setCreationSuccessful(boolean creationSuccessful) {
+        this.creationSuccessful = creationSuccessful;
+    }
+
+
+    public void resetState() {
+        this.playlistName = "";
+        this.creationSuccessful = false;
+        this.message = "";
     }
 
     public String getMessage() {
         return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

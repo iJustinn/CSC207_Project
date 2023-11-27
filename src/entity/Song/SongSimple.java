@@ -1,4 +1,4 @@
-package entity.song;
+package entity.Song;
 
 import entity.artist.ArtistSimple;
 import spotify.models.TrackSimpleModel;

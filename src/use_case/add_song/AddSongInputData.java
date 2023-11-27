@@ -7,7 +7,7 @@ public class AddSongInputData {
     final private Playlist playlist;
     final private Song song;
 
-    public AddSongInputData(String id, Playlist playlist, Song song) {
+    public AddSongInputData(Playlist playlist, Song song) {
 
         this.playlist = playlist;
         this.song = song;

@@ -4,6 +4,7 @@ package entity.Playlist;
 
 import java.util.Date;
 import java.util.HashMap;
+import entity.song.Song;
 
 public class Playlist implements IPlaylist {
     private String name;

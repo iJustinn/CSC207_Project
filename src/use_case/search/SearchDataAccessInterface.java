@@ -2,7 +2,6 @@ package use_case.search;
 
 import entity.album.IAlbumSimple;
 import entity.artist.IArtistFull;
-import entity.song.ISongFull;
 
 import java.util.List;
 

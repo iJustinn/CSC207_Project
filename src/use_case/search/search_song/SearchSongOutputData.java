@@ -1,7 +1,5 @@
 package use_case.search.search_song;
 
-import entity.song.ISongSimple;
-
 import java.util.List;
 
 public class SearchSongOutputData {

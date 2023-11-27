@@ -1,16 +1,50 @@
 package entity.album;
 
-import entity.Song.Song;
-import entity.artist.ArtistFull;
 
-public interface AlbumFull {
-    String getId();
-    String getName();
-    ArtistFull[] getArtists();
-    String getReleaseDate();
+import entity.artist.ArtistSimple;
+import entity.song.Song;
 
-    String[] getGenres();
-    Integer getPopularity();
-    String getLabel();
-    Song[] getTracklist();
+import java.util.List;
+
+public class AlbumFull implements IAlbumFull {
+
+    @Override
+    public String getId() {
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public List<ArtistSimple> getArtists() {
+        return null;
+    }
+
+    @Override
+    public String getReleaseDate() {
+        return null;
+    }
+
+    @Override
+    public String[] getGenres() {
+        return new String[0];
+    }
+
+    @Override
+    public Integer getPopularity() {
+        return null;
+    }
+
+    @Override
+    public String getLabel() {
+        return null;
+    }
+
+    @Override
+    public List<Song> getTracklist() {
+        return null;
+    }
 }

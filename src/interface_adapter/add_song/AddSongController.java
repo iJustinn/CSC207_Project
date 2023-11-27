@@ -1,7 +1,7 @@
 package interface_adapter.add_song;
 
 import entity.Playlist.Playlist;
-import entity.Song.Song;
+import entity.song.Song;
 import use_case.add_song.AddSongInputBoundary;
 import use_case.add_song.AddSongInputData;
 

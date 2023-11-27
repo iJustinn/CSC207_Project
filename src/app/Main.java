@@ -1,18 +1,16 @@
 package app;
 
+// Spotify API imports
+import spotify.SpotifyEndpoint;
 import data_access.SpotifyDataAccessObject;
+
+// Views imports
+import view.SearchView;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.search_album.SearchAlbumViewModel;
-import spotify.SpotifyEndpoint;
-import view.SearchView;
-import view.ViewManager;
 
+// JAVA swing imports
 import javax.swing.*;
-import javax.swing.table.TableColumn;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -166,69 +164,6 @@ public class Main {
         panel.add(new JLabel("Playlist Interface TO BE IMPLEMENT"));
         panel.setBackground(Color.WHITE); // Distinctive color for testing
         return panel;
-    }
-
-//    public static class ButtonRenderer extends JButton implements TableCellRenderer {
-//        public ButtonRenderer() {
-//            setOpaque(true);
-//        }
-//
-//        @Override
-//        public Component getTableCellRendererComponent(JTable table, Object value,
-//                                                       boolean isSelected, boolean hasFocus, int row, int column) {
-//            setText((value == null) ? "" : value.toString());
-//            return this;
-//        }
-//    }
-
-    public static class ButtonEditor extends DefaultCellEditor {
-        protected JButton button;
-        private String label;
-        private boolean isPushed;
-
-        public ButtonEditor(JCheckBox checkBox) {
-            super(checkBox);
-            button = new JButton();
-            button.setOpaque(true);
-            button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    isPushed = true;
-                    fireEditingStopped();
-                }
-            });
-        }
-
-        public Component getTableCellEditorComponent(JTable table, Object value,
-                                                     boolean isSelected, int row, int column) {
-            if (isSelected) {
-                button.setForeground(table.getSelectionForeground());
-                button.setBackground(table.getSelectionBackground());
-            } else {
-                button.setForeground(table.getForeground());
-                button.setBackground(table.getBackground());
-            }
-            label = (value == null) ? "" : value.toString();
-            button.setText(label);
-            return button;
-        }
-
-        public Object getCellEditorValue() {
-            if (isPushed) {
-                // Switch to the specific playlist panel
-                cardLayout.show(cardPanel, "SpecificPlaylistPanel");
-            }
-            isPushed = false;
-            return label;
-        }
-
-        public boolean stopCellEditing() {
-            isPushed = false;
-            return super.stopCellEditing();
-        }
-
-        protected void fireEditingStopped() {
-            super.fireEditingStopped();
-        }
     }
 
     private static JPanel createSongSearchPanel() {

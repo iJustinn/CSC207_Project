@@ -1,6 +1,5 @@
 package entity.song;
 
-import entity.Artist;
 
 import java.util.ArrayList;
 
@@ -9,7 +8,7 @@ public interface SongInterface {
 
     public void setTitle(String title);
 
-    public ArrayList<Artist> getArtist();
+    public ArrayList<String> getArtist();
 
     public String getAlbum();
 

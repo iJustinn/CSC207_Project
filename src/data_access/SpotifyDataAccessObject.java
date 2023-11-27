@@ -5,12 +5,11 @@ package data_access;
 
 import entity.album.AlbumFull;
 import entity.album.AlbumSimple;
-import entity.album.AlbumFactory;
 
 import entity.artist.ArtistSimple;
 import entity.artist.ArtistFull;
 
-import entity.Song.SongFull;
+import entity.song.SongFull;
 import entity.song.SongSimple;
 
 import spotify.SpotifyEndpoint;
@@ -27,19 +26,21 @@ import java.util.List;
 public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetByIdDataAccessInterface {
 
     private final SpotifyEndpoint spotifyApi;
-    private final AlbumFactory albumFactory;
 
-    public SpotifyDataAccessObject(AlbumFactory albumFactory,
-                                   SpotifyEndpoint spotifyApi) {
-        this.albumFactory = albumFactory;
+    public SpotifyDataAccessObject(SpotifyEndpoint spotifyApi) {
         this.spotifyApi = spotifyApi;
     }
 
 
     @Override
     public List<AlbumSimple> searchAlbumsByName(String albumName) {
-        List<AlbumSimpleModel> spotifyAlbums = this.spotifyApi.requestSearchAlbum(albumName);
-        return spotifyAlbums.stream().map(AlbumSimple::new).toList();
+        try {
+            List<AlbumSimpleModel> spotifyAlbums = this.spotifyApi.searchAlbum(albumName);
+            return spotifyAlbums.stream().map(AlbumSimple::new).toList();
+        } catch (Exception e) {
+            a
+        }
+
     }
 
     @Override

@@ -3,6 +3,9 @@
 package entity.song;
 
 
+import spotify.models.ArtistSimpleModel;
+import spotify.models.TrackModel;
+
 import java.util.ArrayList;
 
 public class Song implements entity.song.SongInterface {
@@ -27,6 +30,14 @@ public class Song implements entity.song.SongInterface {
 
     // No-argument constructor for Jackson
     public Song() {}
+
+    public Song(TrackModel track) {
+        this.title = track.getName();
+        this.artist = new ArrayList<>(track.getArtists().stream().map(ArtistSimpleModel::getName).toList());
+        this.album = track.getAlbum().getAlbumName();
+        this.id = track.getId();
+        this.comment = EMPTY_STRING;
+    }
 
     // Getters and setters
     public String getTitle() {

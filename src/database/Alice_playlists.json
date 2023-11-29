@@ -26,6 +26,12 @@
       "numberOfSongs" : 0,
       "date" : "2023-11-28",
       "songs" : { }
+    },
+    "hello" : {
+      "name" : "hello",
+      "numberOfSongs" : 0,
+      "date" : "2023-11-28",
+      "songs" : { }
     }
   }
 }

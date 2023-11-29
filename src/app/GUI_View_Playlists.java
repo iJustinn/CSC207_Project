@@ -49,7 +49,7 @@ public class GUI_View_Playlists {
 
 
         // Create the Views
-        ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController);
+        ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel);
         ViewSongView viewSongView = new ViewSongView(viewSongViewModel);
 
         // Set up the main application window

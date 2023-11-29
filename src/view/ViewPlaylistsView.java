@@ -2,6 +2,8 @@ package view;
 
 import app.GUI_View_Playlists;
 import interface_adapter.delete_playlist.DeletePlaylistController;
+import interface_adapter.delete_playlist.DeletePlaylistState;
+import interface_adapter.delete_playlist.DeletePlaylistViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsController;
 import interface_adapter.view_song.ViewSongController;
@@ -21,26 +23,30 @@ public class ViewPlaylistsView extends JPanel implements PropertyChangeListener,
     private final ViewSongController viewSongController;
     private final DeletePlaylistController deletePlaylistController;
 
+    private final DeletePlaylistViewModel deletePlaylistViewModel;
+
     private final JList<String> playlistsList;
-    private final JButton refreshButton;
+    // private final JButton refreshButton;
     private final JButton createPlaylistButton;
     private final JButton deletePlaylistButton;
 
     public ViewPlaylistsView(ViewPlaylistsViewModel viewModel,
                              ViewPlaylistsController playlistsController,
                              ViewSongController viewSongController,
-                             DeletePlaylistController deletePlaylistController) {
+                             DeletePlaylistController deletePlaylistController, DeletePlaylistViewModel deletePlaylistViewModel) {
         this.viewModel = viewModel;
         this.playlistsController = playlistsController;
         this.viewSongController = viewSongController;
         this.deletePlaylistController = deletePlaylistController;
+        this.deletePlaylistViewModel = deletePlaylistViewModel;
 
         this.playlistsList = new JList<>();
-        this.refreshButton = new JButton("Refresh Playlists");
+        // this.refreshButton = new JButton("Refresh Playlists");
         this.createPlaylistButton = new JButton("Create Playlist");
         this.deletePlaylistButton = new JButton("Delete Playlist");
 
         viewModel.addPropertyChangeListener(this);
+        deletePlaylistViewModel.addPropertyChangeListener(this);
         initUI();
         try {
             playlistsController.execute("Alice");
@@ -56,12 +62,12 @@ public class ViewPlaylistsView extends JPanel implements PropertyChangeListener,
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(createPlaylistButton);
         buttonPanel.add(deletePlaylistButton);
-        buttonPanel.add(refreshButton);
+       // buttonPanel.add(refreshButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
         createPlaylistButton.addActionListener(this);
         deletePlaylistButton.addActionListener(this);
-        refreshButton.addActionListener(this);
+        // refreshButton.addActionListener(this);
         setupMouseListener();
     }
 
@@ -91,18 +97,13 @@ public class ViewPlaylistsView extends JPanel implements PropertyChangeListener,
             if (selectedPlaylist != null && !selectedPlaylist.isEmpty()) {
                 try {
                     deletePlaylistController.deletePlaylist(selectedPlaylist);
+                    // Refresh the playlists after deletion
                     playlistsController.execute("Alice");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Please select a playlist to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
-            }
-        } else if (e.getSource() == refreshButton) {
-            try {
-                playlistsController.execute("Alice");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
             }
         }
     }
@@ -111,6 +112,17 @@ public class ViewPlaylistsView extends JPanel implements PropertyChangeListener,
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
             updatePlaylistsList(viewModel.getState().getPlaylists());
+        }
+        if (evt.getSource() == deletePlaylistViewModel) {
+            if (deletePlaylistViewModel.getState().isDeletionSuccessful()) {
+                JOptionPane.showMessageDialog(this,
+                        "Playlist deleted successfully",
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Failed to delete playlist",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 

@@ -13,4 +13,9 @@ public class UpdateCommentPresenter implements UpdateCommentOutputBoundary {
     public void prepareSuccessView(String successMessage) {
         viewModel.setCommentUpdateStatus(successMessage);
     }
+
+    @Override
+    public void prepareFailView(String successMessage){
+
+    }
 }

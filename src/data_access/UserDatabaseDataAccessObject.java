@@ -10,6 +10,7 @@ import use_case.add_song.AddSongUserDataAccessInterface;
 import use_case.create_playlist.CreatePlaylistDataAccessInterface;
 import use_case.delete_playlist.DeletePlaylistDataAccessInterface;
 import use_case.delete_song.DeleteSongDataAccessInterface;
+import use_case.update_comment.UpdateCommentDataAccessInterface;
 import use_case.view_playlists.ViewPlaylistsDataUserAccessInterface;
 import use_case.view_song.ViewSongDataAccess;
 
@@ -20,7 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface,
-        ViewPlaylistsDataUserAccessInterface, ViewSongDataAccess, DeletePlaylistDataAccessInterface, DeleteSongDataAccessInterface {
+        ViewPlaylistsDataUserAccessInterface, ViewSongDataAccess, DeletePlaylistDataAccessInterface, DeleteSongDataAccessInterface,
+        UpdateCommentDataAccessInterface {
 
     private final ObjectMapper objectMapper; // Jackson's object mapper for JSON serialization/deserialization
     private final String storageDirectory; // The directory path where the user databases are stored
@@ -151,4 +153,13 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
         return true;
 
     }
+
+    @Override
+    public void addComment(String username, String id, String comment, String playlist) throws IOException {
+        UserDatabase userdatabase = loadUserDatabase(username);
+        Song song = userdatabase.getPlaylists().get(playlist).getSongs().get(id);
+        song.setComment(comment);
+        saveUserDatabase(username, userdatabase);
+    }
+
 }

@@ -1,5 +1,6 @@
 package interface_adapter.update_comment;
 
+import interface_adapter.create_playlist.CreatePlaylistState;
 import use_case.update_comment.UpdateCommentOutputBoundary;
 
 public class UpdateCommentPresenter implements UpdateCommentOutputBoundary {
@@ -10,12 +11,13 @@ public class UpdateCommentPresenter implements UpdateCommentOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(String successMessage) {
-        viewModel.setCommentUpdateStatus(successMessage);
+    public void presentSuccess(String successMessage) {
+        viewModel.setCommentUpdateStatus(successMessage, true);
     }
 
     @Override
-    public void prepareFailView(String successMessage){
-
+    public void presentFailure(String errorMessage){
+        viewModel.setCommentUpdateStatus(errorMessage, false);
     }
+
 }

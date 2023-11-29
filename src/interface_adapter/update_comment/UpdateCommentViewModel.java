@@ -29,8 +29,9 @@ public class UpdateCommentViewModel extends ViewModel {
         this.state = state;
     }
 
-    public void setCommentUpdateStatus(String status) {
-        state.setCommentUpdated(true);
-        support.firePropertyChange("commentUpdateStatus", null, status);
+    public void setCommentUpdateStatus(String status, boolean isUpdated) {
+        state.setCommentUpdated(isUpdated);
+        // Consolidate to one property change event to indicate an update
+        support.firePropertyChange("commentUpdate", null, this.state);
     }
 }

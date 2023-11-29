@@ -70,30 +70,45 @@ public class UpdateCommentView extends JPanel implements PropertyChangeListener,
         }
     }
 
+
+    private void displayUpdateStatus(UpdateCommentState state) {
+        // Check if the comment was updated successfully
+        if (state.isCommentUpdated()) {
+            // Display a success message
+            JOptionPane.showMessageDialog(this, "Comment updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            // After displaying the message, you might want to close the dialog or reset the view
+            resetView();
+        } else {
+            // Display an error message if the update was not successful
+            JOptionPane.showMessageDialog(this, "Failed to update comment", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Resets the view to its default state
+    private void resetView() {
+        commentTextArea.setText("");
+        // Assuming the 'cardLayout' and 'cardPanel' are accessible here, or through a callback
+        // cardLayout.show(cardPanel, "SongView");
+        // If you are using a JDialog to show the UpdateCommentView, you would hide it like this:
+        // SwingUtilities.getWindowAncestor(this).setVisible(false);
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getNewValue() instanceof UpdateCommentState) {
+        if ("commentUpdate".equals(evt.getPropertyName())) {
             displayUpdateStatus((UpdateCommentState) evt.getNewValue());
         }
     }
 
-    private void displayUpdateStatus(UpdateCommentState state) {
-        if (state.isCommentUpdated()) {
-            JOptionPane.showMessageDialog(this, "Comment updated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-            // Assuming the 'cardLayout' and 'cardPanel' are accessible here, or through a callback
-            // cardLayout.show(cardPanel, "SongView");
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to update comment", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == updateButton) {
             triggerCommentUpdate();
         } else if (e.getSource() == cancelButton) {
-            // Assuming the 'cardLayout' and 'cardPanel' are accessible here, or through a callback
-            // cardLayout.show(cardPanel, "SongView");
+            // Close the dialog or reset the view here as well
+            resetView();
         }
     }
+
 }

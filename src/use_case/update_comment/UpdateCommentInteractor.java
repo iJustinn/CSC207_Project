@@ -12,9 +12,17 @@ public class UpdateCommentInteractor implements UpdateCommentInputBoundary {
     }
 
     @Override
-    public void execute(UpdateCommentInputData updateCommentInputData) throws IOException {
-        addCommentDataAccessObject.addComment("Alice", updateCommentInputData.getId(),
-                updateCommentInputData.getComment(), updateCommentInputData.getPlaylist());
+    public void execute(UpdateCommentInputData updateCommentInputData) {
+        try {
+            // Attempt to add the comment
+            addCommentDataAccessObject.addComment("Alice", updateCommentInputData.getId(),
+                    updateCommentInputData.getComment(), updateCommentInputData.getPlaylist());
 
+            // If the method above does not throw an exception, assume success
+            addCommentPresenter.presentSuccess("Comment updated successfully.");
+        } catch (IOException e) {
+            // Handle any exceptions, assume failure
+            addCommentPresenter.presentFailure("Failed to update comment: " + e.getMessage());
+        }
     }
 }

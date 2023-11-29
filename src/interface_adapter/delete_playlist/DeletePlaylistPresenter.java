@@ -2,8 +2,6 @@ package interface_adapter.delete_playlist;
 
 import use_case.delete_playlist.DeletePlaylistOutputBoundary;
 import use_case.delete_playlist.DeletePlaylistOutputData;
-import interface_adapter.delete_playlist.DeletePlaylistViewModel;
-import interface_adapter.delete_playlist.DeletePlaylistState;
 
 public class DeletePlaylistPresenter implements DeletePlaylistOutputBoundary {
     private final DeletePlaylistViewModel viewModel;

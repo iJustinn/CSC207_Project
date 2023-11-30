@@ -24,19 +24,4 @@ public class UserDatabase {
         this.playlists = playlists;
     }
 
-    // Method to add a new playlist to the database
-    public boolean addPlaylist(String playlistName, Playlist playlist) {
-        if (playlists.containsKey(playlistName)) {
-            // Playlist already exists
-            return false;
-        }
-        playlists.put(playlistName, playlist);
-        return true;
-    }
-
-    // Method to retrieve a playlist by name
-    public Optional<Playlist> getPlaylist(String playlistName) {
-        return Optional.ofNullable(playlists.get(playlistName));
-    }
-
 }

@@ -4,10 +4,14 @@ import data_access.UserDatabaseDataAccessObject;
 import interface_adapter.delete_playlist.DeletePlaylistController;
 import interface_adapter.delete_playlist.DeletePlaylistPresenter;
 import interface_adapter.delete_playlist.DeletePlaylistViewModel;
+import interface_adapter.update_comment.UpdateCommentController;
+import interface_adapter.update_comment.UpdateCommentPresenter;
+import interface_adapter.update_comment.UpdateCommentViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsController;
 import interface_adapter.view_playlists.ViewPlaylistsPresenter;
 import interface_adapter.view_playlists.ViewPlaylistsViewModel;
 import use_case.delete_playlist.DeletePlaylistInteractor;
+import use_case.update_comment.UpdateCommentInteractor;
 import use_case.view_playlists.ViewPlaylistsInteractor;
 import view.CreatePlaylistView;
 import view.ViewPlaylistsView;
@@ -47,10 +51,17 @@ public class GUI_View_Playlists {
         DeletePlaylistInteractor deletePlaylistInteractor = new DeletePlaylistInteractor(dataAccess, deletePlaylistPresenter);
         DeletePlaylistController deletePlaylistController = new DeletePlaylistController(deletePlaylistInteractor);
 
+        // Set up for UpdateComments
+        UpdateCommentViewModel updateCommentViewModel = new UpdateCommentViewModel();
+        UpdateCommentPresenter updateCommentPresenter = new UpdateCommentPresenter(updateCommentViewModel);
+        UpdateCommentInteractor updateCommentInteractor = new UpdateCommentInteractor(dataAccess, updateCommentPresenter);
+        UpdateCommentController updateCommentController = new UpdateCommentController(updateCommentInteractor);
+
 
         // Create the Views
         ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel);
-        ViewSongView viewSongView = new ViewSongView(viewSongViewModel);
+        ViewSongView viewSongView = new ViewSongView(viewSongViewModel, updateCommentController, updateCommentViewModel);
+
 
         // Set up the main application window
         JFrame frame = new JFrame("Playlist Viewer");
@@ -74,8 +85,12 @@ public class GUI_View_Playlists {
     public static void switchToSongView() {
         cardLayout.show(cardPanel, "SongView");
     }
-
+    // Method to switch to the Createview
     public static void switchToCreateView() {
         cardLayout.show(cardPanel,"CreateView");
+    }
+    // Method to switch to the UpdateCommentView
+    public static void switchToUpdateCommentView() {
+        cardLayout.show(cardPanel, "UpdateCommentView");
     }
 }

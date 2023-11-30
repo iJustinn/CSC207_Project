@@ -1,18 +1,16 @@
 package app;
 
+// Spotify API imports
+import spotify.SpotifyEndpoint;
 import data_access.SpotifyDataAccessObject;
+
+// Views imports
+import view.SearchView;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.search_album.SearchAlbumViewModel;
-import spotify.SpotifyEndpoint;
-import view.SearchView;
-import view.ViewManager;
 
+// JAVA swing imports
 import javax.swing.*;
-import javax.swing.table.TableColumn;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

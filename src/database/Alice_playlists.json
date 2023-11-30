@@ -5,21 +5,27 @@
       "numberOfSongs" : 2,
       "date" : "2023-11-21",
       "songs" : {
-        "1": {
-          "title": "Song Title 1",
-          "artist": ["Artist A", "Artist B"],
-          "album": "Album 1",
-          "id": "1",
-          "comment": "This is a comment for Song 1"
+        "1" : {
+          "title" : "Song Title 1",
+          "artist" : [ "Artist A", "Artist B" ],
+          "album" : "Album 1",
+          "id" : "1",
+          "comment" : "aaaasdaasad"
         },
-        "2": {
-          "title": "Song Title 2",
-          "artist": ["Artist C"],
-          "album": "Album 2",
-          "id": "2",
-          "comment": "This is a comment for Song 2"
+        "2" : {
+          "title" : "Song Title 2",
+          "artist" : [ "Artist C" ],
+          "album" : "Album 2",
+          "id" : "2",
+          "comment" : "caonima"
         }
       }
+    },
+    "asd" : {
+      "name" : "asd",
+      "numberOfSongs" : 0,
+      "date" : "2023-11-28",
+      "songs" : { }
     }
   }
 }

@@ -5,13 +5,6 @@
       "numberOfSongs" : 2,
       "date" : "2023-11-21",
       "songs" : {
-        "1" : {
-          "title" : "Song Title 1",
-          "artist" : [ "Artist A", "Artist B" ],
-          "album" : "Album 1",
-          "id" : "1",
-          "comment" : "aaaasdaasad"
-        },
         "2" : {
           "title" : "Song Title 2",
           "artist" : [ "Artist C" ],

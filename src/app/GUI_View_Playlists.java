@@ -4,6 +4,9 @@ import data_access.UserDatabaseDataAccessObject;
 import interface_adapter.delete_playlist.DeletePlaylistController;
 import interface_adapter.delete_playlist.DeletePlaylistPresenter;
 import interface_adapter.delete_playlist.DeletePlaylistViewModel;
+import interface_adapter.delete_song.DeleteSongController;
+import interface_adapter.delete_song.DeleteSongPresenter;
+import interface_adapter.delete_song.DeleteSongViewModel;
 import interface_adapter.update_comment.UpdateCommentController;
 import interface_adapter.update_comment.UpdateCommentPresenter;
 import interface_adapter.update_comment.UpdateCommentViewModel;
@@ -11,6 +14,7 @@ import interface_adapter.view_playlists.ViewPlaylistsController;
 import interface_adapter.view_playlists.ViewPlaylistsPresenter;
 import interface_adapter.view_playlists.ViewPlaylistsViewModel;
 import use_case.delete_playlist.DeletePlaylistInteractor;
+import use_case.delete_song.DeleteSongInteractor;
 import use_case.update_comment.UpdateCommentInteractor;
 import use_case.view_playlists.ViewPlaylistsInteractor;
 import view.CreatePlaylistView;
@@ -46,6 +50,7 @@ public class GUI_View_Playlists {
         ViewSongInteractor viewSongInteractor = new ViewSongInteractor(dataAccess, viewSongPresenter);
         ViewSongController viewSongController = new ViewSongController(viewSongInteractor);
 
+        // Set up for DeletePlaylist
         DeletePlaylistViewModel deletePlaylistViewModel = new DeletePlaylistViewModel();
         DeletePlaylistPresenter deletePlaylistPresenter = new DeletePlaylistPresenter(deletePlaylistViewModel);
         DeletePlaylistInteractor deletePlaylistInteractor = new DeletePlaylistInteractor(dataAccess, deletePlaylistPresenter);
@@ -57,10 +62,16 @@ public class GUI_View_Playlists {
         UpdateCommentInteractor updateCommentInteractor = new UpdateCommentInteractor(dataAccess, updateCommentPresenter);
         UpdateCommentController updateCommentController = new UpdateCommentController(updateCommentInteractor);
 
+        // Set up for DeleteSongs
+        DeleteSongViewModel deleteSongViewModel = new DeleteSongViewModel();
+        DeleteSongPresenter deleteSongPresenter = new DeleteSongPresenter(deleteSongViewModel);
+        DeleteSongInteractor deleteSongInteractor = new DeleteSongInteractor(dataAccess, deleteSongPresenter);
+        DeleteSongController deleteSongController = new DeleteSongController(deleteSongInteractor);
+
 
         // Create the Views
         ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel);
-        ViewSongView viewSongView = new ViewSongView(viewSongViewModel, updateCommentController, updateCommentViewModel);
+        ViewSongView viewSongView = new ViewSongView(viewSongViewModel, updateCommentController, updateCommentViewModel, deleteSongController, deleteSongViewModel, viewSongController);
 
 
         // Set up the main application window

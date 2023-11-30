@@ -78,13 +78,11 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
         UserDatabase userDatabase = loadUserDatabase(username);
 
         // Locate the target playlist
-        Playlist targetPlaylist = userDatabase.getPlaylists().get(playlistId);
+        userDatabase.getPlaylists().get(playlistId).getSongs().remove(songId);
 
-        // Remove the song from the playlist
-        targetPlaylist.getSongs().remove(songId);
 
         // Update the number of songs in the playlist
-        targetPlaylist.setNumberOfSongs(targetPlaylist.getSongs().size());
+        // userDatabase.setNumberOfSongs(userDatabase.getPlaylists().get(playlistId).getSongs().size());
 
         // Save the updated database back to the JSON file
         saveUserDatabase(username, userDatabase);
@@ -136,7 +134,6 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
     public HashMap<String, Song> getSongsByPlaylistName(String username, String name) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
         return userDatabase.getPlaylists().get(name).getSongs();
-
 
 
     }

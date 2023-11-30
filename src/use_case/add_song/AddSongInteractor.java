@@ -14,13 +14,13 @@ public class AddSongInteractor implements AddSongInputBoundary{
 
     @Override
     public void execute(AddSongInputData addSongInputdata) throws IOException {
-        if (addSongDataAccessObject.checkPlaylistExist("our_username", addSongInputdata.getPlaylist().getName())){
+        if (addSongDataAccessObject.checkPlaylistExist("our_username", addSongInputdata.getPlaylist())){
             addSongPresenter.prepareFailView("This playlist does not exist.");
-        } else if (addSongDataAccessObject.checkSongExist("our_username", addSongInputdata.getPlaylist().getName(), addSongInputdata.getSong())) {
+        } else if (addSongDataAccessObject.checkSongExist("our_username", addSongInputdata.getPlaylist(), addSongInputdata.getSong())) {
             addSongPresenter.prepareFailView("This song is already in the playlist.");
         } else {
 
-            addSongDataAccessObject.addSongToPlaylist("our_username", addSongInputdata.getPlaylist().getName(), addSongInputdata.getSong());
+            addSongDataAccessObject.addSongToPlaylist("our_username", addSongInputdata.getPlaylist(), addSongInputdata.getSong());
             addSongPresenter.prepareSuccessView("The song was successfully added.");
         }
     }

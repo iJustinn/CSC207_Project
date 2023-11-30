@@ -14,7 +14,7 @@ public class AddSongController{
         this.interactor = interactor;
     }
 
-    public void execute(Playlist playlist, Song song) {
+    public void execute(String playlist, Song song) {
         AddSongInputData input = new AddSongInputData(playlist, song);
         try {
             interactor.execute(input);

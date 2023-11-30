@@ -5,10 +5,10 @@ import entity.song.Song;
 
 public class AddSongInputData {
 
-    final private Playlist playlist;
+    final private String playlist;
     final private Song song;
 
-    public AddSongInputData(Playlist playlist, Song song) {
+    public AddSongInputData(String playlist, Song song) {
 
         this.playlist = playlist;
         this.song = song;
@@ -18,7 +18,7 @@ public class AddSongInputData {
         return song;
     }
 
-    public Playlist getPlaylist() {
+    public String getPlaylist() {
         return playlist;
     }
 }

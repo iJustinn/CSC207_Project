@@ -1,9 +1,15 @@
 package interface_adapter.view_playlists;
+import interface_adapter.ViewModel;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-public class ViewPlaylistsViewModel {
+public class ViewPlaylistsViewModel extends ViewModel {
     private ViewPlaylistsState state = new ViewPlaylistsState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
+    public ViewPlaylistsViewModel() {
+        super("ViewPlaylist");
+    }
 
     public void setState(ViewPlaylistsState state) {
         this.state = state;

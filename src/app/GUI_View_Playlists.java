@@ -73,7 +73,6 @@ public class GUI_View_Playlists {
         ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel);
         ViewSongView viewSongView = new ViewSongView(viewSongViewModel, updateCommentController, updateCommentViewModel, deleteSongController, deleteSongViewModel, viewSongController);
 
-
         // Set up the main application window
         JFrame frame = new JFrame("Playlist Viewer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,16 +91,17 @@ public class GUI_View_Playlists {
         frame.setVisible(true);
     }
 
-    // Method to switch to the song view
-    public static void switchToSongView() {
-        cardLayout.show(cardPanel, "SongView");
-    }
-    // Method to switch to the Createview
-    public static void switchToCreateView() {
-        cardLayout.show(cardPanel,"CreateView");
-    }
-    // Method to switch to the UpdateCommentView
-    public static void switchToUpdateCommentView() {
-        cardLayout.show(cardPanel, "UpdateCommentView");
-    }
+//    // Method to switch to the song view
+//    public static void switchToSongView() {
+//        cardLayout.show(cardPanel, "SongView");
+//    }
+//    // Method to switch to the Createview
+//    public static void switchToCreateView() {
+//        cardLayout.show(cardPanel,"CreateView");
+//    }
+//    // Method to switch to the UpdateCommentView
+//    public static void switchToUpdateCommentView() {
+//        cardLayout.show(cardPanel, "UpdateCommentView");
+//    }
+
 }

@@ -142,43 +142,8 @@ public class Main {
 
         // Initialize Database
         String storageDirectory = "src/database";
-        UserDatabaseDataAccessObject dataAccess = new UserDatabaseDataAccessObject(storageDirectory);
 
         CreatePlaylistView createPlaylistView = CreatePlaylistUseCaseFactory.create(storageDirectory);
-
-        // Set up for ViewPlaylists
-        ViewPlaylistsViewModel playlistsViewModel = new ViewPlaylistsViewModel();
-        ViewPlaylistsPresenter playlistsPresenter = new ViewPlaylistsPresenter(playlistsViewModel);
-        ViewPlaylistsInteractor playlistsInteractor = new ViewPlaylistsInteractor(dataAccess, playlistsPresenter);
-        ViewPlaylistsController playlistsController = new ViewPlaylistsController(playlistsInteractor);
-
-        // Set up for ViewSongs
-        ViewSongViewModel viewSongViewModel = new ViewSongViewModel();
-        ViewSongPresenter viewSongPresenter = new ViewSongPresenter(viewSongViewModel);
-        ViewSongInteractor viewSongInteractor = new ViewSongInteractor(dataAccess, viewSongPresenter);
-        ViewSongController viewSongController = new ViewSongController(viewSongInteractor);
-
-        // Set up for DeletePlaylist
-        DeletePlaylistViewModel deletePlaylistViewModel = new DeletePlaylistViewModel();
-        DeletePlaylistPresenter deletePlaylistPresenter = new DeletePlaylistPresenter(deletePlaylistViewModel);
-        DeletePlaylistInteractor deletePlaylistInteractor = new DeletePlaylistInteractor(dataAccess, deletePlaylistPresenter);
-        DeletePlaylistController deletePlaylistController = new DeletePlaylistController(deletePlaylistInteractor);
-
-        // Set up for UpdateComments
-        UpdateCommentViewModel updateCommentViewModel = new UpdateCommentViewModel();
-        UpdateCommentPresenter updateCommentPresenter = new UpdateCommentPresenter(updateCommentViewModel);
-        UpdateCommentInteractor updateCommentInteractor = new UpdateCommentInteractor(dataAccess, updateCommentPresenter);
-        UpdateCommentController updateCommentController = new UpdateCommentController(updateCommentInteractor);
-
-        // Set up for DeleteSongs
-        DeleteSongViewModel deleteSongViewModel = new DeleteSongViewModel();
-        DeleteSongPresenter deleteSongPresenter = new DeleteSongPresenter(deleteSongViewModel);
-        DeleteSongInteractor deleteSongInteractor = new DeleteSongInteractor(dataAccess, deleteSongPresenter);
-        DeleteSongController deleteSongController = new DeleteSongController(deleteSongInteractor);
-
-        // Create the Views
-        ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel);
-        ViewSongView viewSongView = new ViewSongView(viewSongViewModel, updateCommentController, updateCommentViewModel, deleteSongController, deleteSongViewModel, viewSongController);
 
         panel.add(createPlaylistView, BorderLayout.CENTER);
 
@@ -187,7 +152,6 @@ public class Main {
 
         private static JPanel viewPlaylistPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
 
         // Initialize Database
         String storageDirectory = "src/database";
@@ -229,24 +193,24 @@ public class Main {
         ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel);
         ViewSongView viewSongView = new ViewSongView(viewSongViewModel, updateCommentController, updateCommentViewModel, deleteSongController, deleteSongViewModel, viewSongController);
 
+        // Add Views
         panel.add(viewPlaylistsView, BorderLayout.NORTH);
-        panel.add(viewSongView, BorderLayout.CENTER);
-//        panel.add(createPlaylistView, BorderLayout.SOUTH);
-
-//        cardPanel.add(viewPlaylistsView, "PlaylistsView");
-//        cardPanel.add(viewSongView, "SongView");
-//        cardPanel.add(createPlaylistView, "CreateView");
-//        panel.add(cardPanel);
+        panel.add(viewSongView, BorderLayout.SOUTH);
 
         return panel;
     }
 
+    // View Switching
     public static void switchToSongView() {
-        cardLayout.show(cardPanel, "SongView");
+        cardLayout.show(cardPanel, "PlaylistPanel");
     }
 
     public static void switchToCreateView() {
-        cardLayout.show(cardPanel, "CreateView");
+        cardLayout.show(cardPanel, "addPlaylistPanel");
+    }
+
+    public static void switchToUpdateCommentView() {
+        cardLayout.show(cardPanel, "UpdateCommentView");
     }
 
     private static JPanel createSongSearchPanel() {

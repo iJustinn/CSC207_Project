@@ -1,5 +1,6 @@
 package view;
 
+import app.Main;
 import app.GUI_View_Playlists;
 import interface_adapter.delete_playlist.DeletePlaylistController;
 import interface_adapter.delete_playlist.DeletePlaylistState;
@@ -82,7 +83,7 @@ public class ViewPlaylistsView extends JPanel implements PropertyChangeListener,
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    GUI_View_Playlists.switchToSongView();
+                    Main.switchToSongView();
                 }
             }
         });
@@ -91,7 +92,7 @@ public class ViewPlaylistsView extends JPanel implements PropertyChangeListener,
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == createPlaylistButton) {
-            GUI_View_Playlists.switchToCreateView();
+            Main.switchToCreateView();
         } else if (e.getSource() == deletePlaylistButton) {
             String selectedPlaylist = playlistsList.getSelectedValue();
             if (selectedPlaylist != null && !selectedPlaylist.isEmpty()) {

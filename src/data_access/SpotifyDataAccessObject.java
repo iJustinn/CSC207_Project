@@ -65,6 +65,7 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetBy
 
     @Override
     public List<Song> getAlbumSongs(String id) {
-        return null;
+        List<TrackSimpleModel> songs = this.spotifyApi.getAlbumTracks(id);
+        return songs.stream().map(Song::new).toList();
     }
 }

@@ -25,14 +25,13 @@ public class SearchUseCaseFactory {
                                          SearchAlbumViewModel searchAlbumViewModel,
                                          SearchDataAccessInterface dataAccessInterface,
                                          GetSongsViewModel getSongsViewModel,
-                                         GetAlbumSongsDataAccessInterface getSongsDA
-                                         ) {
+                                         GetAlbumSongsDataAccessInterface getSongsDA) {
 
         SearchAlbumOutputBoundary outputBoundary = new SearchAlbumPresenter(searchAlbumViewModel);
         SearchAlbumInputBoundary inputBoundary = new SearchAlbumInteractor(dataAccessInterface, outputBoundary);
         SearchAlbumController controller = new SearchAlbumController(inputBoundary);
 
-        GetAlbumSongsOutputBoundary oBoundary = new GetSongsPresenter(getSongsViewModel);
+        GetAlbumSongsOutputBoundary oBoundary = new GetSongsPresenter(getSongsViewModel, viewManagerModel);
         GetAlbumSongsInputBoundary iBoundary = new GetAlbumSongsInteractor(getSongsDA, oBoundary);
 
         GetSongsController getSongsController = new GetSongsController(iBoundary);

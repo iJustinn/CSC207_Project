@@ -98,7 +98,7 @@ public class SearchAlbumView extends JPanel implements ActionListener, PropertyC
                 if (e.getClickCount() == 2) {
                     int index = list.locationToIndex(e.getPoint());
                     AlbumSimple album = listModel.getElementAt(index);
-                    System.out.println(album.getId());
+                    getSongsController.execute(album.getId());
                 }
 
                 super.mouseClicked(e);

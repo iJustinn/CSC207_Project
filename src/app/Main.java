@@ -59,11 +59,11 @@ public class Main {
 
             // All panels in the program
             JPanel searchPanel = createSearchPanel();
-            JPanel playlistPanel = createPlaylistPanel();
+            JPanel playlistPanel = viewPlaylistPanel();
             JPanel songSearchPanel = createSongSearchPanel();
             JPanel albumSearchPanel = createAlbumSearchPanel();
             JPanel artistSearchPanel = createArtistSearchPanel();
-//            JPanel specificPlaylistPanel = createSpecificPlaylistPanel();
+            JPanel addPlaylistPanel = addPlaylistPanel();
 
             // Adding panels to the card layout
             cardPanel.add(searchPanel, "SearchPanel");
@@ -71,13 +71,14 @@ public class Main {
             cardPanel.add(songSearchPanel, "SongSearchPanel");
             cardPanel.add(albumSearchPanel, "AlbumSearchPanel");
             cardPanel.add(artistSearchPanel, "ArtistSearchPanel");
-//            cardPanel.add(specificPlaylistPanel, "SpecificPlaylistPanel");
+            cardPanel.add(addPlaylistPanel, "addPlaylistPanel");
 
             // Button panel, order of code reflect order on the program window
             JPanel buttonPanel = new JPanel();
             buttonPanel.add(createNavButton("Playlists", "PlaylistPanel"));
             buttonPanel.add(createNavButton("Search", "SearchPanel"));
-            buttonPanel.add(createNavButton("Back", "SearchPanel"));
+            buttonPanel.add(createNavButton("Add", "addPlaylistPanel"));
+            //            buttonPanel.add(createNavButton("Back", "SearchPanel"));
 
             // Adding panels to the frame
             frame.getContentPane().add(cardPanel, BorderLayout.CENTER);
@@ -102,30 +103,61 @@ public class Main {
     private static JPanel createSearchPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        JPanel searchBoxPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JTextField searchText = new JTextField();
-        searchText.setColumns(21);
-        searchText.setBackground(Color.LIGHT_GRAY);
-        searchText.setForeground(Color.BLACK);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // Vertical Layout
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(createNavButton("Song", "SongSearchPanel"));
-        buttonPanel.add(createNavButton("Album", "AlbumSearchPanel"));
-        buttonPanel.add(createNavButton("Artist", "ArtistSearchPanel"));
+        // Song button
+        JButton songButton = createNavButton("Song", "SongSearchPanel");
+        songButton.setPreferredSize(new Dimension(200, 200)); // button size
+        songButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
+        buttonPanel.add(songButton);
 
-        searchBoxPanel.add(searchText);
-        panel.add(searchBoxPanel, BorderLayout.NORTH);
+        buttonPanel.add(Box.createVerticalStrut(30)); // button vertical spacing
+
+        // Album button
+        JButton albumButton = createNavButton("Album", "AlbumSearchPanel");
+        albumButton.setPreferredSize(new Dimension(200, 200)); // button size
+        albumButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
+        buttonPanel.add(albumButton);
+
+        buttonPanel.add(Box.createVerticalStrut(30)); // button vertical spacing
+
+        // Artist button
+        JButton artistButton = createNavButton("Artist", "ArtistSearchPanel");
+        artistButton.setPreferredSize(new Dimension(200, 200)); // button size
+        artistButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
+        buttonPanel.add(artistButton);
+
         panel.add(buttonPanel, BorderLayout.CENTER);
-
         panel.setBackground(Color.WHITE);
+
         return panel;
     }
+
+//    private static JPanel createSearchPanel() {
+//        JPanel panel = new JPanel(new BorderLayout());
 //
-//    public interface PlaylistAccessListener {
-//        void onPlaylistAccess(String playlistName);
+////        JPanel searchBoxPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+//        JTextField searchText = new JTextField();
+//        searchText.setColumns(50);
+//        searchText.setBackground(Color.LIGHT_GRAY);
+//        searchText.setForeground(Color.BLACK);
+//
+//        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+//        buttonPanel.add(createNavButton("Song", "SongSearchPanel"));
+//        buttonPanel.add(createNavButton("Album", "AlbumSearchPanel"));
+//        buttonPanel.add(createNavButton("Artist", "ArtistSearchPanel"));
+//
+////        searchBoxPanel.add(searchText);
+////        panel.add(searchBoxPanel, BorderLayout.NORTH);
+//        panel.add(buttonPanel, BorderLayout.CENTER);
+//
+//        panel.setBackground(Color.WHITE);
+//
+//        return panel;
 //    }
 
-    private static JPanel createPlaylistPanel() {
+    private static JPanel addPlaylistPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
@@ -165,21 +197,67 @@ public class Main {
         DeleteSongInteractor deleteSongInteractor = new DeleteSongInteractor(dataAccess, deleteSongPresenter);
         DeleteSongController deleteSongController = new DeleteSongController(deleteSongInteractor);
 
+        // Create the Views
+        ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel);
+        ViewSongView viewSongView = new ViewSongView(viewSongViewModel, updateCommentController, updateCommentViewModel, deleteSongController, deleteSongViewModel, viewSongController);
+
+        panel.add(createPlaylistView, BorderLayout.CENTER);
+
+        return panel;
+    }
+
+        private static JPanel viewPlaylistPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        // Initialize Database
+        String storageDirectory = "src/database";
+        UserDatabaseDataAccessObject dataAccess = new UserDatabaseDataAccessObject(storageDirectory);
+
+        CreatePlaylistView createPlaylistView = CreatePlaylistUseCaseFactory.create(storageDirectory);
+
+        // Set up for ViewPlaylists
+        ViewPlaylistsViewModel playlistsViewModel = new ViewPlaylistsViewModel();
+        ViewPlaylistsPresenter playlistsPresenter = new ViewPlaylistsPresenter(playlistsViewModel);
+        ViewPlaylistsInteractor playlistsInteractor = new ViewPlaylistsInteractor(dataAccess, playlistsPresenter);
+        ViewPlaylistsController playlistsController = new ViewPlaylistsController(playlistsInteractor);
+
+        // Set up for ViewSongs
+        ViewSongViewModel viewSongViewModel = new ViewSongViewModel();
+        ViewSongPresenter viewSongPresenter = new ViewSongPresenter(viewSongViewModel);
+        ViewSongInteractor viewSongInteractor = new ViewSongInteractor(dataAccess, viewSongPresenter);
+        ViewSongController viewSongController = new ViewSongController(viewSongInteractor);
+
+        // Set up for DeletePlaylist
+        DeletePlaylistViewModel deletePlaylistViewModel = new DeletePlaylistViewModel();
+        DeletePlaylistPresenter deletePlaylistPresenter = new DeletePlaylistPresenter(deletePlaylistViewModel);
+        DeletePlaylistInteractor deletePlaylistInteractor = new DeletePlaylistInteractor(dataAccess, deletePlaylistPresenter);
+        DeletePlaylistController deletePlaylistController = new DeletePlaylistController(deletePlaylistInteractor);
+
+        // Set up for UpdateComments
+        UpdateCommentViewModel updateCommentViewModel = new UpdateCommentViewModel();
+        UpdateCommentPresenter updateCommentPresenter = new UpdateCommentPresenter(updateCommentViewModel);
+        UpdateCommentInteractor updateCommentInteractor = new UpdateCommentInteractor(dataAccess, updateCommentPresenter);
+        UpdateCommentController updateCommentController = new UpdateCommentController(updateCommentInteractor);
+
+        // Set up for DeleteSongs
+        DeleteSongViewModel deleteSongViewModel = new DeleteSongViewModel();
+        DeleteSongPresenter deleteSongPresenter = new DeleteSongPresenter(deleteSongViewModel);
+        DeleteSongInteractor deleteSongInteractor = new DeleteSongInteractor(dataAccess, deleteSongPresenter);
+        DeleteSongController deleteSongController = new DeleteSongController(deleteSongInteractor);
 
         // Create the Views
         ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel);
         ViewSongView viewSongView = new ViewSongView(viewSongViewModel, updateCommentController, updateCommentViewModel, deleteSongController, deleteSongViewModel, viewSongController);
 
-//        panel.add(viewPlaylistsView, BorderLayout.CENTER);
-//        panel.add(viewSongView, BorderLayout.CENTER);
-//        panel.add(createPlaylistView, BorderLayout.CENTER);
+        panel.add(viewPlaylistsView, BorderLayout.NORTH);
+        panel.add(viewSongView, BorderLayout.CENTER);
+//        panel.add(createPlaylistView, BorderLayout.SOUTH);
 
-        cardLayout = new CardLayout();
-        cardPanel = new JPanel(cardLayout);
-        cardPanel.add(viewPlaylistsView, "PlaylistsView");
-        cardPanel.add(viewSongView, "SongView");
-        cardPanel.add(createPlaylistView, "CreateView");
-        panel.add(cardPanel);
+//        cardPanel.add(viewPlaylistsView, "PlaylistsView");
+//        cardPanel.add(viewSongView, "SongView");
+//        cardPanel.add(createPlaylistView, "CreateView");
+//        panel.add(cardPanel);
 
         return panel;
     }

@@ -14,10 +14,16 @@
         }
       }
     },
-    "asd" : {
-      "name" : "asd",
+    "test_0" : {
+      "name" : "test_0",
       "numberOfSongs" : 0,
-      "date" : "2023-11-28",
+      "date" : "2023-11-30",
+      "songs" : { }
+    },
+    "test_1" : {
+      "name" : "test_1",
+      "numberOfSongs" : 0,
+      "date" : "2023-11-30",
       "songs" : { }
     }
   }

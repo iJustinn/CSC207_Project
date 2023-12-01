@@ -103,59 +103,38 @@ public class Main {
     private static JPanel createSearchPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // Vertical Layout
+        JPanel buttonPanel_North = new JPanel();
+        JPanel buttonPanel_East = new JPanel();
+        JPanel buttonPanel_West = new JPanel();
 
         // Song button
         JButton songButton = createNavButton("Song", "SongSearchPanel");
-        songButton.setPreferredSize(new Dimension(200, 200)); // button size
+        songButton.setPreferredSize(new Dimension(150, 50)); // button size
         songButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
-        buttonPanel.add(songButton);
-
-        buttonPanel.add(Box.createVerticalStrut(30)); // button vertical spacing
 
         // Album button
         JButton albumButton = createNavButton("Album", "AlbumSearchPanel");
-        albumButton.setPreferredSize(new Dimension(200, 200)); // button size
+        albumButton.setPreferredSize(new Dimension(150, 50)); // button size
         albumButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
-        buttonPanel.add(albumButton);
-
-        buttonPanel.add(Box.createVerticalStrut(30)); // button vertical spacing
 
         // Artist button
         JButton artistButton = createNavButton("Artist", "ArtistSearchPanel");
-        artistButton.setPreferredSize(new Dimension(200, 200)); // button size
+        artistButton.setPreferredSize(new Dimension(150, 50)); // button size
         artistButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
-        buttonPanel.add(artistButton);
 
-        panel.add(buttonPanel, BorderLayout.CENTER);
+        // adding buttons
+        buttonPanel_North.add(songButton);
+        buttonPanel_East.add(albumButton);
+        buttonPanel_West.add(artistButton);
+
+        panel.add(buttonPanel_North, BorderLayout.NORTH);
+        panel.add(buttonPanel_East, BorderLayout.EAST);
+        panel.add(buttonPanel_West, BorderLayout.WEST);
+
         panel.setBackground(Color.WHITE);
 
         return panel;
     }
-
-//    private static JPanel createSearchPanel() {
-//        JPanel panel = new JPanel(new BorderLayout());
-//
-////        JPanel searchBoxPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-//        JTextField searchText = new JTextField();
-//        searchText.setColumns(50);
-//        searchText.setBackground(Color.LIGHT_GRAY);
-//        searchText.setForeground(Color.BLACK);
-//
-//        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-//        buttonPanel.add(createNavButton("Song", "SongSearchPanel"));
-//        buttonPanel.add(createNavButton("Album", "AlbumSearchPanel"));
-//        buttonPanel.add(createNavButton("Artist", "ArtistSearchPanel"));
-//
-////        searchBoxPanel.add(searchText);
-////        panel.add(searchBoxPanel, BorderLayout.NORTH);
-//        panel.add(buttonPanel, BorderLayout.CENTER);
-//
-//        panel.setBackground(Color.WHITE);
-//
-//        return panel;
-//    }
 
     private static JPanel addPlaylistPanel() {
         JPanel panel = new JPanel();

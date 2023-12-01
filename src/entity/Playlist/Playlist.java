@@ -58,7 +58,4 @@ public class Playlist implements IPlaylist {
         this.songs = songs;
     }
 
-    public void getSong() {
-
-    }
 }

@@ -1,49 +1,70 @@
 package use_case.create_playlist;
 
+import data_access.UserDatabaseDataAccessObject;
 import entity.Playlist.Playlist;
 import entity.Playlist.PlaylistFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import entity.User.UserDatabase;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.After;
+import use_case.create_playlist.CreatePlaylistInteractor;
+import use_case.create_playlist.CreatePlaylistOutputBoundary;
+
+import static org.junit.Assert.*;
 import java.io.IOException;
 import static org.mockito.Mockito.*;
 
-class CreatePlaylistInteractorTest {
-
-    private CreatePlaylistDataAccessInterface dataAccess;
-    private CreatePlaylistOutputBoundary presenter;
-    private PlaylistFactory factory;
+public class CreatePlaylistInteractorTest {
+    private UserDatabaseDataAccessObject dataAccess;
     private CreatePlaylistInteractor interactor;
+    private PlaylistFactory playlistFactory;
+    private CreatePlaylistOutputBoundary presenter;
 
-    @BeforeEach
-    void setUp() {
-        dataAccess = mock(CreatePlaylistDataAccessInterface.class);
+    @Before
+    public void setUp() {
+        playlistFactory = new PlaylistFactory(); // Assuming PlaylistFactory has a no-argument constructor
+        dataAccess = new UserDatabaseDataAccessObject("src/database");
         presenter = mock(CreatePlaylistOutputBoundary.class);
-        factory = mock(PlaylistFactory.class);
-        interactor = new CreatePlaylistInteractor(dataAccess, presenter, factory);
+        interactor = new CreatePlaylistInteractor(dataAccess, presenter, playlistFactory);
     }
 
     @Test
-    void executeWithNewPlaylist() throws IOException {
-        CreatePlaylistInputData inputData = new CreatePlaylistInputData("New Playlist");
-        Playlist mockPlaylist = mock(Playlist.class);
-        when(factory.create("New Playlist")).thenReturn(mockPlaylist);
-        when(dataAccess.checkPlaylistExist("Alice", "New Playlist")).thenReturn(false);
+    public void testCreatePlaylistSuccessful() throws IOException {
+        String playlistName = "Unique Playlist";
 
+        CreatePlaylistInputData inputData = new CreatePlaylistInputData(playlistName);
         interactor.execute(inputData);
 
-        verify(dataAccess).createPlaylist("Alice", mockPlaylist);
+        assertTrue(dataAccess.checkPlaylistExist("Alice", playlistName));
         verify(presenter).prepareSuccessView(any(CreatePlaylistOutputData.class), eq("successfully"));
     }
 
     @Test
-    void executeWithExistingPlaylist() throws IOException {
-        CreatePlaylistInputData inputData = new CreatePlaylistInputData("Existing Playlist");
-        when(dataAccess.checkPlaylistExist("Alice", "Existing Playlist")).thenReturn(true);
+    public void testCreatePlaylistFailure() throws IOException {
+        String playlistName = "Existing Playlist";
+        dataAccess.createPlaylist("Alice", playlistFactory.create(playlistName));
 
+        CreatePlaylistInputData inputData = new CreatePlaylistInputData(playlistName);
         interactor.execute(inputData);
 
         verify(presenter).prepareFailView("This playlist already exists.");
-        verifyNoInteractions(factory);
+    }
+
+    @Test(expected = IOException.class)
+    public void testCreatePlaylistIOException() throws IOException {
+        CreatePlaylistDataAccessInterface mockDataAccess = mock(CreatePlaylistDataAccessInterface.class);
+        when(mockDataAccess.createPlaylist(anyString(), any(Playlist.class))).thenThrow(new IOException("Failed to access database"));
+
+        CreatePlaylistInteractor interactorWithMock = new CreatePlaylistInteractor(mockDataAccess, mock(CreatePlaylistOutputBoundary.class), new PlaylistFactory());
+        CreatePlaylistInputData inputData = new CreatePlaylistInputData("Test Playlist");
+
+        interactorWithMock.execute(inputData);
+    }
+
+    @After
+    public void tearDown() throws IOException {
+        // Reset the JSON file to its original state
+        UserDatabase cleanState = dataAccess.loadUserDatabase("TB");
+        dataAccess.saveUserDatabase("Alice", cleanState);
     }
 }

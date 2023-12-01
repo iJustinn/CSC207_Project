@@ -13,5 +13,4 @@ public class CreatePlaylistOutputData {
     }
 
     public String getPlaylistName(){return playlistName;}
-    public String getCreationDateTime(){return creationDateTime;}
 }

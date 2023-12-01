@@ -14,7 +14,7 @@ public class DeleteSongInteractor implements DeleteSongInputBoundary{
 
     @Override
     public void execute(DeleteSongInputData inputData) {
-        String username = "TB";
+        String username = "Alice";
         String PlaylistID = inputData.getPlaylistId();
         boolean success = false;
         try {

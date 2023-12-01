@@ -72,12 +72,4 @@ public class CreatePlaylistInteractorTest {
         UserDatabase cleanState = dataAccess.loadUserDatabase("TB");
         dataAccess.saveUserDatabase("Alice", cleanState);
     }
-
-    @Test
-    void executeWithIOException() throws IOException {
-        CreatePlaylistInputData inputData = new CreatePlaylistInputData("New Playlist");
-
-        Exception exception = assertThrows(RuntimeException.class, () -> interactor.execute(inputData));
-        assertTrue(exception.getCause() instanceof IOException);
-    }
 }

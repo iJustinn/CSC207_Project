@@ -92,10 +92,9 @@ class PlaylistTest {
         assertEquals(newSong, playlist.getSongs().get(newSong.getId()));
     }
 
-    // Since there's no implementation for getSong, I'm assuming it should return a song by ID.
+
     @Test
     void getSong() {
-        // Assuming getSong is implemented to return a Song given an ID
         playlist.setSongs(songs);
         assertEquals(song, playlist.getSongs().get(song.getId()));
     }

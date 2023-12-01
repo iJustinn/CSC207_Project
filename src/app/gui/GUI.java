@@ -1,10 +1,5 @@
 package app.gui;
 
-import app.SearchAlbumUseCaseFactory;
-import data_access.SpotifyDataAccessObject;
-import interface_adapter.search_album.SearchAlbumViewModel;
-import view.SearchView;
-
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import javax.swing.table.DefaultTableModel;

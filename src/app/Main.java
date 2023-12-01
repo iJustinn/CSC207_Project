@@ -2,16 +2,12 @@ package app;
 
 import data_access.SpotifyDataAccessObject;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.get_album_songs.GetSongsViewModel;
 import interface_adapter.search_album.SearchAlbumViewModel;
 import spotify.SpotifyEndpoint;
-import view.SearchView;
-import view.ViewManager;
+import view.SearchAlbumView;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -247,13 +243,17 @@ public class Main {
         SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
         SpotifyDataAccessObject spotify = new SpotifyDataAccessObject(spotifyEndpoint);
 
-        SearchView searchView = SearchAlbumUseCaseFactory.create(
+        GetSongsViewModel getSongsViewModel = new GetSongsViewModel();
+
+        SearchAlbumView searchAlbumView = SearchUseCaseFactory.create(
                 viewManagerModel,
                 searchAlbumViewModel,
+                spotify,
+                getSongsViewModel,
                 spotify
         );
 
-        panel.add(searchView, BorderLayout.CENTER);
+        panel.add(searchAlbumView, BorderLayout.CENTER);
 
         return panel;
     }

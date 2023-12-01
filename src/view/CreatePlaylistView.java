@@ -10,8 +10,8 @@ import interface_adapter.create_playlist.CreatePlaylistState;
 import interface_adapter.create_playlist.CreateViewModel;
 
 public class CreatePlaylistView extends JPanel implements PropertyChangeListener {
-    private JTextField playlistNameField;
-    private JButton createButton;
+    JTextField playlistNameField;
+    JButton createButton;
     private CreateViewModel viewModel;
     private final CreatePlaylistController controller;
     public final String viewName = "CreatePlaylist";

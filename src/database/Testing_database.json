@@ -1,7 +1,7 @@
 {
   "playlists" : {
-    "love story" : {
-      "name" : "love story",
+    "Play1" : {
+      "name" : "Play1",
       "numberOfSongs" : 2,
       "date" : "2023-11-21",
       "songs" : {
@@ -14,14 +14,14 @@
         }
       }
     },
-    "asd" : {
-      "name" : "asd",
+    "Play2" : {
+      "name" : "Play2",
       "numberOfSongs" : 0,
       "date" : "2023-11-28",
       "songs" : { }
     },
-    "hello name" : {
-      "name" : "hello name",
+    "Play3" : {
+      "name" : "Play3",
       "numberOfSongs" : 0,
       "date" : "2023-11-29",
       "songs" : {
@@ -30,7 +30,7 @@
           "artist" : [ "Artist C" ],
           "album" : "Album 2",
           "id" : "2",
-          "comment" : "dsdsds"
+          "comment" : ""
         }
       }
     }

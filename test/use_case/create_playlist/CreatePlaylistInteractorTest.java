@@ -12,6 +12,9 @@ import use_case.create_playlist.CreatePlaylistOutputBoundary;
 
 import static org.junit.Assert.*;
 import java.io.IOException;
+
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class CreatePlaylistInteractorTest {
@@ -68,5 +71,13 @@ public class CreatePlaylistInteractorTest {
         // Reset the JSON file to its original state
         UserDatabase cleanState = dataAccess.loadUserDatabase("TB");
         dataAccess.saveUserDatabase("Alice", cleanState);
+    }
+
+    @Test
+    void executeWithIOException() throws IOException {
+        CreatePlaylistInputData inputData = new CreatePlaylistInputData("New Playlist");
+
+        Exception exception = assertThrows(RuntimeException.class, () -> interactor.execute(inputData));
+        assertTrue(exception.getCause() instanceof IOException);
     }
 }

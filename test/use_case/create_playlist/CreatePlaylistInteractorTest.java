@@ -45,13 +45,15 @@ public class CreatePlaylistInteractorTest {
         dataAccess.createPlaylist("Alice", playlistFactory.create(playlistName));
 
         CreatePlaylistInputData inputData = new CreatePlaylistInputData(playlistName);
+
+        assertEquals(inputData.getPlaylistName(), "Existing Playlist");
         interactor.execute(inputData);
 
         verify(presenter).prepareFailView("This playlist already exists.");
     }
 
-    @Test(expected = IOException.class)
-    public void testCreatePlaylistIOException() throws IOException {
+    @Test(expected = RuntimeException.class)
+    public void testCreatePlaylistIOException() throws RuntimeException, IOException {
         CreatePlaylistDataAccessInterface mockDataAccess = mock(CreatePlaylistDataAccessInterface.class);
         when(mockDataAccess.createPlaylist(anyString(), any(Playlist.class))).thenThrow(new IOException("Failed to access database"));
 

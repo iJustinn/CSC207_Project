@@ -9,11 +9,35 @@ import view.SearchView;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.search_album.SearchAlbumViewModel;
 
+// tempo
+import data_access.UserDatabaseDataAccessObject;
+import interface_adapter.delete_playlist.DeletePlaylistController;
+import interface_adapter.delete_playlist.DeletePlaylistPresenter;
+import interface_adapter.delete_playlist.DeletePlaylistViewModel;
+import interface_adapter.delete_song.DeleteSongController;
+import interface_adapter.delete_song.DeleteSongPresenter;
+import interface_adapter.delete_song.DeleteSongViewModel;
+import interface_adapter.update_comment.UpdateCommentController;
+import interface_adapter.update_comment.UpdateCommentPresenter;
+import interface_adapter.update_comment.UpdateCommentViewModel;
+import interface_adapter.view_playlists.ViewPlaylistsController;
+import interface_adapter.view_playlists.ViewPlaylistsPresenter;
+import interface_adapter.view_playlists.ViewPlaylistsViewModel;
+import use_case.delete_playlist.DeletePlaylistInteractor;
+import use_case.delete_song.DeleteSongInteractor;
+import use_case.update_comment.UpdateCommentInteractor;
+import use_case.view_playlists.ViewPlaylistsInteractor;
+import view.CreatePlaylistView;
+import view.ViewPlaylistsView;
+import interface_adapter.view_song.ViewSongController;
+import interface_adapter.view_song.ViewSongPresenter;
+import interface_adapter.view_song.ViewSongViewModel;
+import use_case.view_song.ViewSongInteractor;
+import view.ViewSongView;
+
 // JAVA swing imports
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Main {
     private static CardLayout cardLayout;
@@ -39,7 +63,7 @@ public class Main {
             JPanel songSearchPanel = createSongSearchPanel();
             JPanel albumSearchPanel = createAlbumSearchPanel();
             JPanel artistSearchPanel = createArtistSearchPanel();
-            JPanel specificPlaylistPanel = createSpecificPlaylistPanel();
+//            JPanel specificPlaylistPanel = createSpecificPlaylistPanel();
 
             // Adding panels to the card layout
             cardPanel.add(searchPanel, "SearchPanel");
@@ -47,7 +71,7 @@ public class Main {
             cardPanel.add(songSearchPanel, "SongSearchPanel");
             cardPanel.add(albumSearchPanel, "AlbumSearchPanel");
             cardPanel.add(artistSearchPanel, "ArtistSearchPanel");
-            cardPanel.add(specificPlaylistPanel, "SpecificPlaylistPanel");
+//            cardPanel.add(specificPlaylistPanel, "SpecificPlaylistPanel");
 
             // Button panel, order of code reflect order on the program window
             JPanel buttonPanel = new JPanel();
@@ -96,137 +120,76 @@ public class Main {
         panel.setBackground(Color.WHITE);
         return panel;
     }
-
-    public interface PlaylistAccessListener {
-        void onPlaylistAccess(String playlistName);
-    }
-
-    private static JPanel createPlaylistPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        String[] playlists = {"Playlist EX #1", "Playlist EX #2"};
-
-        PlaylistAccessListener listener = new PlaylistAccessListener() {
-            @Override
-            public void onPlaylistAccess(String playlistName) {
-                System.out.println("Accessing playlist: " + playlistName);
-                cardLayout.show(cardPanel, "SpecificPlaylistPanel");
-            }
-        };
-
-        JList<String> playlistList = new JList<>(playlists);
-        playlistList.setCellRenderer(new PlaylistCellRenderer(listener));
-        JScrollPane scrollPane = new JScrollPane(playlistList);
-        panel.add(scrollPane, BorderLayout.CENTER);
-        return panel;
-    }
-
-    static class PlaylistCellRenderer extends JPanel implements ListCellRenderer<String> {
-        private JLabel nameLabel;
-        private JButton accessButton;
-        private PlaylistAccessListener listener;
-
-        public PlaylistCellRenderer(PlaylistAccessListener listener) {
-            this.listener = listener;
-            setLayout(new BorderLayout());
-            nameLabel = new JLabel();
-            accessButton = new JButton("Access");
-            accessButton.addActionListener(e -> {
-                if (listener != null) {
-                    listener.onPlaylistAccess(nameLabel.getText());
-                }
-            });
-            add(nameLabel, BorderLayout.CENTER);
-            add(accessButton, BorderLayout.EAST);
-        }
-
-        @Override
-        public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
-            nameLabel.setText(value);
-            if (isSelected) {
-                setBackground(list.getSelectionBackground());
-                setForeground(list.getSelectionForeground());
-            } else {
-                setBackground(list.getBackground());
-                setForeground(list.getForeground());
-            }
-            return this;
-        }
-
-        private void accessPlaylist(String playlistName) {
-            cardLayout.show(cardPanel, "SpecificPlaylistPanel");
-            cardPanel.revalidate();
-            cardPanel.repaint();
-        }
-    }
-
-    private static JPanel createSpecificPlaylistPanel() {
-        JPanel panel = new JPanel();
-        panel.add(new JLabel("Playlist Interface TO BE IMPLEMENT"));
-        panel.setBackground(Color.WHITE); // Distinctive color for testing
-        return panel;
-    }
-
-//    public static class ButtonRenderer extends JButton implements TableCellRenderer {
-//        public ButtonRenderer() {
-//            setOpaque(true);
-//        }
 //
-//        @Override
-//        public Component getTableCellRendererComponent(JTable table, Object value,
-//                                                       boolean isSelected, boolean hasFocus, int row, int column) {
-//            setText((value == null) ? "" : value.toString());
-//            return this;
-//        }
+//    public interface PlaylistAccessListener {
+//        void onPlaylistAccess(String playlistName);
 //    }
 
-    public static class ButtonEditor extends DefaultCellEditor {
-        protected JButton button;
-        private String label;
-        private boolean isPushed;
+    private static JPanel createPlaylistPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
 
-        public ButtonEditor(JCheckBox checkBox) {
-            super(checkBox);
-            button = new JButton();
-            button.setOpaque(true);
-            button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    isPushed = true;
-                    fireEditingStopped();
-                }
-            });
-        }
+        // Initialize Database
+        String storageDirectory = "src/database";
+        UserDatabaseDataAccessObject dataAccess = new UserDatabaseDataAccessObject(storageDirectory);
 
-        public Component getTableCellEditorComponent(JTable table, Object value,
-                                                     boolean isSelected, int row, int column) {
-            if (isSelected) {
-                button.setForeground(table.getSelectionForeground());
-                button.setBackground(table.getSelectionBackground());
-            } else {
-                button.setForeground(table.getForeground());
-                button.setBackground(table.getBackground());
-            }
-            label = (value == null) ? "" : value.toString();
-            button.setText(label);
-            return button;
-        }
+        CreatePlaylistView createPlaylistView = CreatePlaylistUseCaseFactory.create(storageDirectory);
 
-        public Object getCellEditorValue() {
-            if (isPushed) {
-                // Switch to the specific playlist panel
-                cardLayout.show(cardPanel, "SpecificPlaylistPanel");
-            }
-            isPushed = false;
-            return label;
-        }
+        // Set up for ViewPlaylists
+        ViewPlaylistsViewModel playlistsViewModel = new ViewPlaylistsViewModel();
+        ViewPlaylistsPresenter playlistsPresenter = new ViewPlaylistsPresenter(playlistsViewModel);
+        ViewPlaylistsInteractor playlistsInteractor = new ViewPlaylistsInteractor(dataAccess, playlistsPresenter);
+        ViewPlaylistsController playlistsController = new ViewPlaylistsController(playlistsInteractor);
 
-        public boolean stopCellEditing() {
-            isPushed = false;
-            return super.stopCellEditing();
-        }
+        // Set up for ViewSongs
+        ViewSongViewModel viewSongViewModel = new ViewSongViewModel();
+        ViewSongPresenter viewSongPresenter = new ViewSongPresenter(viewSongViewModel);
+        ViewSongInteractor viewSongInteractor = new ViewSongInteractor(dataAccess, viewSongPresenter);
+        ViewSongController viewSongController = new ViewSongController(viewSongInteractor);
 
-        protected void fireEditingStopped() {
-            super.fireEditingStopped();
-        }
+        // Set up for DeletePlaylist
+        DeletePlaylistViewModel deletePlaylistViewModel = new DeletePlaylistViewModel();
+        DeletePlaylistPresenter deletePlaylistPresenter = new DeletePlaylistPresenter(deletePlaylistViewModel);
+        DeletePlaylistInteractor deletePlaylistInteractor = new DeletePlaylistInteractor(dataAccess, deletePlaylistPresenter);
+        DeletePlaylistController deletePlaylistController = new DeletePlaylistController(deletePlaylistInteractor);
+
+        // Set up for UpdateComments
+        UpdateCommentViewModel updateCommentViewModel = new UpdateCommentViewModel();
+        UpdateCommentPresenter updateCommentPresenter = new UpdateCommentPresenter(updateCommentViewModel);
+        UpdateCommentInteractor updateCommentInteractor = new UpdateCommentInteractor(dataAccess, updateCommentPresenter);
+        UpdateCommentController updateCommentController = new UpdateCommentController(updateCommentInteractor);
+
+        // Set up for DeleteSongs
+        DeleteSongViewModel deleteSongViewModel = new DeleteSongViewModel();
+        DeleteSongPresenter deleteSongPresenter = new DeleteSongPresenter(deleteSongViewModel);
+        DeleteSongInteractor deleteSongInteractor = new DeleteSongInteractor(dataAccess, deleteSongPresenter);
+        DeleteSongController deleteSongController = new DeleteSongController(deleteSongInteractor);
+
+
+        // Create the Views
+        ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel);
+        ViewSongView viewSongView = new ViewSongView(viewSongViewModel, updateCommentController, updateCommentViewModel, deleteSongController, deleteSongViewModel, viewSongController);
+
+//        panel.add(viewPlaylistsView, BorderLayout.CENTER);
+//        panel.add(viewSongView, BorderLayout.CENTER);
+//        panel.add(createPlaylistView, BorderLayout.CENTER);
+
+        cardLayout = new CardLayout();
+        cardPanel = new JPanel(cardLayout);
+        cardPanel.add(viewPlaylistsView, "PlaylistsView");
+        cardPanel.add(viewSongView, "SongView");
+        cardPanel.add(createPlaylistView, "CreateView");
+        panel.add(cardPanel);
+
+        return panel;
+    }
+
+    public static void switchToSongView() {
+        cardLayout.show(cardPanel, "SongView");
+    }
+
+    public static void switchToCreateView() {
+        cardLayout.show(cardPanel, "CreateView");
     }
 
     private static JPanel createSongSearchPanel() {

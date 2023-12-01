@@ -19,20 +19,6 @@
       "numberOfSongs" : 0,
       "date" : "2023-11-28",
       "songs" : { }
-    },
-    "hello name" : {
-      "name" : "hello name",
-      "numberOfSongs" : 0,
-      "date" : "2023-11-29",
-      "songs" : {
-        "2" : {
-          "title" : "Song Title 2",
-          "artist" : [ "Artist C" ],
-          "album" : "Album 2",
-          "id" : "2",
-          "comment" : "dsdsds"
-        }
-      }
     }
   }
 }

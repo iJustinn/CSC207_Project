@@ -37,10 +37,6 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
     // Load a user's entire playlist database from a JSON file
     public UserDatabase loadUserDatabase(String username) throws IOException {
         File file = new File(storageDirectory, username + "_playlists.json");
-        if (!file.exists()) {
-            // If the file doesn't exist, return an empty database
-            return new UserDatabase();
-        }
         // Deserialize the JSON file to a UserDatabase object
         return objectMapper.readValue(file, new TypeReference<UserDatabase>() {});
     }
@@ -76,6 +72,10 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
     // Delete a song from a specific playlist in a user's database
     public boolean deleteSongFromPlaylist(String username, String playlistId, String songId) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
+
+        if(!checkPlaylistExist(username, playlistId)){
+            return false;
+        }
 
         // Locate the target playlist
         userDatabase.getPlaylists().get(playlistId).getSongs().remove(songId);

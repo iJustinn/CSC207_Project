@@ -12,8 +12,4 @@ public class DeleteSongOutputData {
     public boolean isSuccess() {
         return success;
     }
-
-    public String getMessage() {
-        return message;
-    }
 }

@@ -1,22 +1,47 @@
 package use_case.delete_song;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import data_access.UserDatabaseDataAccessObject;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.IOException;
 
-class DeleteSongInteractorTest {
+import static org.mockito.Mockito.*;
 
-    @BeforeEach
-    void setUp() {
-    }
+public class DeleteSongInteractorTest {
+    private DeleteSongDataAccessInterface dataAccess;
+    private DeleteSongOutputBoundary presenter;
+    private DeleteSongInteractor interactor;
 
-    @AfterEach
-    void tearDown() {
+    @Before
+    public void setUp() throws IOException {
+        dataAccess = new UserDatabaseDataAccessObject("src/database");
+        presenter = mock(DeleteSongOutputBoundary.class);
+        interactor = new DeleteSongInteractor(dataAccess, presenter);
     }
 
     @Test
-    void execute() {
+    public void testDeleteSongSuccessful() {
+        String playlistId = "love story";
+        String songId = "2";
+
+        DeleteSongInputData inputData = new DeleteSongInputData(songId, playlistId);
+        interactor.execute(inputData);
+
+        // Verify the presenter was called with success message
+        verify(presenter).prepareSuccessView(Mockito.any(DeleteSongOutputData.class));
+    }
+
+    @Test
+    public void testDeleteSongFailure(){
+        String playlistId = "nonExistingPlaylist";
+        String songId = "nonExistingSong";
+
+        DeleteSongInputData inputData = new DeleteSongInputData(songId, playlistId);
+        interactor.execute(inputData);
+
+        // Verify the presenter was called with fail message
+        verify(presenter).prepareFailView(Mockito.any(DeleteSongOutputData.class));
     }
 }

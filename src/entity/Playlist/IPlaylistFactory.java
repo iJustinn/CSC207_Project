@@ -1,5 +1,7 @@
 package entity.Playlist;
 
 public interface IPlaylistFactory {
-    public Playlist create(String name);
+    Playlist create(String name);
+    KpopPalylist kpop_create(String name);
+
 }

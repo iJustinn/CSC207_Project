@@ -6,38 +6,40 @@ import data_access.SpotifyDataAccessObject;
 
 // Views imports
 import view.SearchView;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.search_album.SearchAlbumViewModel;
+import view.ViewSongView;
+import view.ViewPlaylistsView;
+import view.CreatePlaylistView;
 
-// tempo
+// interface adapters imports
+import interface_adapter.ViewManagerModel;
 import data_access.UserDatabaseDataAccessObject;
-import interface_adapter.delete_playlist.DeletePlaylistController;
-import interface_adapter.delete_playlist.DeletePlaylistPresenter;
-import interface_adapter.delete_playlist.DeletePlaylistViewModel;
-import interface_adapter.delete_song.DeleteSongController;
+import interface_adapter.view_song.ViewSongPresenter;
+import interface_adapter.view_song.ViewSongViewModel;
+import interface_adapter.view_song.ViewSongController;
 import interface_adapter.delete_song.DeleteSongPresenter;
 import interface_adapter.delete_song.DeleteSongViewModel;
-import interface_adapter.update_comment.UpdateCommentController;
-import interface_adapter.update_comment.UpdateCommentPresenter;
-import interface_adapter.update_comment.UpdateCommentViewModel;
-import interface_adapter.view_playlists.ViewPlaylistsController;
+import interface_adapter.delete_song.DeleteSongController;
+import interface_adapter.search_album.SearchAlbumViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsPresenter;
 import interface_adapter.view_playlists.ViewPlaylistsViewModel;
-import use_case.delete_playlist.DeletePlaylistInteractor;
+import interface_adapter.update_comment.UpdateCommentPresenter;
+import interface_adapter.update_comment.UpdateCommentViewModel;
+import interface_adapter.update_comment.UpdateCommentController;
+import interface_adapter.view_playlists.ViewPlaylistsController;
+import interface_adapter.delete_playlist.DeletePlaylistPresenter;
+import interface_adapter.delete_playlist.DeletePlaylistViewModel;
+import interface_adapter.delete_playlist.DeletePlaylistController;
+
+// use cases imports
+import use_case.view_song.ViewSongInteractor;
 import use_case.delete_song.DeleteSongInteractor;
 import use_case.update_comment.UpdateCommentInteractor;
 import use_case.view_playlists.ViewPlaylistsInteractor;
-import view.CreatePlaylistView;
-import view.ViewPlaylistsView;
-import interface_adapter.view_song.ViewSongController;
-import interface_adapter.view_song.ViewSongPresenter;
-import interface_adapter.view_song.ViewSongViewModel;
-import use_case.view_song.ViewSongInteractor;
-import view.ViewSongView;
+import use_case.delete_playlist.DeletePlaylistInteractor;
 
 // JAVA swing imports
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class Main {
     private static CardLayout cardLayout;
@@ -60,20 +62,20 @@ public class Main {
             // All panels in the program
             JPanel searchPanel = createSearchPanel();
             JPanel playlistPanel = viewPlaylistPanel();
+            JPanel addPlaylistPanel = addPlaylistPanel();
             JPanel songSearchPanel = createSongSearchPanel();
             JPanel albumSearchPanel = createAlbumSearchPanel();
             JPanel artistSearchPanel = createArtistSearchPanel();
-            JPanel addPlaylistPanel = addPlaylistPanel();
 
             // Adding panels to the card layout
             cardPanel.add(searchPanel, "SearchPanel");
             cardPanel.add(playlistPanel, "PlaylistPanel");
             cardPanel.add(songSearchPanel, "SongSearchPanel");
             cardPanel.add(albumSearchPanel, "AlbumSearchPanel");
-            cardPanel.add(artistSearchPanel, "ArtistSearchPanel");
             cardPanel.add(addPlaylistPanel, "addPlaylistPanel");
+            cardPanel.add(artistSearchPanel, "ArtistSearchPanel");
 
-            // Button panel, order of code reflect order on the program window
+            // Button panel (NOTE: order of code reflect order of buttons on the GUI)
             JPanel buttonPanel = new JPanel();
             buttonPanel.add(createNavButton("Playlists", "PlaylistPanel"));
             buttonPanel.add(createNavButton("Search", "SearchPanel"));
@@ -85,8 +87,8 @@ public class Main {
             frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
             // Styling
-            frame.getContentPane().setBackground(Color.BLACK);
             buttonPanel.setBackground(Color.BLACK);
+            frame.getContentPane().setBackground(Color.BLACK);
 
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
@@ -103,9 +105,9 @@ public class Main {
     private static JPanel createSearchPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        JPanel buttonPanel_North = new JPanel();
         JPanel buttonPanel_East = new JPanel();
         JPanel buttonPanel_West = new JPanel();
+        JPanel buttonPanel_North = new JPanel();
 
         // Song button
         JButton songButton = createNavButton("Song", "SongSearchPanel");
@@ -127,9 +129,9 @@ public class Main {
         buttonPanel_East.add(albumButton);
         buttonPanel_West.add(artistButton);
 
-        panel.add(buttonPanel_North, BorderLayout.NORTH);
         panel.add(buttonPanel_East, BorderLayout.EAST);
         panel.add(buttonPanel_West, BorderLayout.WEST);
+        panel.add(buttonPanel_North, BorderLayout.NORTH);
 
         panel.setBackground(Color.WHITE);
 
@@ -143,8 +145,10 @@ public class Main {
         // Initialize Database
         String storageDirectory = "src/database";
 
+        // Initialize Views
         CreatePlaylistView createPlaylistView = CreatePlaylistUseCaseFactory.create(storageDirectory);
 
+        // Add Views
         panel.add(createPlaylistView, BorderLayout.CENTER);
 
         return panel;
@@ -157,39 +161,32 @@ public class Main {
         String storageDirectory = "src/database";
         UserDatabaseDataAccessObject dataAccess = new UserDatabaseDataAccessObject(storageDirectory);
 
-        CreatePlaylistView createPlaylistView = CreatePlaylistUseCaseFactory.create(storageDirectory);
-
-        // Set up for ViewPlaylists
-        ViewPlaylistsViewModel playlistsViewModel = new ViewPlaylistsViewModel();
-        ViewPlaylistsPresenter playlistsPresenter = new ViewPlaylistsPresenter(playlistsViewModel);
-        ViewPlaylistsInteractor playlistsInteractor = new ViewPlaylistsInteractor(dataAccess, playlistsPresenter);
-        ViewPlaylistsController playlistsController = new ViewPlaylistsController(playlistsInteractor);
-
-        // Set up for ViewSongs
+        // Setups
         ViewSongViewModel viewSongViewModel = new ViewSongViewModel();
-        ViewSongPresenter viewSongPresenter = new ViewSongPresenter(viewSongViewModel);
-        ViewSongInteractor viewSongInteractor = new ViewSongInteractor(dataAccess, viewSongPresenter);
-        ViewSongController viewSongController = new ViewSongController(viewSongInteractor);
-
-        // Set up for DeletePlaylist
+        DeleteSongViewModel deleteSongViewModel = new DeleteSongViewModel();
+        ViewPlaylistsViewModel playlistsViewModel = new ViewPlaylistsViewModel();
+        UpdateCommentViewModel updateCommentViewModel = new UpdateCommentViewModel();
         DeletePlaylistViewModel deletePlaylistViewModel = new DeletePlaylistViewModel();
+
+        ViewSongPresenter viewSongPresenter = new ViewSongPresenter(viewSongViewModel);
+        DeleteSongPresenter deleteSongPresenter = new DeleteSongPresenter(deleteSongViewModel);
+        ViewPlaylistsPresenter playlistsPresenter = new ViewPlaylistsPresenter(playlistsViewModel);
+        UpdateCommentPresenter updateCommentPresenter = new UpdateCommentPresenter(updateCommentViewModel);
         DeletePlaylistPresenter deletePlaylistPresenter = new DeletePlaylistPresenter(deletePlaylistViewModel);
+
+        ViewSongInteractor viewSongInteractor = new ViewSongInteractor(dataAccess, viewSongPresenter);
+        DeleteSongInteractor deleteSongInteractor = new DeleteSongInteractor(dataAccess, deleteSongPresenter);
+        ViewPlaylistsInteractor playlistsInteractor = new ViewPlaylistsInteractor(dataAccess, playlistsPresenter);
+        UpdateCommentInteractor updateCommentInteractor = new UpdateCommentInteractor(dataAccess, updateCommentPresenter);
         DeletePlaylistInteractor deletePlaylistInteractor = new DeletePlaylistInteractor(dataAccess, deletePlaylistPresenter);
+
+        ViewSongController viewSongController = new ViewSongController(viewSongInteractor);
+        DeleteSongController deleteSongController = new DeleteSongController(deleteSongInteractor);
+        ViewPlaylistsController playlistsController = new ViewPlaylistsController(playlistsInteractor);
+        UpdateCommentController updateCommentController = new UpdateCommentController(updateCommentInteractor);
         DeletePlaylistController deletePlaylistController = new DeletePlaylistController(deletePlaylistInteractor);
 
-        // Set up for UpdateComments
-        UpdateCommentViewModel updateCommentViewModel = new UpdateCommentViewModel();
-        UpdateCommentPresenter updateCommentPresenter = new UpdateCommentPresenter(updateCommentViewModel);
-        UpdateCommentInteractor updateCommentInteractor = new UpdateCommentInteractor(dataAccess, updateCommentPresenter);
-        UpdateCommentController updateCommentController = new UpdateCommentController(updateCommentInteractor);
-
-        // Set up for DeleteSongs
-        DeleteSongViewModel deleteSongViewModel = new DeleteSongViewModel();
-        DeleteSongPresenter deleteSongPresenter = new DeleteSongPresenter(deleteSongViewModel);
-        DeleteSongInteractor deleteSongInteractor = new DeleteSongInteractor(dataAccess, deleteSongPresenter);
-        DeleteSongController deleteSongController = new DeleteSongController(deleteSongInteractor);
-
-        // Create the Views
+        // Initialize Views
         ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel);
         ViewSongView viewSongView = new ViewSongView(viewSongViewModel, updateCommentController, updateCommentViewModel, deleteSongController, deleteSongViewModel, viewSongController);
 
@@ -209,9 +206,9 @@ public class Main {
         cardLayout.show(cardPanel, "addPlaylistPanel");
     }
 
-    public static void switchToUpdateCommentView() {
-        cardLayout.show(cardPanel, "UpdateCommentView");
-    }
+//    public static void switchToUpdateCommentView() {
+//        cardLayout.show(cardPanel, "UpdateCommentView");
+//    }
 
     private static JPanel createSongSearchPanel() {
         JPanel panel = new JPanel();

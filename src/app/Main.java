@@ -7,6 +7,7 @@ import data_access.SpotifyDataAccessObject;
 // Views imports
 import view.SearchView;
 import view.ViewSongView;
+import view.SearchAlbumView;
 import view.ViewPlaylistsView;
 import view.CreatePlaylistView;
 
@@ -20,6 +21,7 @@ import interface_adapter.delete_song.DeleteSongPresenter;
 import interface_adapter.delete_song.DeleteSongViewModel;
 import interface_adapter.delete_song.DeleteSongController;
 import interface_adapter.search_album.SearchAlbumViewModel;
+import interface_adapter.get_album_songs.GetSongsViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsPresenter;
 import interface_adapter.view_playlists.ViewPlaylistsViewModel;
 import interface_adapter.update_comment.UpdateCommentPresenter;
@@ -231,13 +233,17 @@ public class Main {
         SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
         SpotifyDataAccessObject spotify = new SpotifyDataAccessObject(spotifyEndpoint);
 
-        SearchView searchView = SearchAlbumUseCaseFactory.create(
+        GetSongsViewModel getSongsViewModel = new GetSongsViewModel();
+
+        SearchAlbumView searchAlbumView = SearchUseCaseFactory.create(
                 viewManagerModel,
                 searchAlbumViewModel,
+                spotify,
+                getSongsViewModel,
                 spotify
         );
 
-        panel.add(searchView, BorderLayout.CENTER);
+        panel.add(searchAlbumView, BorderLayout.CENTER);
 
         return panel;
     }

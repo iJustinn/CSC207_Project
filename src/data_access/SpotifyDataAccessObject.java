@@ -12,6 +12,7 @@ import entity.song.Song;
 
 import spotify.SpotifyEndpoint;
 import spotify.models.*;
+import use_case.get_album_songs.GetAlbumSongsDataAccessInterface;
 import use_case.search.SearchDataAccessInterface;
 import use_case.get_by_id.GetByIdDataAccessInterface;
 
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * A DataAccessObject used to get data from the Spotify API
  */
-public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetByIdDataAccessInterface {
+public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetByIdDataAccessInterface, GetAlbumSongsDataAccessInterface {
 
     private final SpotifyEndpoint spotifyApi;
 
@@ -60,5 +61,11 @@ public class SpotifyDataAccessObject implements SearchDataAccessInterface, GetBy
     @Override
     public Song getSongById(String songId) {
         return null;
+    }
+
+    @Override
+    public List<Song> getAlbumSongs(String id) {
+        List<TrackSimpleModel> songs = this.spotifyApi.getAlbumTracks(id);
+        return songs.stream().map(Song::new).toList();
     }
 }

@@ -5,6 +5,7 @@ package entity.song;
 
 import spotify.models.ArtistSimpleModel;
 import spotify.models.TrackModel;
+import spotify.models.TrackSimpleModel;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,14 @@ public class Song implements entity.song.SongInterface {
         this.title = track.getName();
         this.artist = new ArrayList<>(track.getArtists().stream().map(ArtistSimpleModel::getName).toList());
         this.album = track.getAlbum().getAlbumName();
+        this.id = track.getId();
+        this.comment = EMPTY_STRING;
+    }
+
+    public Song(TrackSimpleModel track) {
+        this.title = track.getId();
+        this.artist = new ArrayList<>(track.getArtists().stream().map(ArtistSimpleModel::getName).toList());
+        this.album = "??";
         this.id = track.getId();
         this.comment = EMPTY_STRING;
     }

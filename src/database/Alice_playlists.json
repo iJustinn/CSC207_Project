@@ -4,15 +4,7 @@
       "name" : "love story",
       "numberOfSongs" : 2,
       "date" : "2023-11-21",
-      "songs" : {
-        "2" : {
-          "title" : "Song Title 2",
-          "artist" : [ "Artist C" ],
-          "album" : "Album 2",
-          "id" : "2",
-          "comment" : "dsadadsa"
-        }
-      }
+      "songs" : { }
     },
     "test_0" : {
       "name" : "test_0",

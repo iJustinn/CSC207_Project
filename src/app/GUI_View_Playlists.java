@@ -1,6 +1,10 @@
 package app;
 
 import data_access.UserDatabaseDataAccessObject;
+import entity.Playlist.PlaylistFactory;
+import interface_adapter.create_playlist.CreatePlaylistController;
+import interface_adapter.create_playlist.CreatePlaylistPresenter;
+import interface_adapter.create_playlist.CreateViewModel;
 import interface_adapter.delete_playlist.DeletePlaylistController;
 import interface_adapter.delete_playlist.DeletePlaylistPresenter;
 import interface_adapter.delete_playlist.DeletePlaylistViewModel;
@@ -13,6 +17,9 @@ import interface_adapter.update_comment.UpdateCommentViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsController;
 import interface_adapter.view_playlists.ViewPlaylistsPresenter;
 import interface_adapter.view_playlists.ViewPlaylistsViewModel;
+import use_case.create_playlist.CreatePlaylistInputBoundary;
+import use_case.create_playlist.CreatePlaylistInteractor;
+import use_case.create_playlist.CreatePlaylistOutputBoundary;
 import use_case.delete_playlist.DeletePlaylistInteractor;
 import use_case.delete_song.DeleteSongInteractor;
 import use_case.update_comment.UpdateCommentInteractor;
@@ -23,6 +30,7 @@ import interface_adapter.view_song.ViewSongController;
 import interface_adapter.view_song.ViewSongPresenter;
 import interface_adapter.view_song.ViewSongViewModel;
 import use_case.view_song.ViewSongInteractor;
+import view.ViewPlaylistsView_test;
 import view.ViewSongView;
 
 import javax.swing.*;
@@ -68,9 +76,16 @@ public class GUI_View_Playlists {
         DeleteSongInteractor deleteSongInteractor = new DeleteSongInteractor(dataAccess, deleteSongPresenter);
         DeleteSongController deleteSongController = new DeleteSongController(deleteSongInteractor);
 
+        // Set up for Create
+        PlaylistFactory playlistFactory = new PlaylistFactory();
+        CreateViewModel createPlaylistViewModel = new CreateViewModel();
+        CreatePlaylistOutputBoundary outputBoundary = new CreatePlaylistPresenter(createPlaylistViewModel);
+        CreatePlaylistInputBoundary inputBoundary = new CreatePlaylistInteractor(dataAccess, outputBoundary, playlistFactory);
+        CreatePlaylistController createPlaylistController = new CreatePlaylistController(inputBoundary);
+
 
         // Create the Views
-        ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel);
+        ViewPlaylistsView_test viewPlaylistsView = new ViewPlaylistsView_test(playlistsViewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel, createPlaylistViewModel, createPlaylistController);
         ViewSongView viewSongView = new ViewSongView(viewSongViewModel, updateCommentController, updateCommentViewModel, deleteSongController, deleteSongViewModel, viewSongController);
 
         // Set up the main application window

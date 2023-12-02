@@ -1,12 +1,12 @@
 package view;
 
 import app.Main;
-import app.GUI_View_Playlists;
+import interface_adapter.create_playlist.CreatePlaylistController;
+import interface_adapter.create_playlist.CreateViewModel;
 import interface_adapter.delete_playlist.DeletePlaylistController;
-import interface_adapter.delete_playlist.DeletePlaylistState;
 import interface_adapter.delete_playlist.DeletePlaylistViewModel;
-import interface_adapter.view_playlists.ViewPlaylistsViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsController;
+import interface_adapter.view_playlists.ViewPlaylistsViewModel;
 import interface_adapter.view_song.ViewSongController;
 
 import javax.swing.*;
@@ -18,31 +18,37 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Vector;
 
-public class ViewPlaylistsView extends JPanel implements PropertyChangeListener, ActionListener {
+public class ViewPlaylistsView_test extends JPanel implements PropertyChangeListener, ActionListener {
     private final ViewPlaylistsViewModel viewModel;
     private final ViewPlaylistsController playlistsController;
     private final ViewSongController viewSongController;
     private final DeletePlaylistController deletePlaylistController;
-
     private final DeletePlaylistViewModel deletePlaylistViewModel;
+    private final CreateViewModel createViewModel;
+    private final CreatePlaylistController createPlaylistController;
 
     private final JList<String> playlistsList;
     // private final JButton refreshButton;
+    private JTextField playlistNameField;
     private final JButton createPlaylistButton;
     private final JButton deletePlaylistButton;
 
-    public ViewPlaylistsView(ViewPlaylistsViewModel viewModel,
-                             ViewPlaylistsController playlistsController,
-                             ViewSongController viewSongController,
-                             DeletePlaylistController deletePlaylistController, DeletePlaylistViewModel deletePlaylistViewModel) {
+    public ViewPlaylistsView_test(ViewPlaylistsViewModel viewModel,
+                                  ViewPlaylistsController playlistsController,
+                                  ViewSongController viewSongController,
+                                  DeletePlaylistController deletePlaylistController, DeletePlaylistViewModel deletePlaylistViewModel, CreateViewModel createViewModel, CreatePlaylistController createPlaylistController) {
         this.viewModel = viewModel;
         this.playlistsController = playlistsController;
         this.viewSongController = viewSongController;
         this.deletePlaylistController = deletePlaylistController;
         this.deletePlaylistViewModel = deletePlaylistViewModel;
+        this.createViewModel = createViewModel;
+        this.createPlaylistController = createPlaylistController;
 
         this.playlistsList = new JList<>();
         // this.refreshButton = new JButton("Refresh Playlists");
+        this.playlistNameField = new JTextField(20);
+
         this.createPlaylistButton = new JButton("Create Playlist");
         this.deletePlaylistButton = new JButton("Delete Playlist");
 
@@ -65,6 +71,11 @@ public class ViewPlaylistsView extends JPanel implements PropertyChangeListener,
         buttonPanel.add(deletePlaylistButton);
        // buttonPanel.add(refreshButton);
         add(buttonPanel, BorderLayout.SOUTH);
+
+        JPanel createPanel = new JPanel();
+        createPanel.add(playlistNameField);
+        createPanel.add(createPlaylistButton);
+        add(createPanel, BorderLayout.NORTH);
 
         createPlaylistButton.addActionListener(this);
         deletePlaylistButton.addActionListener(this);
@@ -92,7 +103,7 @@ public class ViewPlaylistsView extends JPanel implements PropertyChangeListener,
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == createPlaylistButton) {
-            Main.switchToCreateView();
+            triggerPlaylistCreation();
             try {
                 playlistsController.execute("Alice");
             } catch (IOException ex) {
@@ -111,6 +122,20 @@ public class ViewPlaylistsView extends JPanel implements PropertyChangeListener,
             } else {
                 JOptionPane.showMessageDialog(this, "Please select a playlist to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
             }
+        }
+    }
+
+    private void triggerPlaylistCreation() {
+        String playlistName = playlistNameField.getText();
+        if (!playlistName.trim().isEmpty()) {
+            createPlaylistController.execute(playlistName); // Create playlist
+            try {
+                playlistsController.execute("Alice"); // Refresh playlists
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Playlist name cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

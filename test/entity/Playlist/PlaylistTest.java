@@ -35,7 +35,7 @@ class PlaylistTest {
         assertNotNull(emptyPlaylist);
         assertNull(emptyPlaylist.getName());
         assertNull(emptyPlaylist.getDate());
-        assertNull(emptyPlaylist.getSongs());
+        assertEquals(emptyPlaylist.getSongs(), new HashMap<>());
     }
 
     @Test

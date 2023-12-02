@@ -111,17 +111,17 @@ public class Main {
 
         // Song button
         JButton songButton = createNavButton("Song", "SongSearchPanel");
-        songButton.setPreferredSize(new Dimension(150, 50)); // button size
+        songButton.setPreferredSize(new Dimension(290, 50)); // button size
         songButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
 
         // Album button
         JButton albumButton = createNavButton("Album", "AlbumSearchPanel");
-        albumButton.setPreferredSize(new Dimension(150, 50)); // button size
+        albumButton.setPreferredSize(new Dimension(140, 50)); // button size
         albumButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
 
         // Artist button
         JButton artistButton = createNavButton("Artist", "ArtistSearchPanel");
-        artistButton.setPreferredSize(new Dimension(150, 50)); // button size
+        artistButton.setPreferredSize(new Dimension(140, 50)); // button size
         artistButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
 
         // adding buttons
@@ -197,18 +197,13 @@ public class Main {
         return panel;
     }
 
-    // View Switching
     public static void switchToSongView() {
-        cardLayout.show(cardPanel, "PlaylistPanel");
+        cardLayout.show(cardPanel, "PlaylistPanel"); // show PlaylistPanel
     }
 
     public static void switchToCreateView() {
-        cardLayout.show(cardPanel, "addPlaylistPanel");
+        cardLayout.show(cardPanel, "addPlaylistPanel"); // show addPlaylistPanel
     }
-
-//    public static void switchToUpdateCommentView() {
-//        cardLayout.show(cardPanel, "UpdateCommentView");
-//    }
 
     private static JPanel createSongSearchPanel() {
         JPanel panel = new JPanel();

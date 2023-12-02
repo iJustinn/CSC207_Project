@@ -90,10 +90,17 @@ public class SongListView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getNewValue() instanceof AddSongState){
+        if (evt.getSource() == addSongViewModel) {
             AddSongState state = addSongViewModel.getState();
-            if(state.getMessage().equals("The song was successfully added.")){
-                JOptionPane.showMessageDialog(this,state.getMessage(), "success", JOptionPane.INFORMATION_MESSAGE);
+            if (state.getMessage() == "The song was successfully added.") {
+                JOptionPane.showMessageDialog(this, state.getMessage(), "Success", JOptionPane.INFORMATION_MESSAGE);
+                try {
+                    viewPlaylistsController.execute("Alice"); // Refresh the playlists
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, state.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         if ("state".equals(evt.getPropertyName())) {
@@ -104,4 +111,5 @@ public class SongListView extends JPanel implements PropertyChangeListener {
             }
         }
     }
+
 }

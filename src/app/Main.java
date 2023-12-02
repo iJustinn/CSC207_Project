@@ -1,12 +1,12 @@
 package app;
 
 // Spotify API imports
+import interface_adapter.search_artist.SearchArtistViewModel;
+import interface_adapter.search_song.SearchSongViewModel;
 import spotify.SpotifyEndpoint;
 
 // other imports
-import view.ViewSongView;
-import view.SearchAlbumView;
-import view.ViewPlaylistsView_test;
+import view.*;
 import entity.Playlist.PlaylistFactory;
 import interface_adapter.ViewManagerModel;
 import data_access.SpotifyDataAccessObject;
@@ -211,8 +211,18 @@ public class Main {
 
     private static JPanel createSongSearchPanel() {
         JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
 
-        // Add components for song search
+        SearchSongViewModel searchSongViewModel = new SearchSongViewModel();
+        SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
+        SpotifyDataAccessObject spotifyDataAccessObject = new SpotifyDataAccessObject(spotifyEndpoint);
+
+        SearchSongView searchSongView = SearchUseCaseFactory.song(
+                viewManagerModel,
+                searchSongViewModel,
+                spotifyDataAccessObject
+        );
+        panel.add(searchSongView, BorderLayout.CENTER);
 
         return panel;
     }
@@ -242,8 +252,19 @@ public class Main {
 
     private static JPanel createArtistSearchPanel() {
         JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
 
-        // Add components for artist search
+        SearchArtistViewModel searchArtistViewModel = new SearchArtistViewModel();
+        SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
+        SpotifyDataAccessObject spotifyDataAccessObject = new SpotifyDataAccessObject(spotifyEndpoint);
+
+        SearchArtistView searchArtistView = SearchUseCaseFactory.artist(
+                viewManagerModel,
+                searchArtistViewModel,
+                spotifyDataAccessObject
+        );
+
+        panel.add(searchArtistView, BorderLayout.CENTER);
 
         return panel;
     }

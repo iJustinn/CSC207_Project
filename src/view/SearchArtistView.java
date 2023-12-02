@@ -24,10 +24,10 @@ public class SearchArtistView extends JPanel implements ActionListener, Property
     private CustomListModel<ArtistFull> listModel;
     private final JList<ArtistFull> artistList;
 
-    public SearchArtistView(SearchArtistController searchArtistController,
-                            SearchArtistViewModel searchArtistViewModel) {
-        this.searchArtistController = searchArtistController;
-        this.searchArtistViewModel = searchArtistViewModel;
+    public SearchArtistView(SearchArtistController controller,
+                            SearchArtistViewModel viewModel) {
+        this.searchArtistController = controller;
+        this.searchArtistViewModel = viewModel;
 
         this.searchButton = new JButton(SearchArtistViewModel.SEARCH_BUTTON_LABEL);
 

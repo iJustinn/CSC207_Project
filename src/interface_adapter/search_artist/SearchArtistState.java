@@ -17,7 +17,7 @@ public class SearchArtistState {
     }
 
     public String getSearchInput() {
-        return getSearchInput();
+        return searchInput;
     }
 
     public void setArtists(List<ArtistFull> artists) {

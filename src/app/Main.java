@@ -154,8 +154,13 @@ public class Main {
         return panel;
     }
 
-        private static JPanel viewPlaylistPanel() {
+    private static JPanel viewPlaylistPanel() {
         JPanel panel = new JPanel();
+
+        JButton refreshButton = new JButton("Refresh");
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        refreshButton.addActionListener(e -> refreshPlaylistsView());
+        buttonPanel.add(refreshButton);
 
         // Initialize Database
         String storageDirectory = "src/database";
@@ -192,7 +197,8 @@ public class Main {
 
         // Add Views
         panel.add(viewPlaylistsView, BorderLayout.NORTH);
-        panel.add(viewSongView, BorderLayout.SOUTH);
+        panel.add(viewSongView, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
 
         return panel;
     }
@@ -203,6 +209,10 @@ public class Main {
 
     public static void switchToCreateView() {
         cardLayout.show(cardPanel, "addPlaylistPanel"); // show addPlaylistPanel
+    }
+
+    private static void refreshPlaylistsView() { // refresh playlist
+        // not sure how to do this :(
     }
 
     private static JPanel createSongSearchPanel() {

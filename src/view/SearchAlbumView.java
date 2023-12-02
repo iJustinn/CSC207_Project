@@ -15,7 +15,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 public class SearchAlbumView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "search";
+    public final String viewName = "search album";
 
     private final JTextField searchField = new JTextField(20);
 

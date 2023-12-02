@@ -6,23 +6,25 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class Playlist implements Iterable<Song>, IPlaylist {
+public class KpopPalylist implements IPlaylist, Iterable<Song>{
+
     private String name;
     private int numberOfSongs;
     private Date date;
     private HashMap<String, Song> songs;
 
     // Default constructor for Jackson
-    public Playlist() {
+    public KpopPalylist() {
         this.songs = new HashMap<>();
     }
 
     // Constructor
-    public Playlist(String name, int numberOfSongs, Date date, HashMap<String, Song> songs) {
+    public KpopPalylist(String name, int numberOfSongs, Date date, HashMap<String, Song> songs) {
         this.name = name;
         this.numberOfSongs = numberOfSongs;
         this.date = date;
         this.songs = songs;
+
     }
 
     // Getters and setters

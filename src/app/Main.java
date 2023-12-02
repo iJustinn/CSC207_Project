@@ -3,7 +3,7 @@ package app;
 // Spotify API imports
 import spotify.SpotifyEndpoint;
 
-// Other imports
+// other imports
 import view.ViewSongView;
 import view.SearchAlbumView;
 import view.ViewPlaylistsView_test;
@@ -11,6 +11,16 @@ import entity.Playlist.PlaylistFactory;
 import interface_adapter.ViewManagerModel;
 import data_access.SpotifyDataAccessObject;
 import data_access.UserDatabaseDataAccessObject;
+
+// use cases imports
+import use_case.view_song.ViewSongInteractor;
+import use_case.delete_song.DeleteSongInteractor;
+import use_case.update_comment.UpdateCommentInteractor;
+import use_case.view_playlists.ViewPlaylistsInteractor;
+import use_case.delete_playlist.DeletePlaylistInteractor;
+import use_case.create_playlist.CreatePlaylistInteractor;
+
+// interface adapter imports
 import interface_adapter.view_song.ViewSongPresenter;
 import interface_adapter.view_song.ViewSongViewModel;
 import interface_adapter.view_song.ViewSongController;
@@ -31,14 +41,6 @@ import interface_adapter.delete_playlist.DeletePlaylistViewModel;
 import interface_adapter.create_playlist.CreatePlaylistPresenter;
 import interface_adapter.delete_playlist.DeletePlaylistController;
 import interface_adapter.create_playlist.CreatePlaylistController;
-
-// use cases imports
-import use_case.view_song.ViewSongInteractor;
-import use_case.delete_song.DeleteSongInteractor;
-import use_case.update_comment.UpdateCommentInteractor;
-import use_case.view_playlists.ViewPlaylistsInteractor;
-import use_case.delete_playlist.DeletePlaylistInteractor;
-import use_case.create_playlist.CreatePlaylistInteractor;
 
 // JAVA swing imports
 import java.awt.*;
@@ -137,22 +139,6 @@ public class Main {
 
         return panel;
     }
-
-//    private static JPanel addPlaylistPanel() {
-//        JPanel panel = new JPanel();
-//        panel.setLayout(new BorderLayout());
-//
-//        // Initialize Database
-//        String storageDirectory = "src/database";
-//
-//        // Initialize Views
-//        CreatePlaylistView createPlaylistView = CreatePlaylistUseCaseFactory.create(storageDirectory);
-//
-//        // Add Views
-//        panel.add(createPlaylistView, BorderLayout.CENTER);
-//
-//        return panel;
-//    }
 
     private static JPanel viewPlaylistPanel() {
         JPanel panel = new JPanel();

@@ -73,11 +73,11 @@ public class CreatePlaylistView extends JPanel implements PropertyChangeListener
     private void displayCreationStatus() {
         if (viewModel.isCreationSuccessful()) {
             JOptionPane.showMessageDialog(this,
-                    "Playlist created successfully",
+                    viewModel.getState().getMessage(),
                     "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this,
-                    "Failed to create playlist",
+                    viewModel.getState().getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

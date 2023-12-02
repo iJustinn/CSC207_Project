@@ -1,20 +1,20 @@
-// Playlist.java in package entity
-
 package entity.Playlist;
 
 import entity.song.Song;
 
 import java.util.Date;
 import java.util.HashMap;
-import entity.song.Song;
+import java.util.Iterator;
 
-public class Playlist implements IPlaylist {
+public class Playlist implements Iterable<Song> {
     private String name;
     private int numberOfSongs;
     private Date date;
     private HashMap<String, Song> songs;
+
+    // Default constructor for Jackson
     public Playlist() {
-        // this constructor is needed by Jackson
+        this.songs = new HashMap<>();
     }
 
     // Constructor
@@ -58,4 +58,35 @@ public class Playlist implements IPlaylist {
         this.songs = songs;
     }
 
+    // Iterable interface implementation
+    @Override
+    public Iterator<Song> iterator() {
+        return new SongIterator();
+    }
+
+    // Inner class to implement the Iterator interface
+    private class SongIterator implements Iterator<Song> {
+        private Iterator<Song> songIterator;
+
+        public SongIterator() {
+            this.songIterator = songs.values().iterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return songIterator.hasNext();
+        }
+
+        @Override
+        public Song next() {
+            return songIterator.next();
+        }
+
+        // Optional: Implement the remove method if you want to allow
+        // removal of songs during iteration
+        @Override
+        public void remove() {
+            songIterator.remove();
+        }
+    }
 }

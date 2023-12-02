@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterface, CreatePlaylistDataAccessInterface,
         ViewPlaylistsDataUserAccessInterface, ViewSongDataAccess, DeletePlaylistDataAccessInterface, DeleteSongDataAccessInterface,
@@ -121,7 +122,7 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
         saveUserDatabase(username, userDatabase);
         return true;
     }
-
+    @Override
     // Return a list of playlist names, used by view playlists
     public ArrayList<String> viewPlaylists(String username) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
@@ -129,15 +130,23 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
 
         return names;
     }
-
+    @Override
     //Return the songs inside a playlist
     public HashMap<String, Song> getSongsByPlaylistName(String username, String name) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
-        return userDatabase.getPlaylists().get(name).getSongs();
+        Playlist playlist = userDatabase.getPlaylists().get(name);
 
-
+        HashMap<String, Song> songMap = new HashMap<>();
+        if (playlist != null) {
+            Iterator<Song> iterator = playlist.iterator();
+            while (iterator.hasNext()) {
+                Song song = iterator.next();
+                songMap.put(song.getId(), song); // Assuming Song has a getId() method
+            }
+        }
+        return songMap;
     }
-
+    @Override
     public boolean deleteplaylist(String username, String deletePlaylist) throws IOException{
         if(!checkPlaylistExist(username,deletePlaylist)){
             return false;

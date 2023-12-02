@@ -59,6 +59,11 @@ public class CreatePlaylistView extends JPanel implements PropertyChangeListener
     }
 
     private void triggerPlaylistCreation() {
+        try {
+            playlistsController.execute("Alice");
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
         String playlistName = playlistNameField.getText();
         if (!playlistName.trim().isEmpty()) {
             controller.execute(playlistName);

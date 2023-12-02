@@ -21,7 +21,7 @@ import java.util.List;
 public class GUI_View_Song_List_After_Search {
     public static void main(String[] args) throws IOException {
         // Initialize Data Access Object
-        UserDatabaseDataAccessObject dataAccessObject = new UserDatabaseDataAccessObject("path/to/your/storageDirectory");
+        UserDatabaseDataAccessObject dataAccessObject = new UserDatabaseDataAccessObject("src/database");
 
         // Initialize View Models
         AddSongViewModel addSongViewModel = new AddSongViewModel();
@@ -39,22 +39,24 @@ public class GUI_View_Song_List_After_Search {
         AddSongController addSongController = new AddSongController(addSongInteractor);
         ViewPlaylistsController viewPlaylistsController = new ViewPlaylistsController(viewPlaylistsInteractor);
 
-        ));
         // Fetch Playlists and Update ViewModel
         viewPlaylistsController.execute("Alice");
 
-        // Create the SongListView
+        // Prepare Songs for the View (Example Songs)
         List<Song> songs = new ArrayList<>(Arrays.asList(
                 new Song("Song Title 1", new ArrayList<>(Arrays.asList("Artist A")), "Album 1", "1"),
                 new Song("Song Title 2", new ArrayList<>(Arrays.asList("Artist B")), "Album 2", "2")
+        ));
 
+        // Create the SongListView
+        SongListView songListView = new SongListView(songs, addSongController, viewPlaylistsController, viewPlaylistsViewModel, addSongViewModel);
 
+        // Create and setup the main window
         JFrame frame = new JFrame("Playlist Manager");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(songListView);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-    }
     }
 }

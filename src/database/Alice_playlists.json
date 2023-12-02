@@ -2,27 +2,92 @@
   "playlists" : {
     "love story" : {
       "name" : "love story",
-      "numberOfSongs" : 2,
+      "numberOfSongs" : 4,
       "date" : "2023-11-21",
-      "songs" : { }
+      "songs" : {
+        "1" : {
+          "title" : "Song Title 1",
+          "artist" : [ "Artist A" ],
+          "album" : "Album 1",
+          "id" : "1",
+          "comment" : ""
+        },
+        "2asdasd" : {
+          "title" : "Song Titasdasdle 2",
+          "artist" : [ "Artist B" ],
+          "album" : "Album 2",
+          "id" : "2",
+          "comment" : ""
+        },
+        "2asdasda" : {
+          "title" : "Sonasdasdg Title 2",
+          "artist" : [ "Artist B" ],
+          "album" : "Album 2",
+          "id" : "2",
+          "comment" : ""
+        },
+        "1asdad" : {
+          "title" : "Song Titasdasdle 1",
+          "artist" : [ "Artist A" ],
+          "album" : "Album 1",
+          "id" : "1",
+          "comment" : ""
+        }
+      }
     },
     "asd" : {
       "name" : "asd",
-      "numberOfSongs" : 0,
+      "numberOfSongs" : 2,
       "date" : "2023-11-28",
-      "songs" : { }
+      "songs" : {
+        "1" : {
+          "title" : "Song Title 1",
+          "artist" : [ "Artist A" ],
+          "album" : "Album 1",
+          "id" : "1",
+          "comment" : ""
+        },
+        "2" : {
+          "title" : "Song Title 2",
+          "artist" : [ "Artist B" ],
+          "album" : "Album 2",
+          "id" : "2",
+          "comment" : ""
+        }
+      }
     },
     "hello name" : {
       "name" : "hello name",
-      "numberOfSongs" : 0,
+      "numberOfSongs" : 2,
       "date" : "2023-11-29",
       "songs" : {
+        "1" : {
+          "title" : "Song Title 1",
+          "artist" : [ "Artist A" ],
+          "album" : "Album 1",
+          "id" : "1",
+          "comment" : ""
+        },
         "2" : {
           "title" : "Song Title 2",
           "artist" : [ "Artist C" ],
           "album" : "Album 2",
           "id" : "2",
           "comment" : "dsdsds"
+        }
+      }
+    },
+    "rdada" : {
+      "name" : "rdada",
+      "numberOfSongs" : 1,
+      "date" : "2023-12-01",
+      "songs" : {
+        "2" : {
+          "title" : "Song Title 2",
+          "artist" : [ "Artist B" ],
+          "album" : "Album 2",
+          "id" : "2",
+          "comment" : ""
         }
       }
     }

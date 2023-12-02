@@ -1,9 +1,7 @@
 package view;
 
 import app.Main;
-import app.GUI_View_Playlists;
 import interface_adapter.delete_playlist.DeletePlaylistController;
-import interface_adapter.delete_playlist.DeletePlaylistState;
 import interface_adapter.delete_playlist.DeletePlaylistViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsController;
@@ -34,7 +32,8 @@ public class ViewPlaylistsView extends JPanel implements PropertyChangeListener,
     public ViewPlaylistsView(ViewPlaylistsViewModel viewModel,
                              ViewPlaylistsController playlistsController,
                              ViewSongController viewSongController,
-                             DeletePlaylistController deletePlaylistController, DeletePlaylistViewModel deletePlaylistViewModel) {
+                             DeletePlaylistController deletePlaylistController,
+                             DeletePlaylistViewModel deletePlaylistViewModel) {
         this.viewModel = viewModel;
         this.playlistsController = playlistsController;
         this.viewSongController = viewSongController;

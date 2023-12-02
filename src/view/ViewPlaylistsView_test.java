@@ -66,16 +66,16 @@ public class ViewPlaylistsView_test extends JPanel implements PropertyChangeList
         setLayout(new BorderLayout());
         add(new JScrollPane(playlistsList), BorderLayout.CENTER);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(createPlaylistButton);
-        buttonPanel.add(deletePlaylistButton);
-       // buttonPanel.add(refreshButton);
-        add(buttonPanel, BorderLayout.SOUTH);
-
         JPanel createPanel = new JPanel();
         createPanel.add(playlistNameField);
         createPanel.add(createPlaylistButton);
         add(createPanel, BorderLayout.NORTH);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(createPlaylistButton);
+        buttonPanel.add(deletePlaylistButton);
+        // buttonPanel.add(refreshButton);
+        add(buttonPanel, BorderLayout.SOUTH);
 
         createPlaylistButton.addActionListener(this);
         deletePlaylistButton.addActionListener(this);

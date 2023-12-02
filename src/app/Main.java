@@ -1,8 +1,6 @@
 package app;
 
 // Spotify API imports
-import interface_adapter.search_artist.SearchArtistViewModel;
-import interface_adapter.search_song.SearchSongViewModel;
 import spotify.SpotifyEndpoint;
 
 // other imports
@@ -27,9 +25,11 @@ import interface_adapter.view_song.ViewSongController;
 import interface_adapter.delete_song.DeleteSongPresenter;
 import interface_adapter.delete_song.DeleteSongViewModel;
 import interface_adapter.create_playlist.CreateViewModel;
+import interface_adapter.search_song.SearchSongViewModel;
 import interface_adapter.delete_song.DeleteSongController;
 import interface_adapter.search_album.SearchAlbumViewModel;
 import interface_adapter.get_album_songs.GetSongsViewModel;
+import interface_adapter.search_artist.SearchArtistViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsPresenter;
 import interface_adapter.view_playlists.ViewPlaylistsViewModel;
 import interface_adapter.update_comment.UpdateCommentPresenter;
@@ -179,23 +179,27 @@ public class Main {
         CreatePlaylistController createPlaylistController = new CreatePlaylistController(createPlaylistInteractor);
 
         // Initialize Views
-        ViewPlaylistsView_test viewPlaylistsView_test = new ViewPlaylistsView_test(playlistsViewModel,
-                                                                                    playlistsController,
-                                                                                    viewSongController,
-                                                                                    deletePlaylistController,
-                                                                                    deletePlaylistViewModel,
-                                                                                    createViewModel,
-                                                                                    createPlaylistController);
+        ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(
+                playlistsViewModel,
+                playlistsController,
+                viewSongController,
+                deletePlaylistController,
+                deletePlaylistViewModel,
+                createViewModel,
+                createPlaylistController
+        );
 
-        ViewSongView viewSongView = new ViewSongView(viewSongViewModel,
-                                                        updateCommentController,
-                                                        updateCommentViewModel,
-                                                        deleteSongController,
-                                                        deleteSongViewModel,
-                                                        viewSongController);
+        ViewSongView viewSongView = new ViewSongView(
+                viewSongViewModel,
+                updateCommentController,
+                updateCommentViewModel,
+                deleteSongController,
+                deleteSongViewModel,
+                viewSongController
+        );
 
         // Add Views
-        panel.add(viewPlaylistsView_test, BorderLayout.NORTH);
+        panel.add(viewPlaylistsView, BorderLayout.NORTH);
         panel.add(viewSongView, BorderLayout.CENTER);
 
         return panel;
@@ -213,8 +217,8 @@ public class Main {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        SearchSongViewModel searchSongViewModel = new SearchSongViewModel();
         SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
+        SearchSongViewModel searchSongViewModel = new SearchSongViewModel();
         SpotifyDataAccessObject spotifyDataAccessObject = new SpotifyDataAccessObject(spotifyEndpoint);
 
         SearchSongView searchSongView = SearchUseCaseFactory.song(
@@ -231,8 +235,8 @@ public class Main {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        SearchAlbumViewModel searchAlbumViewModel = new SearchAlbumViewModel();
         SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
+        SearchAlbumViewModel searchAlbumViewModel = new SearchAlbumViewModel();
         SpotifyDataAccessObject spotify = new SpotifyDataAccessObject(spotifyEndpoint);
 
         GetSongsViewModel getSongsViewModel = new GetSongsViewModel();
@@ -254,8 +258,8 @@ public class Main {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        SearchArtistViewModel searchArtistViewModel = new SearchArtistViewModel();
         SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
+        SearchArtistViewModel searchArtistViewModel = new SearchArtistViewModel();
         SpotifyDataAccessObject spotifyDataAccessObject = new SpotifyDataAccessObject(spotifyEndpoint);
 
         SearchArtistView searchArtistView = SearchUseCaseFactory.artist(

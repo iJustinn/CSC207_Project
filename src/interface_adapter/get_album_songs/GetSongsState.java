@@ -10,10 +10,6 @@ public class GetSongsState {
     private String searchId = null;
 
     public GetSongsState() {}
-    public GetSongsState(GetSongsState copy) {
-        songs = copy.songs;
-        searchId = copy.searchId;
-    }
 
     public List<Song> getSongs() {
         return songs;

@@ -1,34 +1,27 @@
 package interface_adapter.get_album_songs;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import entity.song.Song;
+import java.util.ArrayList;
+import static org.junit.Assert.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class GetSongsStateTest {
 
-class GetSongsStateTest {
+    @Test
+    public void testSetAndGetSongs() {
+        GetSongsState state = new GetSongsState();
+        ArrayList<Song> songs = new ArrayList<>();
+        songs.add(new Song("Test", new ArrayList<>(), "Album", "1"));
+        state.setSongs(songs);
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
+        assertEquals(songs, state.getSongs());
     }
 
     @Test
-    void getSongs() {
-    }
-
-    @Test
-    void getSearchId() {
-    }
-
-    @Test
-    void setSearchId() {
-    }
-
-    @Test
-    void setSongs() {
+    public void testSetAndGetSearchId() {
+        GetSongsState state = new GetSongsState();
+        String searchId = "testId";
+        state.setSearchId(searchId);
+        assertEquals(searchId, state.getSearchId());
     }
 }

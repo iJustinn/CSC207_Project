@@ -1,24 +1,27 @@
 package interface_adapter.get_album_songs;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import java.beans.PropertyChangeListener;
+import static org.mockito.Mockito.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class GetSongsViewModelTest {
+    private GetSongsViewModel viewModel;
 
-class GetSongsViewModelTest {
-
-    @Test
-    void getState() {
+    @Before
+    public void setUp() {
+        viewModel = new GetSongsViewModel();
     }
 
     @Test
-    void setState() {
-    }
+    public void testSetAndFirePropertyChange() {
+        PropertyChangeListener listener = mock(PropertyChangeListener.class);
+        viewModel.addPropertyChangeListener(listener);
 
-    @Test
-    void firePropertyChanged() {
-    }
+        GetSongsState newState = new GetSongsState();
+        viewModel.setState(newState);
+        viewModel.firePropertyChanged();
 
-    @Test
-    void addPropertyChangeListener() {
+        verify(listener).propertyChange(any());
     }
 }

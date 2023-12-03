@@ -12,8 +12,8 @@ import interface_adapter.create_playlist.CreateViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsController;
 
 public class CreatePlaylistView extends JPanel implements PropertyChangeListener {
-    private JTextField playlistNameField;
-    private JButton createButton;
+    JTextField playlistNameField;
+    JButton createButton;
     private CreateViewModel viewModel;
     private final CreatePlaylistController controller;
     public final String viewName = "CreatePlaylist";
@@ -87,11 +87,11 @@ public class CreatePlaylistView extends JPanel implements PropertyChangeListener
     private void displayCreationStatus() {
         if (viewModel.isCreationSuccessful()) {
             JOptionPane.showMessageDialog(this,
-                    "Playlist created successfully",
+                    viewModel.getState().getMessage(),
                     "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this,
-                    "Failed to create playlist",
+                    viewModel.getState().getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

@@ -20,8 +20,4 @@ public class UserDatabase {
         return playlists;
     }
 
-    public void setPlaylists(Map<String, Playlist> playlists) {
-        this.playlists = playlists;
-    }
-
 }

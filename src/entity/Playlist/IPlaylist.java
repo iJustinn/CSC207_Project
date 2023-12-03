@@ -23,5 +23,4 @@ public interface IPlaylist {
 
     public void setSongs(HashMap<String, Song> songs);
 
-    public void getSong();
 }

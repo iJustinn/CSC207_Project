@@ -1,3 +1,5 @@
+package view;
+
 import interface_adapter.update_comment.UpdateCommentController;
 import interface_adapter.update_comment.UpdateCommentViewModel;
 import org.junit.jupiter.api.BeforeEach;

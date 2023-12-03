@@ -18,9 +18,9 @@ import java.io.IOException;
 
 public class ViewSongView extends JPanel implements PropertyChangeListener {
     private final ViewSongViewModel viewModel;
-    private final JList<SongDTO> songList;
-    private final JButton addCommentButton;
-    private final JButton deleteSongButton;
+    public final JList<SongDTO> songList;
+    public final JButton addCommentButton;
+    public final JButton deleteSongButton;
     private final UpdateCommentController updateCommentController;
     private final UpdateCommentViewModel updateCommentViewModel;
     private final DeleteSongViewModel deleteSongViewModel;

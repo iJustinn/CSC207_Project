@@ -5,10 +5,6 @@ public class AddSongState {
     private String message = "Song added successfully";
     private String error = "Error when adding song";
 
-    public AddSongState(AddSongState copy){
-        message = copy.message;
-        error = copy.error;
-    }
     public AddSongState() {
     }
     public String getMessage() {

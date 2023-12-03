@@ -1,41 +1,34 @@
-import interface_adapter.add_song.AddSongPresenter;
-import interface_adapter.add_song.AddSongState;
-import interface_adapter.add_song.AddSongViewModel;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+package interface_adapter.add_song;
 
-import static org.mockito.Mockito.*;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class AddSongPresenterTest {
-
-    @Mock
-    private AddSongViewModel mockViewModel;
-
+    private AddSongViewModel viewModel;
     private AddSongPresenter presenter;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        presenter = new AddSongPresenter(mockViewModel);
+    @Before
+    public void setUp() {
+        viewModel = new AddSongViewModel();
+        presenter = new AddSongPresenter(viewModel);
     }
 
     @Test
-    void prepareSuccessView_updatesViewModel() {
-        presenter.prepareSuccessView("Success message");
+    public void testPrepareSuccessView() {
+        String successMessage = "Song added successfully.";
+        presenter.prepareSuccessView(successMessage);
 
-        verify(mockViewModel, times(1)).setState(any(AddSongState.class));
-        verify(mockViewModel, times(1)).firePropertyChanged();
+        AddSongState state = viewModel.getState();
+        assertEquals("The success message should match", successMessage, state.getMessage());
     }
 
     @Test
-    void prepareFailView_updatesViewModel() {
-        presenter.prepareFailView("Error message");
+    public void testPrepareFailView() {
+        String errorMessage = "Failed to add song.";
+        presenter.prepareFailView(errorMessage);
 
-        verify(mockViewModel, times(1)).setState(any(AddSongState.class));
-        verify(mockViewModel, times(1)).firePropertyChanged();
+        AddSongState state = viewModel.getState();
+        assertEquals("The error message should match", errorMessage, state.getError());
     }
-
-    // Add more test cases as needed...
 }

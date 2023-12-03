@@ -27,6 +27,6 @@ public class GetSongsPresenter implements GetAlbumSongsOutputBoundary {
 
     @Override
     public void fail(String error) {
-        // TODO: To be implemented
     }
+
 }

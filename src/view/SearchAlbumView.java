@@ -1,35 +1,42 @@
 package view;
 
 import entity.album.AlbumSimple;
+import interface_adapter.get_album_songs.GetSongsController;
+import interface_adapter.get_album_songs.GetSongsViewModel;
 import interface_adapter.search_album.SearchAlbumController;
 import interface_adapter.search_album.SearchAlbumState;
 import interface_adapter.search_album.SearchAlbumViewModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "search";
+public class SearchAlbumView extends JPanel implements ActionListener, PropertyChangeListener {
+    public final String viewName = "search album";
 
     private final JTextField searchField = new JTextField(20);
 
     private final SearchAlbumController searchAlbumController;
     private final SearchAlbumViewModel searchAlbumViewModel;
+    private final GetSongsController getSongsController;
+    private final GetSongsViewModel getSongsViewModel;
 
     private final JButton searchButton;
-    private final JList<AlbumSimple> albumList = new JList<entity.album.AlbumSimple>();
-    private CustomListModel<AlbumSimple> listModel;
 
-    public SearchView(SearchAlbumController controller, SearchAlbumViewModel viewModel) {
+    private CustomListModel<AlbumSimple> listModel;
+    private final JList<AlbumSimple> albumList;
+
+    public SearchAlbumView(SearchAlbumController controller,
+                           SearchAlbumViewModel viewModel,
+                           GetSongsController getSongsController,
+                           GetSongsViewModel getSongsViewModel) {
         this.searchAlbumController = controller;
         this.searchAlbumViewModel = viewModel;
+        this.getSongsController = getSongsController;
+        this.getSongsViewModel = getSongsViewModel;
         this.searchButton = new JButton(SearchAlbumViewModel.SEARCH_BUTTON_LABEL);
 
         searchAlbumViewModel.addPropertyChangeListener(this);
@@ -81,14 +88,23 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(searchField);
         this.add(buttons);
 
-        albumList.setPreferredSize(new Dimension(400, 360));
+        listModel = new CustomListModel<>(searchAlbumViewModel.getState().getAlbums());
+        albumList = new JList<>(listModel);
+        albumList.setPreferredSize(new Dimension(400, 400));
+        albumList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JList<AlbumSimple> list = (JList<AlbumSimple>) e.getSource();
+                if (e.getClickCount() == 2) {
+                    int index = list.locationToIndex(e.getPoint());
+                    AlbumSimple album = listModel.getElementAt(index);
+                    getSongsController.execute(album.getId());
+                }
 
-        listModel = new CustomListModel<entity.album.AlbumSimple>(searchAlbumViewModel.getState().getAlbums());
-
-        albumList.setModel(listModel);
-
+                super.mouseClicked(e);
+            }
+        });
         this.add(albumList);
-
     }
 
 

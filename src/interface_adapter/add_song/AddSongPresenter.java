@@ -24,6 +24,7 @@ public class AddSongPresenter implements AddSongOutputBoundary{
     public void prepareFailView(String error) {
         AddSongState state = addSongViewModel.getState();
         state.setError(error);
+        addSongViewModel.setState(state);
         addSongViewModel.firePropertyChanged();
     }
 }

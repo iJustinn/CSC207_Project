@@ -2,8 +2,8 @@ package interface_adapter.add_song;
 
 public class AddSongState {
 
-    private String message = "";
-    private String error = "";
+    private String message = "Song added successfully";
+    private String error = "Error when adding song";
 
     public AddSongState(AddSongState copy){
         message = copy.message;

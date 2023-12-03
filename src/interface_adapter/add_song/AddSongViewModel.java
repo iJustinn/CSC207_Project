@@ -23,7 +23,7 @@ public class AddSongViewModel extends ViewModel {
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-
+        support.addPropertyChangeListener(listener);
     }
 
     public AddSongState getState() {

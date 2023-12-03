@@ -1,18 +1,18 @@
 package app;
 
 // Spotify API imports
-import interface_adapter.search_artist.SearchArtistViewModel;
-import interface_adapter.search_song.SearchSongViewModel;
 import spotify.SpotifyEndpoint;
 
 // other imports
 import view.*;
+import entity.song.Song;
 import entity.Playlist.PlaylistFactory;
 import interface_adapter.ViewManagerModel;
 import data_access.SpotifyDataAccessObject;
 import data_access.UserDatabaseDataAccessObject;
 
 // use cases imports
+import use_case.add_song.AddSongInteractor;
 import use_case.view_song.ViewSongInteractor;
 import use_case.delete_song.DeleteSongInteractor;
 import use_case.update_comment.UpdateCommentInteractor;
@@ -21,15 +21,20 @@ import use_case.delete_playlist.DeletePlaylistInteractor;
 import use_case.create_playlist.CreatePlaylistInteractor;
 
 // interface adapter imports
+import interface_adapter.add_song.AddSongPresenter;
+import interface_adapter.add_song.AddSongViewModel;
+import interface_adapter.add_song.AddSongController;
 import interface_adapter.view_song.ViewSongPresenter;
 import interface_adapter.view_song.ViewSongViewModel;
 import interface_adapter.view_song.ViewSongController;
 import interface_adapter.delete_song.DeleteSongPresenter;
 import interface_adapter.delete_song.DeleteSongViewModel;
 import interface_adapter.create_playlist.CreateViewModel;
+import interface_adapter.search_song.SearchSongViewModel;
 import interface_adapter.delete_song.DeleteSongController;
 import interface_adapter.search_album.SearchAlbumViewModel;
 import interface_adapter.get_album_songs.GetSongsViewModel;
+import interface_adapter.search_artist.SearchArtistViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsPresenter;
 import interface_adapter.view_playlists.ViewPlaylistsViewModel;
 import interface_adapter.update_comment.UpdateCommentPresenter;
@@ -64,15 +69,19 @@ public class Main {
             cardLayout = new CardLayout();
             cardPanel = new JPanel(cardLayout);
 
+            JList<Song> songs = null; // dummy variable to start the program
+
             // All panels in the program
             JPanel searchPanel = createSearchPanel();
             JPanel playlistPanel = viewPlaylistPanel();
+            JPanel addSongPanel = createAddSongPanel(songs);
             JPanel songSearchPanel = createSongSearchPanel();
             JPanel albumSearchPanel = createAlbumSearchPanel();
             JPanel artistSearchPanel = createArtistSearchPanel();
 
             // Adding panels to the card layout
             cardPanel.add(searchPanel, "SearchPanel");
+            cardPanel.add(addSongPanel, "addSongPanel");
             cardPanel.add(playlistPanel, "PlaylistPanel");
             cardPanel.add(songSearchPanel, "SongSearchPanel");
             cardPanel.add(albumSearchPanel, "AlbumSearchPanel");
@@ -82,7 +91,7 @@ public class Main {
             JPanel buttonPanel = new JPanel();
             buttonPanel.add(createNavButton("Playlists", "PlaylistPanel"));
             buttonPanel.add(createNavButton("Search", "SearchPanel"));
-//            buttonPanel.add(createNavButton("Back", "SearchPanel"));
+            buttonPanel.add(createNavButton("Song", "addSongPanel"));
 
             // Adding panels to the frame
             frame.getContentPane().add(cardPanel, BorderLayout.CENTER);
@@ -104,41 +113,6 @@ public class Main {
         return button;
     }
 
-    private static JPanel createSearchPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-
-        JPanel buttonPanel_East = new JPanel();
-        JPanel buttonPanel_West = new JPanel();
-        JPanel buttonPanel_North = new JPanel();
-
-        // Song button
-        JButton songButton = createNavButton("Song", "SongSearchPanel");
-        songButton.setPreferredSize(new Dimension(290, 50)); // button size
-        songButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
-
-        // Album button
-        JButton albumButton = createNavButton("Album", "AlbumSearchPanel");
-        albumButton.setPreferredSize(new Dimension(140, 50)); // button size
-        albumButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
-
-        // Artist button
-        JButton artistButton = createNavButton("Artist", "ArtistSearchPanel");
-        artistButton.setPreferredSize(new Dimension(140, 50)); // button size
-        artistButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
-
-        // adding buttons
-        buttonPanel_North.add(songButton);
-        buttonPanel_East.add(albumButton);
-        buttonPanel_West.add(artistButton);
-
-        panel.add(buttonPanel_East, BorderLayout.EAST);
-        panel.add(buttonPanel_West, BorderLayout.WEST);
-        panel.add(buttonPanel_North, BorderLayout.NORTH);
-
-        panel.setBackground(Color.WHITE);
-
-        return panel;
-    }
 
     private static JPanel viewPlaylistPanel() {
         JPanel panel = new JPanel();
@@ -179,42 +153,74 @@ public class Main {
         CreatePlaylistController createPlaylistController = new CreatePlaylistController(createPlaylistInteractor);
 
         // Initialize Views
-        ViewPlaylistsView_test viewPlaylistsView_test = new ViewPlaylistsView_test(playlistsViewModel,
-                                                                                    playlistsController,
-                                                                                    viewSongController,
-                                                                                    deletePlaylistController,
-                                                                                    deletePlaylistViewModel,
-                                                                                    createViewModel,
-                                                                                    createPlaylistController);
+        ViewPlaylistsView viewPlaylistsView = new ViewPlaylistsView(
+                playlistsViewModel,
+                playlistsController,
+                viewSongController,
+                deletePlaylistController,
+                deletePlaylistViewModel,
+                createViewModel,
+                createPlaylistController
+        );
 
-        ViewSongView viewSongView = new ViewSongView(viewSongViewModel,
-                                                        updateCommentController,
-                                                        updateCommentViewModel,
-                                                        deleteSongController,
-                                                        deleteSongViewModel,
-                                                        viewSongController);
+        ViewSongView viewSongView = new ViewSongView(
+                viewSongViewModel,
+                updateCommentController,
+                updateCommentViewModel,
+                deleteSongController,
+                deleteSongViewModel,
+                viewSongController
+        );
 
         // Add Views
-        panel.add(viewPlaylistsView_test, BorderLayout.NORTH);
+        panel.add(viewPlaylistsView, BorderLayout.NORTH);
         panel.add(viewSongView, BorderLayout.CENTER);
 
         return panel;
     }
 
-    public static void switchToSongView() {
-        cardLayout.show(cardPanel, "PlaylistPanel"); // show PlaylistPanel
-    }
+    private static JPanel createSearchPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
 
-    public static void switchToCreateView() {
-        cardLayout.show(cardPanel, "addPlaylistPanel"); // show addPlaylistPanel
+        JPanel buttonPanel_East = new JPanel();
+        JPanel buttonPanel_West = new JPanel();
+        JPanel buttonPanel_North = new JPanel();
+
+        // Song button
+        JButton songButton = createNavButton("Song", "SongSearchPanel");
+        songButton.setPreferredSize(new Dimension(290, 50)); // button size
+        songButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
+
+        // Album button
+        JButton albumButton = createNavButton("Album", "AlbumSearchPanel");
+        albumButton.setPreferredSize(new Dimension(140, 50)); // button size
+        albumButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
+
+        // Artist button
+        JButton artistButton = createNavButton("Artist", "ArtistSearchPanel");
+        artistButton.setPreferredSize(new Dimension(140, 50)); // button size
+        artistButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
+
+        // adding buttons
+        buttonPanel_North.add(songButton);
+        buttonPanel_East.add(albumButton);
+        buttonPanel_West.add(artistButton);
+
+        panel.add(buttonPanel_East, BorderLayout.EAST);
+        panel.add(buttonPanel_West, BorderLayout.WEST);
+        panel.add(buttonPanel_North, BorderLayout.NORTH);
+
+        panel.setBackground(Color.WHITE);
+
+        return panel;
     }
 
     private static JPanel createSongSearchPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        SearchSongViewModel searchSongViewModel = new SearchSongViewModel();
         SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
+        SearchSongViewModel searchSongViewModel = new SearchSongViewModel();
         SpotifyDataAccessObject spotifyDataAccessObject = new SpotifyDataAccessObject(spotifyEndpoint);
 
         SearchSongView searchSongView = SearchUseCaseFactory.song(
@@ -231,8 +237,8 @@ public class Main {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        SearchAlbumViewModel searchAlbumViewModel = new SearchAlbumViewModel();
         SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
+        SearchAlbumViewModel searchAlbumViewModel = new SearchAlbumViewModel();
         SpotifyDataAccessObject spotify = new SpotifyDataAccessObject(spotifyEndpoint);
 
         GetSongsViewModel getSongsViewModel = new GetSongsViewModel();
@@ -254,8 +260,8 @@ public class Main {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        SearchArtistViewModel searchArtistViewModel = new SearchArtistViewModel();
         SpotifyEndpoint spotifyEndpoint = new SpotifyEndpoint();
+        SearchArtistViewModel searchArtistViewModel = new SearchArtistViewModel();
         SpotifyDataAccessObject spotifyDataAccessObject = new SpotifyDataAccessObject(spotifyEndpoint);
 
         SearchArtistView searchArtistView = SearchUseCaseFactory.artist(
@@ -267,5 +273,52 @@ public class Main {
         panel.add(searchArtistView, BorderLayout.CENTER);
 
         return panel;
+    }
+
+    private static JPanel createAddSongPanel(JList<Song> songs) {
+        JPanel panel = new JPanel(new BorderLayout());
+
+        // Setups
+        UserDatabaseDataAccessObject dataAccessObject = new UserDatabaseDataAccessObject("src/database");
+
+        AddSongViewModel addSongViewModel = new AddSongViewModel();
+        ViewPlaylistsViewModel viewPlaylistsViewModel = new ViewPlaylistsViewModel();
+
+        AddSongPresenter addSongPresenter = new AddSongPresenter(addSongViewModel);
+        ViewPlaylistsPresenter viewPlaylistsPresenter = new ViewPlaylistsPresenter(viewPlaylistsViewModel);
+
+        AddSongInteractor addSongInteractor = new AddSongInteractor(dataAccessObject, addSongPresenter);
+        ViewPlaylistsInteractor viewPlaylistsInteractor = new ViewPlaylistsInteractor(dataAccessObject, viewPlaylistsPresenter);
+
+        AddSongController addSongController = new AddSongController(addSongInteractor);
+        ViewPlaylistsController viewPlaylistsController = new ViewPlaylistsController(viewPlaylistsInteractor);
+
+        // Create the View
+        SongListView songListView = new SongListView(songs, addSongController, viewPlaylistsController, viewPlaylistsViewModel, addSongViewModel);
+
+        panel.add(songListView, BorderLayout.CENTER);
+
+        return panel;
+    }
+
+//    public void setSongsList(List<Song> songs) {
+//        songListView.updateSongs(songs);
+//    }
+
+    public static void switchToSongView() {
+        cardLayout.show(cardPanel, "PlaylistPanel"); // show PlaylistPanel
+    }
+
+    public static void switchToCreateView() {
+        cardLayout.show(cardPanel, "addPlaylistPanel"); // show addPlaylistPanel
+    }
+
+    public static void switchToAddSongView(JList<Song> songslist) {
+        if (songslist != null) {
+            JPanel addSongPanel = createAddSongPanel(songslist);
+            cardPanel.add(addSongPanel, "addSongPanel");
+        }
+
+        cardLayout.show(cardPanel, "addSongPanel");
     }
 }

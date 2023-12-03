@@ -1,31 +1,28 @@
 package view;
 
 import entity.album.AlbumSimple;
-import interface_adapter.get_album_songs.GetSongsController;
-import interface_adapter.get_album_songs.GetSongsViewModel;
-import interface_adapter.search_album.SearchAlbumController;
 import interface_adapter.search_album.SearchAlbumState;
+import interface_adapter.get_album_songs.GetSongsViewModel;
 import interface_adapter.search_album.SearchAlbumViewModel;
+import interface_adapter.get_album_songs.GetSongsController;
+import interface_adapter.search_album.SearchAlbumController;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+import java.util.List;
 import java.awt.event.*;
+import javax.swing.JTextField;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 public class SearchAlbumView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "search album";
-
     private final JTextField searchField = new JTextField(20);
-
     private final SearchAlbumController searchAlbumController;
     private final SearchAlbumViewModel searchAlbumViewModel;
     private final GetSongsController getSongsController;
     private final GetSongsViewModel getSongsViewModel;
-
     private final JButton searchButton;
-
     private CustomListModel<AlbumSimple> listModel;
     private final JList<AlbumSimple> albumList;
 
@@ -33,6 +30,7 @@ public class SearchAlbumView extends JPanel implements ActionListener, PropertyC
                            SearchAlbumViewModel viewModel,
                            GetSongsController getSongsController,
                            GetSongsViewModel getSongsViewModel) {
+
         this.searchAlbumController = controller;
         this.searchAlbumViewModel = viewModel;
         this.getSongsController = getSongsController;
@@ -90,7 +88,7 @@ public class SearchAlbumView extends JPanel implements ActionListener, PropertyC
 
         listModel = new CustomListModel<>(searchAlbumViewModel.getState().getAlbums());
         albumList = new JList<>(listModel);
-        albumList.setPreferredSize(new Dimension(400, 400));
+        albumList.setPreferredSize(new Dimension(280, 500));
         albumList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

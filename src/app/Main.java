@@ -1,21 +1,18 @@
 package app;
 
 // Spotify API imports
-import entity.song.Song;
-import interface_adapter.add_song.AddSongController;
-import interface_adapter.add_song.AddSongPresenter;
-import interface_adapter.add_song.AddSongViewModel;
 import spotify.SpotifyEndpoint;
 
 // other imports
-import use_case.add_song.AddSongInteractor;
 import view.*;
+import entity.song.Song;
 import entity.Playlist.PlaylistFactory;
 import interface_adapter.ViewManagerModel;
 import data_access.SpotifyDataAccessObject;
 import data_access.UserDatabaseDataAccessObject;
 
 // use cases imports
+import use_case.add_song.AddSongInteractor;
 import use_case.view_song.ViewSongInteractor;
 import use_case.delete_song.DeleteSongInteractor;
 import use_case.update_comment.UpdateCommentInteractor;
@@ -24,6 +21,9 @@ import use_case.delete_playlist.DeletePlaylistInteractor;
 import use_case.create_playlist.CreatePlaylistInteractor;
 
 // interface adapter imports
+import interface_adapter.add_song.AddSongPresenter;
+import interface_adapter.add_song.AddSongViewModel;
+import interface_adapter.add_song.AddSongController;
 import interface_adapter.view_song.ViewSongPresenter;
 import interface_adapter.view_song.ViewSongViewModel;
 import interface_adapter.view_song.ViewSongController;
@@ -49,9 +49,6 @@ import interface_adapter.create_playlist.CreatePlaylistController;
 
 // JAVA swing imports
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javax.swing.*;
 
 public class Main {
@@ -72,12 +69,12 @@ public class Main {
             cardLayout = new CardLayout();
             cardPanel = new JPanel(cardLayout);
 
-            JList<Song> songs = null;
+            JList<Song> songs = null; // dummy variable to start the program
 
             // All panels in the program
             JPanel searchPanel = createSearchPanel();
-            JPanel addSongPanel = createAddSongPanel(songs);
             JPanel playlistPanel = viewPlaylistPanel();
+            JPanel addSongPanel = createAddSongPanel(songs);
             JPanel songSearchPanel = createSongSearchPanel();
             JPanel albumSearchPanel = createAlbumSearchPanel();
             JPanel artistSearchPanel = createArtistSearchPanel();
@@ -296,13 +293,6 @@ public class Main {
         AddSongController addSongController = new AddSongController(addSongInteractor);
         ViewPlaylistsController viewPlaylistsController = new ViewPlaylistsController(viewPlaylistsInteractor);
 
-//        List<Song> songs = new ArrayList<>(Arrays.asList(
-//                new Song("Song Title 1", new ArrayList<>(Arrays.asList("Artist A")), "Album 1", "1"),
-//                new Song("Song Title 2", new ArrayList<>(Arrays.asList("Artist B")), "Album 2", "2")
-//        ));
-
-//        List<Song> songs = new ArrayList<>();
-
         // Create the View
         SongListView songListView = new SongListView(songs, addSongController, viewPlaylistsController, viewPlaylistsViewModel, addSongViewModel);
 
@@ -324,11 +314,10 @@ public class Main {
     }
 
     public static void switchToAddSongView(JList<Song> songslist) {
-//        if (createAddSongPanel != null) {
-//            createAddSongPanel.setSongsList(songslist);
-//        }
-
-        JPanel addSongPanel = createAddSongPanel(songslist);
+        if (songslist != null) {
+            JPanel addSongPanel = createAddSongPanel(songslist);
+            cardPanel.add(addSongPanel, "addSongPanel");
+        }
 
         cardLayout.show(cardPanel, "addSongPanel");
     }

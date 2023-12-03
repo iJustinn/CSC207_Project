@@ -10,33 +10,23 @@
           "artist" : [ "Artist C" ],
           "album" : "Album 2",
           "id" : "2",
-          "comment" : "123"
+          "comment" : "test comment"
         }
       }
     },
-    "ijustin_test_0" : {
-      "name" : "ijustin_test_0",
-      "numberOfSongs" : 0,
-      "date" : "2023-12-01",
-      "songs" : { }
-    },
-    "ijustin_test_1" : {
-      "name" : "ijustin_test_1",
-      "numberOfSongs" : 0,
-      "date" : "2023-12-01",
-      "songs" : { }
-    },
-    "ijustin_test_2" : {
-      "name" : "ijustin_test_2",
-      "numberOfSongs" : 0,
-      "date" : "2023-12-01",
-      "songs" : { }
-    },
-    "ijustin_test_3" : {
-      "name" : "ijustin_test_3",
-      "numberOfSongs" : 0,
-      "date" : "2023-12-01",
-      "songs" : { }
+    "drake_test" : {
+      "name" : "drake_test",
+      "numberOfSongs" : 1,
+      "date" : "2023-12-03",
+      "songs" : {
+        "6DCZcSspjsKoFjzjrWoCdn" : {
+          "title" : "God's Plan",
+          "artist" : [ "Drake" ],
+          "album" : "Scorpion",
+          "id" : "6DCZcSspjsKoFjzjrWoCdn",
+          "comment" : ""
+        }
+      }
     }
   }
 }

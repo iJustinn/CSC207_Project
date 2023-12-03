@@ -1,9 +1,20 @@
 package view;
 
+import app.Main;
+
+import data_access.UserDatabaseDataAccessObject;
 import entity.song.Song;
+import interface_adapter.add_song.AddSongController;
+import interface_adapter.add_song.AddSongPresenter;
+import interface_adapter.add_song.AddSongViewModel;
 import interface_adapter.search_song.SearchSongController;
 import interface_adapter.search_song.SearchSongState;
 import interface_adapter.search_song.SearchSongViewModel;
+import interface_adapter.view_playlists.ViewPlaylistsController;
+import interface_adapter.view_playlists.ViewPlaylistsPresenter;
+import interface_adapter.view_playlists.ViewPlaylistsViewModel;
+import use_case.add_song.AddSongInteractor;
+import use_case.view_playlists.ViewPlaylistsInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,13 +100,13 @@ public class SearchSongView extends JPanel implements ActionListener, PropertyCh
                 JList<Song> list = (JList<Song>) e.getSource();
                 if (e.getClickCount() == 2) {
                     int index = list.locationToIndex(e.getPoint());
+                    Main.switchToAddSongView(artistList); // switch to addsongview
                 }
                 super.mouseClicked(e);
             }
         });
 
         this.add(artistList);
-
     }
 
     @Override

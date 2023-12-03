@@ -25,9 +25,11 @@ public class SongListView extends JPanel implements PropertyChangeListener {
     private ViewPlaylistsViewModel viewPlaylistsViewModel;
     private List<String> playlists;
 
-    public SongListView(List<Song> songs, AddSongController addSongController,
+    public SongListView(List<Song> songs,
+                        AddSongController addSongController,
                         ViewPlaylistsController viewPlaylistsController,
-                        ViewPlaylistsViewModel viewPlaylistsViewModel, AddSongViewModel addSongViewModel) {
+                        ViewPlaylistsViewModel viewPlaylistsViewModel,
+                        AddSongViewModel addSongViewModel) {
         this.addSongController = addSongController;
         this.viewPlaylistsController = viewPlaylistsController;
         this.viewPlaylistsViewModel = viewPlaylistsViewModel;
@@ -112,4 +114,12 @@ public class SongListView extends JPanel implements PropertyChangeListener {
         }
     }
 
+    private CustomListModel<Song> listModel;
+
+    // Constructor and other methods...
+
+    public void updateSongs(List<Song> songs) {
+        listModel.setList(songs);
+        listModel.fireDataChanged();
+    }
 }

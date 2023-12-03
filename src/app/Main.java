@@ -1,9 +1,14 @@
 package app;
 
 // Spotify API imports
+import entity.song.Song;
+import interface_adapter.add_song.AddSongController;
+import interface_adapter.add_song.AddSongPresenter;
+import interface_adapter.add_song.AddSongViewModel;
 import spotify.SpotifyEndpoint;
 
 // other imports
+import use_case.add_song.AddSongInteractor;
 import view.*;
 import entity.Playlist.PlaylistFactory;
 import interface_adapter.ViewManagerModel;
@@ -44,6 +49,9 @@ import interface_adapter.create_playlist.CreatePlaylistController;
 
 // JAVA swing imports
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.*;
 
 public class Main {
@@ -66,6 +74,7 @@ public class Main {
 
             // All panels in the program
             JPanel searchPanel = createSearchPanel();
+            JPanel addSongPanel = createAddSongPanel();
             JPanel playlistPanel = viewPlaylistPanel();
             JPanel songSearchPanel = createSongSearchPanel();
             JPanel albumSearchPanel = createAlbumSearchPanel();
@@ -73,6 +82,7 @@ public class Main {
 
             // Adding panels to the card layout
             cardPanel.add(searchPanel, "SearchPanel");
+            cardPanel.add(addSongPanel, "addSongPanel");
             cardPanel.add(playlistPanel, "PlaylistPanel");
             cardPanel.add(songSearchPanel, "SongSearchPanel");
             cardPanel.add(albumSearchPanel, "AlbumSearchPanel");
@@ -82,7 +92,7 @@ public class Main {
             JPanel buttonPanel = new JPanel();
             buttonPanel.add(createNavButton("Playlists", "PlaylistPanel"));
             buttonPanel.add(createNavButton("Search", "SearchPanel"));
-//            buttonPanel.add(createNavButton("Back", "SearchPanel"));
+            buttonPanel.add(createNavButton("Song", "addSongPanel"));
 
             // Adding panels to the frame
             frame.getContentPane().add(cardPanel, BorderLayout.CENTER);
@@ -104,41 +114,6 @@ public class Main {
         return button;
     }
 
-    private static JPanel createSearchPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-
-        JPanel buttonPanel_East = new JPanel();
-        JPanel buttonPanel_West = new JPanel();
-        JPanel buttonPanel_North = new JPanel();
-
-        // Song button
-        JButton songButton = createNavButton("Song", "SongSearchPanel");
-        songButton.setPreferredSize(new Dimension(290, 50)); // button size
-        songButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
-
-        // Album button
-        JButton albumButton = createNavButton("Album", "AlbumSearchPanel");
-        albumButton.setPreferredSize(new Dimension(140, 50)); // button size
-        albumButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
-
-        // Artist button
-        JButton artistButton = createNavButton("Artist", "ArtistSearchPanel");
-        artistButton.setPreferredSize(new Dimension(140, 50)); // button size
-        artistButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
-
-        // adding buttons
-        buttonPanel_North.add(songButton);
-        buttonPanel_East.add(albumButton);
-        buttonPanel_West.add(artistButton);
-
-        panel.add(buttonPanel_East, BorderLayout.EAST);
-        panel.add(buttonPanel_West, BorderLayout.WEST);
-        panel.add(buttonPanel_North, BorderLayout.NORTH);
-
-        panel.setBackground(Color.WHITE);
-
-        return panel;
-    }
 
     private static JPanel viewPlaylistPanel() {
         JPanel panel = new JPanel();
@@ -205,12 +180,40 @@ public class Main {
         return panel;
     }
 
-    public static void switchToSongView() {
-        cardLayout.show(cardPanel, "PlaylistPanel"); // show PlaylistPanel
-    }
+    private static JPanel createSearchPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
 
-    public static void switchToCreateView() {
-        cardLayout.show(cardPanel, "addPlaylistPanel"); // show addPlaylistPanel
+        JPanel buttonPanel_East = new JPanel();
+        JPanel buttonPanel_West = new JPanel();
+        JPanel buttonPanel_North = new JPanel();
+
+        // Song button
+        JButton songButton = createNavButton("Song", "SongSearchPanel");
+        songButton.setPreferredSize(new Dimension(290, 50)); // button size
+        songButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
+
+        // Album button
+        JButton albumButton = createNavButton("Album", "AlbumSearchPanel");
+        albumButton.setPreferredSize(new Dimension(140, 50)); // button size
+        albumButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
+
+        // Artist button
+        JButton artistButton = createNavButton("Artist", "ArtistSearchPanel");
+        artistButton.setPreferredSize(new Dimension(140, 50)); // button size
+        artistButton.setAlignmentX(Component.CENTER_ALIGNMENT); // button center alignment
+
+        // adding buttons
+        buttonPanel_North.add(songButton);
+        buttonPanel_East.add(albumButton);
+        buttonPanel_West.add(artistButton);
+
+        panel.add(buttonPanel_East, BorderLayout.EAST);
+        panel.add(buttonPanel_West, BorderLayout.WEST);
+        panel.add(buttonPanel_North, BorderLayout.NORTH);
+
+        panel.setBackground(Color.WHITE);
+
+        return panel;
     }
 
     private static JPanel createSongSearchPanel() {
@@ -271,5 +274,53 @@ public class Main {
         panel.add(searchArtistView, BorderLayout.CENTER);
 
         return panel;
+    }
+
+    private static JPanel createAddSongPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+
+        // Setups
+        UserDatabaseDataAccessObject dataAccessObject = new UserDatabaseDataAccessObject("src/database");
+
+        AddSongViewModel addSongViewModel = new AddSongViewModel();
+        ViewPlaylistsViewModel viewPlaylistsViewModel = new ViewPlaylistsViewModel();
+
+        AddSongPresenter addSongPresenter = new AddSongPresenter(addSongViewModel);
+        ViewPlaylistsPresenter viewPlaylistsPresenter = new ViewPlaylistsPresenter(viewPlaylistsViewModel);
+
+        AddSongInteractor addSongInteractor = new AddSongInteractor(dataAccessObject, addSongPresenter);
+        ViewPlaylistsInteractor viewPlaylistsInteractor = new ViewPlaylistsInteractor(dataAccessObject, viewPlaylistsPresenter);
+
+        AddSongController addSongController = new AddSongController(addSongInteractor);
+        ViewPlaylistsController viewPlaylistsController = new ViewPlaylistsController(viewPlaylistsInteractor);
+
+//        List<Song> songs = new ArrayList<>(Arrays.asList(
+//                new Song("Song Title 1", new ArrayList<>(Arrays.asList("Artist A")), "Album 1", "1"),
+//                new Song("Song Title 2", new ArrayList<>(Arrays.asList("Artist B")), "Album 2", "2")
+//        ));
+
+        List<Song> songs = new ArrayList<>();
+
+        // Create the View
+        SongListView songListView = new SongListView(songs, addSongController, viewPlaylistsController, viewPlaylistsViewModel, addSongViewModel);
+
+        panel.add(songListView, BorderLayout.CENTER);
+
+        return panel;
+    }
+
+    public static void switchToSongView() {
+        cardLayout.show(cardPanel, "PlaylistPanel"); // show PlaylistPanel
+    }
+
+    public static void switchToCreateView() {
+        cardLayout.show(cardPanel, "addPlaylistPanel"); // show addPlaylistPanel
+    }
+
+    public static void switchToAddSongView(List<Song> songslist) {
+        if (addSongPanel != null) {
+            addSongPanel.setSongsList(songslist);
+        }
+        cardLayout.show(cardPanel, "addSongPanel");
     }
 }

@@ -5,16 +5,40 @@
 [Link to Spotify API](https://developer.spotify.com/documentation/web-api/tutorials/getting-started)
 
 # Overview
-Motivated by the fact that users often face difficulties when trying to search for, categorize, or manage their favourite playlists or albums in existing streaming platform. Moreover, with the diverse array of content, users need a holistic tool that can facilitate better management and searching capabilities, allowing them to optimize their experience. Our team envisions developing a media searching and management software application that leverages the Spotify API, granting users enhanced access and control over their Spotify media content. This software will serve as a one-stop solution for users to search, categorize, manage their media, specifically music, collections.
+Our Media Manager system, designed for music enthusiasts, offers a unique way to interact with Spotify's extensive music library. By utilizing the Spotify API as a primary search engine, our system enables users to explore and find their desired albums and songs with ease. Moreover, it offers the capability to manage music collections locally. Users can create and access local playlists within our system, tailoring their music experience to their preferences. Each song in these playlists can be enriched with personal comments, allowing users to annotate tracks with special memories or notes. This makes our Media Manager not just a tool for music discovery and management, but also a personal music diary.
 
-# Possible functionalities the software
+# Functionalities currently have
 1. Metadata Insights:
 	* Fetch and display detailed metadata for tracks, albums, and artists.
 	* Including artist biographies, album release dates, track durations, etc.
 	
 2. Advanced Searching:
-	* Allows users to search for tracks, albums, artists and even lyrics of a song.
-	* Providing filters options based on genres, popularity, release dates, etc.
-	
-3. User Listening Analytics:
-	* Analyze a user's listening habits to suggest new tracks or artists they might enjoy.
+	* Allows users to search for tracks, albums and artists.
+
+3. Local Playlist Management:
+	* Create and manage local playlists within the application.
+	* Add songs from Spotify searches to these playlists for personalized curation.
+
+4. Personalized Song Comments:
+   * Add personal comments to songs in local playlists.
+   * Turn playlists into a collection of memories and stories.
+
+# Running Application Locally
+
+1. Clone the project repository from GitHub.
+2. Ensure Java installed on your system.
+3. Open the repository in your preferred Java IDE.
+4. Set up the Maven, and get access token see below
+   ### Generating Access Tokens
+- For generating an access token: https://hopp.sh/r/Nt8tZ9jYThJW.
+- Click send
+- Save this generated `access_token`, it lasts 1 hour.
+- Click the "More Actions" icon beside Run.
+- Click "Edit".
+- Inside "Main", in "Environment variables", add "API_KEY=`access_token`".
+
+5. Add Necessary libraries Jackson for it project.
+6. Run the 'Main' class to start the application.
+
+### If packages are not working
+`View` -> `Tool Windows` -> `Maven` -> `Reload All Maven Projects`

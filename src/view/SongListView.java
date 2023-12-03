@@ -25,7 +25,7 @@ public class SongListView extends JPanel implements PropertyChangeListener {
     private ViewPlaylistsViewModel viewPlaylistsViewModel;
     private List<String> playlists;
 
-    public SongListView(List<Song> songs,
+    public SongListView(JList<Song> songs,
                         AddSongController addSongController,
                         ViewPlaylistsController viewPlaylistsController,
                         ViewPlaylistsViewModel viewPlaylistsViewModel,
@@ -36,8 +36,8 @@ public class SongListView extends JPanel implements PropertyChangeListener {
         this.addSongViewModel = addSongViewModel;
         this.viewPlaylistsViewModel.addPropertyChangeListener(this);
         this.addSongViewModel.addPropertyChangeListener(this);// Register as a listener
-
-        initializeUI(songs);
+        this.songList = songs;
+        initializeUI();
 
         try {
             viewPlaylistsController.execute("Alice");
@@ -48,12 +48,13 @@ public class SongListView extends JPanel implements PropertyChangeListener {
 
     }
 
-    private void initializeUI(List<Song> songs) {
+    // Initialize the UI with the existing songList JList
+    private void initializeUI() {
         setLayout(new BorderLayout());
-        songList = new JList<>(new DefaultListModel<>());
-        songs.forEach(((DefaultListModel<Song>) songList.getModel())::addElement);
+        // Add the songList JList wrapped in a JScrollPane to the center of the layout
         add(new JScrollPane(songList), BorderLayout.CENTER);
 
+        // Initialize and add the addButton
         addButton = new JButton("Add to Playlist");
         addButton.addActionListener(this::onAddButtonClicked);
         add(addButton, BorderLayout.SOUTH);

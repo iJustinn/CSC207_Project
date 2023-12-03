@@ -113,7 +113,6 @@ public class Main {
         return button;
     }
 
-
     private static JPanel viewPlaylistPanel() {
         JPanel panel = new JPanel();
 
@@ -300,10 +299,6 @@ public class Main {
 
         return panel;
     }
-
-//    public void setSongsList(List<Song> songs) {
-//        songListView.updateSongs(songs);
-//    }
 
     public static void switchToSongView() {
         cardLayout.show(cardPanel, "PlaylistPanel"); // show PlaylistPanel

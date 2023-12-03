@@ -72,9 +72,11 @@ public class Main {
             cardLayout = new CardLayout();
             cardPanel = new JPanel(cardLayout);
 
+            JList<Song> songs = null;
+
             // All panels in the program
             JPanel searchPanel = createSearchPanel();
-            JPanel addSongPanel = createAddSongPanel();
+            JPanel addSongPanel = createAddSongPanel(songs);
             JPanel playlistPanel = viewPlaylistPanel();
             JPanel songSearchPanel = createSongSearchPanel();
             JPanel albumSearchPanel = createAlbumSearchPanel();
@@ -276,7 +278,7 @@ public class Main {
         return panel;
     }
 
-    private static JPanel createAddSongPanel() {
+    private static JPanel createAddSongPanel(JList<Song> songs) {
         JPanel panel = new JPanel(new BorderLayout());
 
         // Setups
@@ -299,7 +301,7 @@ public class Main {
 //                new Song("Song Title 2", new ArrayList<>(Arrays.asList("Artist B")), "Album 2", "2")
 //        ));
 
-        List<Song> songs = new ArrayList<>();
+//        List<Song> songs = new ArrayList<>();
 
         // Create the View
         SongListView songListView = new SongListView(songs, addSongController, viewPlaylistsController, viewPlaylistsViewModel, addSongViewModel);
@@ -309,6 +311,10 @@ public class Main {
         return panel;
     }
 
+//    public void setSongsList(List<Song> songs) {
+//        songListView.updateSongs(songs);
+//    }
+
     public static void switchToSongView() {
         cardLayout.show(cardPanel, "PlaylistPanel"); // show PlaylistPanel
     }
@@ -317,10 +323,13 @@ public class Main {
         cardLayout.show(cardPanel, "addPlaylistPanel"); // show addPlaylistPanel
     }
 
-    public static void switchToAddSongView(List<Song> songslist) {
-        if (addSongPanel != null) {
-            addSongPanel.setSongsList(songslist);
-        }
+    public static void switchToAddSongView(JList<Song> songslist) {
+//        if (createAddSongPanel != null) {
+//            createAddSongPanel.setSongsList(songslist);
+//        }
+
+        JPanel addSongPanel = createAddSongPanel(songslist);
+
         cardLayout.show(cardPanel, "addSongPanel");
     }
 }

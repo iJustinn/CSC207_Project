@@ -304,10 +304,6 @@ public class Main {
         cardLayout.show(cardPanel, "PlaylistPanel"); // show PlaylistPanel
     }
 
-    public static void switchToCreateView() {
-        cardLayout.show(cardPanel, "addPlaylistPanel"); // show addPlaylistPanel
-    }
-
     public static void switchToAddSongView(JList<Song> songslist) {
         if (songslist != null) {
             JPanel addSongPanel = createAddSongPanel(songslist);

@@ -1,66 +1,58 @@
 package use_case.view_playlists;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import data_access.UserDatabaseDataAccessObject;
+import entity.Playlist.Playlist;
+import entity.User.UserDatabase;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.After;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 
-import static org.mockito.Mockito.*;
-
-class ViewPlaylistsInteractorTest {
-
-    @Mock
-    private ViewPlaylistsDataUserAccessInterface dataAccess;
-    @Mock
+public class ViewPlaylistsInteractorTest {
+    private UserDatabaseDataAccessObject dataAccess;
+    private ViewPlaylistsInteractor interactor;
     private ViewPlaylistsOutputBoundary presenter;
 
-    private ViewPlaylistsInteractor interactor;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    @Before
+    public void setUp() {
+        dataAccess = new UserDatabaseDataAccessObject("src/database");
+        presenter = mock(ViewPlaylistsOutputBoundary.class);
         interactor = new ViewPlaylistsInteractor(dataAccess, presenter);
     }
 
     @Test
-    void executeWithPlaylists() throws IOException {
-        String user = "Alice";
-        ArrayList<String> playlists = new ArrayList<>(Arrays.asList("Playlist1", "Playlist2"));
-        when(dataAccess.viewPlaylists(user)).thenReturn(playlists);
+    public void testViewPlaylists() throws IOException {
+        // Prepare data
+        String playlistName1 = "Playlist 1";
+        String playlistName2 = "Playlist 2";
+        dataAccess.createPlaylist("Alice", new Playlist(playlistName1, 0, new Date(), new HashMap<>()));
+        dataAccess.createPlaylist("Alice", new Playlist(playlistName2, 0, new Date(), new HashMap<>()));
 
-        interactor.execute(user);
+        // Execute interactor
+        interactor.execute("Alice");
 
-        verify(presenter).prepareSuccessView(any(ViewPlaylistsOutputData.class));
-        verify(dataAccess).viewPlaylists(user);
+        // Expected playlists
+        ArrayList<String> expectedPlaylists = new ArrayList<>(Arrays.asList(playlistName1, playlistName2));
+
+        // Verify the presenter was called with the correct data
+        verify(presenter).prepareSuccessView(argThat(outputData ->
+                outputData.getPlaylists().equals(expectedPlaylists)
+        ));
     }
 
-    @Test
-    void executeWithNoPlaylists() throws IOException {
-        String user = "Alice";
-        ArrayList<String> playlists = new ArrayList<>();
-        when(dataAccess.viewPlaylists(user)).thenReturn(playlists);
-
-        interactor.execute(user);
-
-        verify(presenter).prepareSuccessView(any(ViewPlaylistsOutputData.class));
-        verify(dataAccess).viewPlaylists(user);
-    }
-
-    @Test
-    void executeWithIOException() throws IOException {
-        String user = "Alice";
-        when(dataAccess.viewPlaylists(user)).thenThrow(new IOException("Database error"));
-
-        interactor.execute(user);
-
-        // This part depends on how you want to handle exceptions in your presenter
-        // For example, you might want to verify that a failure method is called
-        // verify(presenter).prepareFailureView("Database error");
-
-        verify(dataAccess).viewPlaylists(user);
+    @After
+    public void tearDown() throws IOException {
+        // Reset the JSON file to its original state
+        UserDatabase cleanState = dataAccess.loadUserDatabase("TB");
+        dataAccess.saveUserDatabase("Alice", cleanState);
     }
 }

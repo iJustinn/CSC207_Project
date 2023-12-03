@@ -1,3 +1,5 @@
+package interface_adapter.add_song;
+
 import entity.song.Song;
 import interface_adapter.add_song.AddSongController;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,5 +35,4 @@ public class AddSongControllerTest {
         verify(mockInteractor, times(1)).execute(any(AddSongInputData.class));
     }
 
-    // Add more test cases as needed...
 }

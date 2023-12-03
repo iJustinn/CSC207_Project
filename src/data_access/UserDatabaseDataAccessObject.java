@@ -94,11 +94,9 @@ public class UserDatabaseDataAccessObject implements AddSongUserDataAccessInterf
     @Override
     public boolean checkSongExist(String username, String playlistId, Song newSong) throws IOException {
         UserDatabase userDatabase = loadUserDatabase(username);
-        // Located our target playlist
-        Playlist target = userDatabase.getPlaylists().get(playlistId);
 
         //Check to see if the song was already in our playlist
-        return target.getSongs().get(newSong.getId()) == null;
+        return userDatabase.getPlaylists().get(playlistId).getSongs().get(newSong.getId()) == null;
     }
 
     @Override

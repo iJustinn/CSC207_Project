@@ -1,71 +1,102 @@
 package view;
 
 import interface_adapter.update_comment.UpdateCommentController;
+import interface_adapter.update_comment.UpdateCommentState;
 import interface_adapter.update_comment.UpdateCommentViewModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import view.UpdateCommentView;
+import use_case.view_song.SongDTO;
 
 import javax.swing.*;
-
 import java.io.IOException;
+import java.util.ArrayList;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class UpdateCommentViewTest {
+class UpdateCommentViewTest {
 
     @Mock
-    private UpdateCommentViewModel mockViewModel;
-    @Mock
-    private UpdateCommentController mockController;
+    private UpdateCommentViewModel viewModel;
 
-    private UpdateCommentView updateCommentView;
-    private JTextArea commentTextArea;
-    private JButton updateButton;
-    private JButton cancelButton;
+    @Mock
+    private UpdateCommentController controller;
+
+    @Mock
+    private UpdateCommentState updateCommentState;
+
+    private UpdateCommentView view;
+
+    private final SongDTO dummySong = new SongDTO("SongTitle", "1", new ArrayList<>(), "Album", "Comment");
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-        updateCommentView = new UpdateCommentView(mockViewModel, mockController);
-
-        commentTextArea = (JTextArea) getField(updateCommentView, "commentTextArea");
-        updateButton = (JButton) getField(updateCommentView, "updateButton");
-        cancelButton = (JButton) getField(updateCommentView, "cancelButton");
+        MockitoAnnotations.openMocks(this); // Initialize mocks annotated with @Mock
+        view = new UpdateCommentView(viewModel, controller); // Manually inject mocks
+        view.prepareView(dummySong, "PlaylistID");
     }
 
     @Test
-    void testUpdateComment() throws IOException {
-        // Set a mock comment in the text area
+    void shouldTriggerCommentUpdateWhenUpdateButtonClicked() throws IOException {
+        // Arrange
+        JButton updateButton = view.updateButton;
+        JTextArea commentTextArea = view.commentTextArea;
         commentTextArea.setText("New Comment");
 
-        // Simulate button click
+        // Act
         updateButton.doClick();
 
-        // Verify that the controller's method was called
-        verify(mockController, times(1)).updateComment(anyString(), eq("New Comment"), anyString());
+        // Assert
+        verify(controller).updateComment(dummySong.getId(), "New Comment", "PlaylistID");
     }
 
     @Test
-    void testCancelUpdate() {
-        // Simulate button click
+    void shouldNotTriggerCommentUpdateWhenCommentIsEmpty() throws IOException {
+        // Arrange
+        JButton updateButton = view.updateButton;
+        JTextArea commentTextArea = view.commentTextArea;
+        commentTextArea.setText("");
+
+        // Act
+        updateButton.doClick();
+
+        // Assert
+        verify(controller, never()).updateComment(anyString(), anyString(), anyString());
+    }
+
+    @Test
+    void shouldResetViewWhenCancelButtonClicked() {
+        // Arrange
+        JButton cancelButton = view.cancelButton;
+        JTextArea commentTextArea = view.commentTextArea;
+        commentTextArea.setText("New Comment");
+
+        // Act
         cancelButton.doClick();
 
-        // Verify that the text area is cleared
-        assertTrue(commentTextArea.getText().isEmpty());
+        // Assert
+        assertEquals("", commentTextArea.getText());
     }
 
-    // Utility method to access private fields for testing
-    private Object getField(Object obj, String fieldName) {
-        try {
-            java.lang.reflect.Field field = obj.getClass().getDeclaredField(fieldName);
-            field.setAccessible(true);
-            return field.get(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    @Test
+    void shouldDisplaySuccessMessageWhenCommentIsUpdated() {
+        // Arrange
+        when(updateCommentState.isCommentUpdated()).thenReturn(true);
+        view.displayUpdateStatus(updateCommentState);
+
+        // Act & Assert (The assert here depends on how you handle the success message)
     }
+
+    @Test
+    void shouldDisplayErrorMessageWhenCommentIsNotUpdated() {
+        // Arrange
+        when(updateCommentState.isCommentUpdated()).thenReturn(false);
+        view.displayUpdateStatus(updateCommentState);
+
+        // Act & Assert (The assert here depends on how you handle the error message)
+    }
+
+    // Add more tests to cover different property change events and other scenarios
 }

@@ -1,6 +1,5 @@
 package entity.Playlist;
 
-import entity.artist.ArtistSimple;
 import entity.song.Song;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class PlaylistFactory implements IPlaylistFactory {
     }
 
     @Override
-    public KpopPalylist kpop_create(String name) {
+    public KpopPlaylist kpop_create(String name) {
         HashMap<String, Song> kpopSongs = new HashMap<>();
 
         ArrayList<String> list = new ArrayList<>();
@@ -26,7 +25,8 @@ public class PlaylistFactory implements IPlaylistFactory {
         // Example: Adding Blackpink songs to the playlist
         kpopSongs.put("1", song1);
         kpopSongs.put("2", new Song("Ddu-Du Ddu-Du",list,"2", "Hit KPop track"));
-        return new KpopPalylist("KPop - Blackpink", 2,new Date(), kpopSongs);
+        String formattedName = String.format("KPop - %s", name);
+        return new KpopPlaylist(formattedName, 2,new Date(), kpopSongs);
     }
 
 

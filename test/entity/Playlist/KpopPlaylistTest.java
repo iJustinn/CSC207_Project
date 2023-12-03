@@ -12,8 +12,8 @@ import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlaylistTest {
-    private Playlist playlist;
+class KpopPlaylistTest {
+    private KpopPlaylist playlist;
     private final String name = "Test Playlist";
     private final int numberOfSongs = 3;
     private final Date date = new Date();
@@ -23,7 +23,7 @@ class PlaylistTest {
     @BeforeEach
     void setUp() {
         songs.put(song.getId(), song);
-        playlist = new Playlist(name, numberOfSongs, date, songs);
+        playlist = new KpopPlaylist(name, numberOfSongs, date, songs);
     }
 
     @AfterEach
@@ -33,7 +33,7 @@ class PlaylistTest {
 
     @Test
     void testJacksonConstructor() {
-        Playlist emptyPlaylist = new Playlist();
+        KpopPlaylist emptyPlaylist = new KpopPlaylist();
         assertNotNull(emptyPlaylist);
         assertNull(emptyPlaylist.getName());
         assertNull(emptyPlaylist.getDate());
@@ -99,5 +99,12 @@ class PlaylistTest {
     void getSong() {
         playlist.setSongs(songs);
         assertEquals(song, playlist.getSongs().get(song.getId()));
+    }
+    @Test
+    public void iteratorTest() {
+        Iterator<Song> iterator = playlist.iterator();
+        assertTrue(iterator.hasNext());
+        assertEquals(songs.get("1"), iterator.next());
+        assertFalse(iterator.hasNext());
     }
 }

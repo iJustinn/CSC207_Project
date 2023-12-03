@@ -41,7 +41,7 @@ public class Song implements entity.song.SongInterface {
     }
 
     public Song(TrackSimpleModel track) {
-        this.title = track.getId();
+        this.title = track.getName();
         this.artist = new ArrayList<>(track.getArtists().stream().map(ArtistSimpleModel::getName).toList());
         this.album = "??";
         this.id = track.getId();

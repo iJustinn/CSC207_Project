@@ -1,6 +1,8 @@
 package view;
 
+import app.Main;
 import entity.album.AlbumSimple;
+import entity.song.Song;
 import interface_adapter.search_album.SearchAlbumState;
 import interface_adapter.get_album_songs.GetSongsViewModel;
 import interface_adapter.search_album.SearchAlbumViewModel;
@@ -97,6 +99,8 @@ public class SearchAlbumView extends JPanel implements ActionListener, PropertyC
                     int index = list.locationToIndex(e.getPoint());
                     AlbumSimple album = listModel.getElementAt(index);
                     getSongsController.execute(album.getId());
+                    JList<Song> songJList = new JList<>(getSongsViewModel.getState().getSongs().toArray(new Song[0]));
+                    Main.switchToAddSongView(songJList);
                 }
 
                 super.mouseClicked(e);

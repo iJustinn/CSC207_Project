@@ -10,10 +10,6 @@ public class SearchAlbumState {
     private String searchInput = null;
 
     public SearchAlbumState() {}
-    public SearchAlbumState(SearchAlbumState copy) {
-        albums = copy.albums;
-        searchInput = copy.searchInput;
-    }
 
     public String getSearchInput() {
         return searchInput;

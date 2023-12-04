@@ -19,13 +19,13 @@ import java.beans.PropertyChangeListener;
 
 public class SearchAlbumView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "search album";
-    private final JTextField searchField = new JTextField(20);
+    final JTextField searchField = new JTextField(20);
     private final SearchAlbumController searchAlbumController;
     private final SearchAlbumViewModel searchAlbumViewModel;
     private final GetSongsController getSongsController;
     private final GetSongsViewModel getSongsViewModel;
-    private final JButton searchButton;
-    private CustomListModel<AlbumSimple> listModel;
+    final JButton searchButton;
+    CustomListModel<AlbumSimple> listModel;
     private final JList<AlbumSimple> albumList;
 
     public SearchAlbumView(SearchAlbumController controller,

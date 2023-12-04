@@ -17,10 +17,10 @@ import java.beans.PropertyChangeListener;
 
 public class SearchSongView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "search song";
-    private final JTextField searchField = new JTextField(20);
+    final JTextField searchField = new JTextField(20);
     private final SearchSongController searchSongController;
     private final SearchSongViewModel searchSongViewModel;
-    private final JButton searchButton;
+    final JButton searchButton;
 
     // Lists to display the thing
     private CustomListModel<Song> listModel;

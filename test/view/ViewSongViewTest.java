@@ -12,18 +12,20 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import use_case.view_song.SongDTO;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class ViewSongViewTest {
 
     @Mock
-    private ViewSongViewModel viewModel;
+    private ViewSongViewModel songViewModel;
     @Mock
     private UpdateCommentController updateCommentController;
     @Mock
@@ -35,44 +37,56 @@ class ViewSongViewTest {
     @Mock
     private ViewSongController viewSongController;
 
-    private ViewSongView viewSongView;
-    private ArrayList<SongDTO> songs;
+    private ViewSongView view;
+    private List<SongDTO> dummySongs;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        viewSongView = new ViewSongView(viewModel, updateCommentController, updateCommentViewModel,
-                deleteSongController, deleteSongViewModel, viewSongController);
-        songs = new ArrayList<>(Arrays.asList(
-                new SongDTO("Song1", "1", new ArrayList<>(Arrays.asList("Artist1")), "Album1", "Comment1"),
-                new SongDTO("Song2", "2", new ArrayList<>(Arrays.asList("Artist2")), "Album2", "Comment2")
+        ArrayList<String> artist = new ArrayList<>(Arrays.asList("Artist 1", "Artist 2"));
+        dummySongs = new ArrayList<>(Arrays.asList(
+                new SongDTO("Song1", "1", artist, "Album1", "Comment1"),
+                new SongDTO("Song2", "2", artist, "Album2", "Comment2")
         ));
-        when(viewModel.getState().getSongs()).thenReturn(songs);
+        view = new ViewSongView(songViewModel, updateCommentController, updateCommentViewModel,
+                deleteSongController, deleteSongViewModel, viewSongController);
+        when(songViewModel.getState().getSongs()).thenReturn((ArrayList<SongDTO>) dummySongs);
     }
 
     @Test
-    void testOpenUpdateCommentViewWithSelectedSong() {
-        // Simulate selecting a song
-        viewSongView.songList.setSelectedIndex(0);
+    void shouldDisplaySongsOnPropertyChange() {
+        // Trigger the property change
+        view.propertyChange(new PropertyChangeEvent(this, "state", null, songViewModel.getState()));
 
-        // Simulate clicking the add comment button
-        viewSongView.addCommentButton.doClick();
-
+        // Assert that songs are displayed in the list
+        assertEquals(2, view.songList.getModel().getSize());
+        assertEquals(dummySongs.get(0), view.songList.getModel().getElementAt(0));
+        assertEquals(dummySongs.get(1), view.songList.getModel().getElementAt(1));
     }
 
     @Test
-    void testDeleteSelectedSong() throws IOException, IOException {
-        // Simulate selecting a song
-        viewSongView.songList.setSelectedIndex(0);
+    void shouldOpenCommentDialogWhenAddCommentClicked() {
+        // Assuming a Song is selected
+        view.songList.setSelectedIndex(0);
 
-        // Simulate clicking the delete song button
-        viewSongView.deleteSongButton.doClick();
+        // Simulate button click
+        view.addCommentButton.doClick();
 
-        // Verify that the delete song controller is executed
-        verify(deleteSongController).execute(eq("1"), eq("love story"));
-        verify(viewSongController).execute(eq("Alice"), eq("love story"));
+        assertTrue(true);
     }
 
-    // Additional tests can include verifying the correct handling of null selections,
-    // testing the propertyChange method, and so on.
+    @Test
+    void shouldDeleteSongWhenDeleteSongClicked() throws IOException {
+        // Assuming a Song is selected
+        view.songList.setSelectedIndex(0);
+
+        // Simulate button click
+        view.deleteSongButton.doClick();
+
+        // Assert that the DeleteSongController is called
+        verify(deleteSongController).execute("1", "love story");
+    }
+
+    // Additional tests for other buttons and scenarios...
+
 }

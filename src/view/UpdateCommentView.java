@@ -13,9 +13,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class UpdateCommentView extends JPanel implements PropertyChangeListener, ActionListener {
-    private JTextArea commentTextArea;
-    private JButton updateButton;
-    private JButton cancelButton;
+    JTextArea commentTextArea;
+    JButton updateButton;
+    JButton cancelButton;
     private UpdateCommentViewModel viewModel;
     private UpdateCommentController controller;
     private String songId;
@@ -71,7 +71,7 @@ public class UpdateCommentView extends JPanel implements PropertyChangeListener,
     }
 
 
-    private void displayUpdateStatus(UpdateCommentState state) {
+    void displayUpdateStatus(UpdateCommentState state) {
         // Check if the comment was updated successfully
         if (state.isCommentUpdated()) {
             // Display a success message

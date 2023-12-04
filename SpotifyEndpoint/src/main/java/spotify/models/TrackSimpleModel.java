@@ -35,15 +35,4 @@ public class TrackSimpleModel {
         return id;
     }
 
-    public Integer getDiscNumber() {
-        return discNumber;
-    }
-
-    public Integer getDurationMs() {
-        return durationMs;
-    }
-
-    public Integer getTrackNumber() {
-        return trackNumber;
-    }
 }

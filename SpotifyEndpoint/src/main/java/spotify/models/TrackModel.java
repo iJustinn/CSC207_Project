@@ -27,24 +27,8 @@ public class TrackModel {
         this.artists = Arrays.stream(track.getArtists()).map(ArtistSimpleModel::new).toList();
     }
 
-    public Integer getDiscNumber() {
-        return discNumber;
-    }
-
-    public Integer getTrackNumber() {
-        return trackNumber;
-    }
-
-    public Integer getDurationMs() {
-        return durationMs;
-    }
-
     public List<ArtistSimpleModel> getArtists() {
         return artists;
-    }
-
-    public Integer getPopularity() {
-        return popularity;
     }
 
     public String getId() {

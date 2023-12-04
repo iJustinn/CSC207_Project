@@ -24,7 +24,7 @@ public class SearchSongView extends JPanel implements ActionListener, PropertyCh
 
     // Lists to display the thing
     private CustomListModel<Song> listModel;
-    private final JList<Song> songList;
+    JList<Song> songJlist;
 
     public SearchSongView(SearchSongController searchSongController,
                             SearchSongViewModel searchSongViewModel) {
@@ -82,21 +82,21 @@ public class SearchSongView extends JPanel implements ActionListener, PropertyCh
         this.add(buttons);
 
         listModel = new CustomListModel<>(this.searchSongViewModel.getState().getSongs());
-        songList = new JList<>(listModel);
-        songList.setPreferredSize(new Dimension(280, 500));
-        songList.addMouseListener(new MouseAdapter() {
+        songJlist = new JList<>(listModel);
+        songJlist.setPreferredSize(new Dimension(280, 500));
+        songJlist.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JList<Song> list = (JList<Song>) e.getSource();
                 if (e.getClickCount() == 2) {
                     int index = list.locationToIndex(e.getPoint());
-                    Main.switchToAddSongView(songList); // switch to addSongView
+                    Main.switchToAddSongView(songJlist); // switch to addSongView
                 }
                 super.mouseClicked(e);
             }
         });
 
-        this.add(songList);
+        this.add(songJlist);
     }
 
     @Override

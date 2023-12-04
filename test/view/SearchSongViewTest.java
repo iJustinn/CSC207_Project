@@ -68,10 +68,10 @@ class SearchSongViewTest {
     @Test
     void shouldHandleDoubleClickOnSongList() {
         // Simulate double click on list item
-        searchSongView.artistList.setSelectedIndex(0);
-        MouseEvent doubleClick = new MouseEvent(searchSongView.artistList, MouseEvent.MOUSE_CLICKED,
+        searchSongView.songJlist.setSelectedIndex(0);
+        MouseEvent doubleClick = new MouseEvent(searchSongView.songJlist, MouseEvent.MOUSE_CLICKED,
                 System.currentTimeMillis(), 0, 0, 0, 2, false);
-        for (MouseListener ml : searchSongView.artistList.getMouseListeners()) {
+        for (MouseListener ml : searchSongView.songJlist.getMouseListeners()) {
             ml.mouseClicked(doubleClick);
         }
 

@@ -29,8 +29,8 @@ public class ViewPlaylistsView extends JPanel implements PropertyChangeListener,
 
     final JList<String> playlistsList;
     // private final JButton refreshButton;
-    private JTextField playlistNameField;
-    private final JButton createPlaylistButton;
+    public JTextField playlistNameField;
+    public final JButton createPlaylistButton;
     final JButton deletePlaylistButton;
 
     public ViewPlaylistsView(ViewPlaylistsViewModel viewModel,

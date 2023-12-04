@@ -20,6 +20,9 @@ public class SearchArtistPresenter implements SearchArtistOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-        // TODO: To be implemented
+        SearchArtistState state = viewModel.getState();
+        state.setSearchInput(error);
+        viewModel.setState(state);
     }
+
 }

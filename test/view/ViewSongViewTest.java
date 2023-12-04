@@ -61,7 +61,7 @@ class ViewSongViewTest {
     }
 
     @Test
-    void testDeleteSelectedSong() throws IOException, IOException {
+    void testDeleteSelectedSong() throws IOException {
         // Simulate selecting a song
         viewSongView.songList.setSelectedIndex(0);
 
@@ -73,6 +73,8 @@ class ViewSongViewTest {
         verify(viewSongController).execute(eq("Alice"), eq("love story"));
     }
 
-    // Additional tests can include verifying the correct handling of null selections,
-    // testing the propertyChange method, and so on.
+    @Test
+    void testSelection() throws IOException {
+
+    }
 }

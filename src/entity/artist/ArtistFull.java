@@ -8,7 +8,7 @@ public class ArtistFull implements IArtistFull {
     private final String[] genres;
     private final Integer popularity;
 
-    ArtistFull(String id, String name, String[] genres, Integer popularity) {
+    public ArtistFull(String id, String name, String[] genres, Integer popularity) {
         this.id = id;
         this.name = name;
         this.genres = genres;

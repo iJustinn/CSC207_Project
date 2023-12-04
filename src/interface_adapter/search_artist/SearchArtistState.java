@@ -11,10 +11,6 @@ public class SearchArtistState {
 
     public SearchArtistState() {}
 
-    public SearchArtistState(SearchArtistState copy) {
-        artists = copy.artists;
-        searchInput = copy.searchInput;
-    }
 
     public String getSearchInput() {
         return searchInput;

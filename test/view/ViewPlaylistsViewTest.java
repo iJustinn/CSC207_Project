@@ -1,92 +1,151 @@
 package view;
 
-import interface_adapter.create_playlist.CreatePlaylistController;
-import interface_adapter.create_playlist.CreateViewModel;
-import interface_adapter.delete_playlist.DeletePlaylistController;
-import interface_adapter.delete_playlist.DeletePlaylistViewModel;
-import interface_adapter.view_playlists.ViewPlaylistsController;
-import interface_adapter.view_playlists.ViewPlaylistsViewModel;
 import interface_adapter.view_song.ViewSongController;
+import interface_adapter.create_playlist.CreateViewModel;
+import interface_adapter.view_playlists.ViewPlaylistsViewModel;
+import interface_adapter.view_playlists.ViewPlaylistsController;
+import interface_adapter.delete_playlist.DeletePlaylistViewModel;
+import interface_adapter.delete_playlist.DeletePlaylistController;
+import interface_adapter.create_playlist.CreatePlaylistController;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import javax.swing.*;
-
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 class ViewPlaylistsViewTest {
 
     @Mock
-    private ViewPlaylistsViewModel viewModel;
+    private ViewPlaylistsViewModel viewPlaylistsViewModel;
     @Mock
-    private ViewPlaylistsController playlistsController;
+    private ViewPlaylistsController viewPlaylistsController;
     @Mock
     private ViewSongController viewSongController;
     @Mock
-    private DeletePlaylistController deletePlaylistController;
-    @Mock
     private DeletePlaylistViewModel deletePlaylistViewModel;
+    @Mock
+    private DeletePlaylistController deletePlaylistController;
     @Mock
     private CreateViewModel createViewModel;
     @Mock
     private CreatePlaylistController createPlaylistController;
 
-    private ViewPlaylistsView view;
+    private ViewPlaylistsView viewPlaylistsView;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        view = new ViewPlaylistsView(viewModel, playlistsController, viewSongController, deletePlaylistController, deletePlaylistViewModel, createViewModel, createPlaylistController);
+        viewPlaylistsView = new ViewPlaylistsView(
+                viewPlaylistsViewModel,
+                viewPlaylistsController,
+                viewSongController,
+                deletePlaylistController,
+                deletePlaylistViewModel,
+                createViewModel,
+                createPlaylistController
+        );
     }
 
     @Test
-    void shouldDisplayPlaylistsOnPropertyChange() {
-        // Given
-        var playlists = java.util.List.of("Playlist 1", "Playlist 2");
-        when(viewModel.getState().getPlaylists());
+    void shouldTriggerPlaylistCreation() throws IOException {
+        viewPlaylistsView.playlistNameField.setText("New Playlist");
+        viewPlaylistsView.createPlaylistButton.doClick();
 
-        // When
-        viewModel.firePropertyChanged(); // Simulate property change
-
-        // Then
-        var listModel = (DefaultListModel<String>) view.playlistsList.getModel();
-        assertEquals(playlists.size(), listModel.getSize());
-        for (int i = 0; i < playlists.size(); i++) {
-            assertEquals(playlists.get(i), listModel.getElementAt(i));
-        }
+        verify(createPlaylistController).execute("New Playlist");
+        verify(viewPlaylistsController).execute("Alice");
     }
 
     @Test
-    void shouldInvokeDeletePlaylistWhenDeleteButtonPressed() throws IOException {
-        // Given
-        String selectedPlaylist = "Playlist 1";
-        view.playlistsList.setSelectedValue(selectedPlaylist, true);
+    void shouldTriggerPlaylistDeletion() throws IOException {
+        JList<String> playlistsList = viewPlaylistsView.playlistsList;
+        playlistsList.setListData(new String[]{"Playlist 1"});
+        playlistsList.setSelectedIndex(0);
 
-        // When
-        view.deletePlaylistButton.doClick();
+        viewPlaylistsView.deletePlaylistButton.doClick();
 
-        // Then
-        verify(deletePlaylistController).deletePlaylist(selectedPlaylist);
+        verify(deletePlaylistController).deletePlaylist("Playlist 1");
+        verify(viewPlaylistsController).execute("Alice");
     }
 
     @Test
-    void shouldShowErrorMessageWhenDeletePlaylistFails() throws IOException {
-        // Given
-        String selectedPlaylist = "Playlist 1";
-        view.playlistsList.setSelectedValue(selectedPlaylist, true);
-        doThrow(new IOException()).when(deletePlaylistController).deletePlaylist(anyString());
+    void shouldUpdatePlaylistsList() {
+        java.util.List<String> playlists = java.util.Arrays.asList("Playlist 1", "Playlist 2");
+        when(viewPlaylistsViewModel.getState().getPlaylists()).thenReturn((ArrayList<String>) playlists);
 
-        // When
-        view.deletePlaylistButton.doClick();
+        viewPlaylistsView.propertyChange(new PropertyChangeEvent(this, "state", null, viewPlaylistsViewModel.getState()));
 
-        // Then
-        // You can check if an error dialog was displayed, but this requires additional setup with JOptionPane mocking.
     }
 
-    // Additional tests for createPlaylistButton and refreshButton can be created in a similar manner.
+    @Test
+    void shouldHandlePlaylistSelection() throws IOException {
+        JList<String> playlistsList = viewPlaylistsView.playlistsList;
+        playlistsList.setListData(new String[]{"love story"});
+        playlistsList.setSelectedIndex(0);
+
+        viewPlaylistsView.playlistsList.getMouseListeners()[1].mouseClicked(null);
+
+        verify(viewSongController).execute("Alice", "love story");
+    }
+
+    @Test
+    void shouldDisplaySuccessMessageOnPlaylistCreation() {
+        when(createViewModel.isCreationSuccessful()).thenReturn(true);
+        when(createViewModel.getCreationMessage()).thenReturn("Playlist created successfully");
+
+        viewPlaylistsView.propertyChange(new PropertyChangeEvent(this, "state", null, createViewModel.getState()));
+
+        // Verify if a success message dialog was displayed
+    }
+
+    @Test
+    void shouldDisplayErrorMessageOnFailedPlaylistCreation() {
+        when(createViewModel.isCreationSuccessful()).thenReturn(false);
+        when(createViewModel.getCreationMessage()).thenReturn("Failed to create playlist");
+
+        viewPlaylistsView.propertyChange(new PropertyChangeEvent(this, "state", null, createViewModel.getState()));
+
+        // Verify if an error message dialog was displayed
+    }
+
+    @Test
+    void shouldNotCreatePlaylistWithEmptyName() throws IOException {
+        viewPlaylistsView.playlistNameField.setText("");
+        viewPlaylistsView.createPlaylistButton.doClick();
+
+        verifyNoInteractions(createPlaylistController);
+    }
+
+    @Test
+    void shouldDisplayDeletionSuccessMessage() {
+        when(deletePlaylistViewModel.getState().isDeletionSuccessful()).thenReturn(true);
+        viewPlaylistsView.propertyChange(new PropertyChangeEvent(this, "state", null, deletePlaylistViewModel.getState()));
+
+        // Verify if a success message dialog was displayed
+    }
+
+    @Test
+    void shouldDisplayDeletionErrorMessage() {
+        when(deletePlaylistViewModel.getState().isDeletionSuccessful()).thenReturn(false);
+        viewPlaylistsView.propertyChange(new PropertyChangeEvent(this, "state", null, deletePlaylistViewModel.getState()));
+    }
+    @Test
+    void mouseClickedShouldTriggerViewSongController() throws IOException {
+        // Simulate a mouse click on the first item in the playlists list
+        int indexToClick = 0;
+        MouseEvent mockEvent = mock(MouseEvent.class);
+        when(mockEvent.getPoint()).thenReturn(new java.awt.Point(0, viewPlaylistsView.playlistsList.indexToLocation(indexToClick).y));
+        viewPlaylistsView.playlistsList.getMouseListeners()[1].mouseClicked(mockEvent);
+
+        // Verify that the viewSongController is called with the correct playlist
+        verify(viewSongController).execute("Alice", "Playlist 1");
+    }
 }

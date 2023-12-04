@@ -13,14 +13,14 @@ import java.beans.PropertyChangeListener;
 
 public class SearchArtistView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "search artist";
-    private final JTextField searchField = new JTextField(20);
+    final JTextField searchField = new JTextField(20);
     private final SearchArtistController searchArtistController;
     private final SearchArtistViewModel searchArtistViewModel;
-    private final JButton searchButton;
+    final JButton searchButton;
 
     // Lists to display the thing
-    private CustomListModel<ArtistFull> listModel;
-    private final JList<ArtistFull> artistList;
+    CustomListModel<ArtistFull> listModel;
+    final JList<ArtistFull> artistList;
 
     public SearchArtistView(SearchArtistController controller,
                             SearchArtistViewModel viewModel) {

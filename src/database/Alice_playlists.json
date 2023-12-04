@@ -1,19 +1,5 @@
 {
   "playlists" : {
-    "love story" : {
-      "name" : "love story",
-      "numberOfSongs" : 3,
-      "date" : "2023-11-21",
-      "songs" : {
-        "2" : {
-          "title" : "Song Title 2",
-          "artist" : [ "Artist C" ],
-          "album" : "Album 2",
-          "id" : "2",
-          "comment" : "dsadadsa"
-        }
-      }
-    },
     "asd" : {
       "name" : "asd",
       "numberOfSongs" : 0,
@@ -31,6 +17,44 @@
           "album" : "Album 2",
           "id" : "2",
           "comment" : "dsdsds"
+        }
+      }
+    },
+    "Playlist 1" : {
+      "name" : "Playlist 1",
+      "numberOfSongs" : 0,
+      "date" : "2023-12-03",
+      "songs" : { }
+    },
+    "Playlist 2" : {
+      "name" : "Playlist 2",
+      "numberOfSongs" : 0,
+      "date" : "2023-12-03",
+      "songs" : { }
+    },
+    "Unique Playlist" : {
+      "name" : "Unique Playlist",
+      "numberOfSongs" : 0,
+      "date" : "2023-12-03",
+      "songs" : { }
+    },
+    "Existing Playlist" : {
+      "name" : "Existing Playlist",
+      "numberOfSongs" : 0,
+      "date" : "2023-12-03",
+      "songs" : { }
+    },
+    "Test Playlist" : {
+      "name" : "Test Playlist",
+      "numberOfSongs" : 1,
+      "date" : "2023-12-03",
+      "songs" : {
+        "1" : {
+          "title" : "New Song",
+          "artist" : [ "New Artist" ],
+          "album" : "New Album",
+          "id" : "1",
+          "comment" : ""
         }
       }
     }

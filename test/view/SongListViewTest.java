@@ -2,6 +2,7 @@ package view;
 
 import entity.song.Song;
 import interface_adapter.add_song.AddSongController;
+import interface_adapter.add_song.AddSongState;
 import interface_adapter.add_song.AddSongViewModel;
 import interface_adapter.view_playlists.ViewPlaylistsController;
 import interface_adapter.view_playlists.ViewPlaylistsViewModel;
@@ -13,12 +14,15 @@ import view.SongListView;
 
 import javax.swing.*;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 class SongListViewTest {
     @Mock private AddSongController addSongController;
@@ -72,5 +76,17 @@ class SongListViewTest {
         assertEquals(2, listModel.getSize()); // Check if the list model has 2 songs
         assertEquals(songJustice, listModel.getElementAt(0)); // Check the first song
         assertEquals(songPurpose, listModel.getElementAt(1)); // Check the second song
+    }
+
+    @Test
+    void testPropertyChangeReaction() {
+        // Mock state change in addSongViewModel
+        AddSongState mockAddSongState = mock(AddSongState.class);
+        when(mockAddSongState.getMessage()).thenReturn("The song was successfully added.");
+        PropertyChangeEvent addSongEvt = new PropertyChangeEvent(addSongViewModel, "state", null, mockAddSongState);
+        songListView.propertyChange(addSongEvt);
+
+        // Verify if a success message is shown
+        verify(addSongViewModel).getState();
     }
 }

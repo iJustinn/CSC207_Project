@@ -1,24 +1,37 @@
 package interface_adapter.search_album;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.beans.PropertyChangeListener;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 class SearchAlbumViewModelTest {
+    private SearchAlbumViewModel viewModel;
+    private PropertyChangeListener mockListener;
 
-    @Test
-    void getState() {
+    @BeforeEach
+    void setUp() {
+        viewModel = new SearchAlbumViewModel();
+        mockListener = mock(PropertyChangeListener.class);
+        viewModel.addPropertyChangeListener(mockListener);
     }
 
     @Test
-    void setState() {
+    void testPropertyChangeNotification() {
+        SearchAlbumState newState = new SearchAlbumState();
+        viewModel.setState(newState);
+
+        verify(mockListener).propertyChange(any());
     }
 
     @Test
-    void firePropertyChanged() {
-    }
+    void testGetAndSetState() {
+        SearchAlbumState state = new SearchAlbumState();
+        state.setSearchInput("Test Input");
+        viewModel.setState(state);
 
-    @Test
-    void addPropertyChangeListener() {
+        assertEquals("Test Input", viewModel.getState().getSearchInput());
     }
 }

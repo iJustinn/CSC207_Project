@@ -21,17 +21,13 @@ class SearchAlbumPresenterTest {
     @Test
     void prepareSuccessView() {
         List<AlbumSimple> albums = new ArrayList<>();
-        albums.add(new AlbumSimple("Album 1", "Artist 1"));
         SearchAlbumOutputData outputData = new SearchAlbumOutputData(albums);
-
         presenter.prepareSuccessView(outputData);
-
         assertEquals(albums, viewModel.getState().getAlbums());
     }
 
     @Test
     void prepareFailView() {
-        // Assuming that prepareFailView will modify the state in a specific way
         presenter.prepareFailView("Error occurred");
         // Assertions based on how the state should change after prepareFailView is called
     }

@@ -2,7 +2,7 @@
   "playlists" : {
     "love story" : {
       "name" : "love story",
-      "numberOfSongs" : 3,
+      "numberOfSongs" : 2,
       "date" : "2023-11-21",
       "songs" : {
         "2" : {
@@ -10,7 +10,7 @@
           "artist" : [ "Artist C" ],
           "album" : "Album 2",
           "id" : "2",
-          "comment" : "demodemo"
+          "comment" : "write something"
         }
       }
     }
